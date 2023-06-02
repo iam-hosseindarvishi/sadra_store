@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
-import 'screens/sign_in/sign_in_screen.dart';
+import './theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,16 +20,7 @@ class _MainState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'صدرا پخش',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Vazir',
-        textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: kTextColor),
-            bodyMedium: TextStyle(color: kTextColor),
-            bodySmall: TextStyle(color: kTextColor)),
-        useMaterial3: true,
-      ),
+      theme: theme(),
       // home:  SplashScreen(),
       initialRoute: SplashScreen.routeName,
       routes: routes,
