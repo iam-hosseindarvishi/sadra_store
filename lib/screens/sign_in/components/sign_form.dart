@@ -1,0 +1,111 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+
+import '../../../components/custom_surffix_icon.dart';
+import '../../../components/default_button.dart';
+import '../../../constants.dart';
+import '../../../size_config.dart';
+
+class SignForm extends StatefulWidget {
+  const SignForm({Key? key}) : super(key: key);
+
+  @override
+  _SignFormState createState() => _SignFormState();
+}
+
+class _SignFormState extends State<SignForm> {
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  String? email;
+  String? password;
+  bool remember = false;
+  final List<String> errors = [];
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            buildEmailFormField(emailController),
+            SizedBox(
+              height: getProportionateScreenHeight(30),
+            ),
+            buildPasswordFormField(passwordController),
+            SizedBox(
+              height: getProportionateScreenHeight(30),
+            ),
+            Row(
+              children: [
+                Checkbox(
+                    value: remember,
+                    activeColor: kPrimaryColor,
+                    onChanged: (value) {
+                      setState(() {
+                        remember = value!;
+                      });
+                    }),
+                const Text("مرا به خاطر بسپار"),
+                const Spacer(),
+                const Text(
+                  "فراموشی کلمه عبور!",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                )
+              ],
+            ),
+            DefaultButton(
+                text: "ورود",
+                press: () {
+                  if (_formKey.currentState!.validate()) {
+                    email = emailController.text;
+                    password = passwordController.text;
+                  }
+                })
+          ],
+        ));
+  }
+}
+
+TextFormField buildEmailFormField(TextEditingController emailController) {
+  return TextFormField(
+    controller: emailController,
+    keyboardType: TextInputType.emailAddress,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return kEmailNullError;
+      }
+      if (!EmailValidator.validate(value, true)) {
+        return kInvalidemailError;
+      }
+      return null;
+    },
+    decoration: const InputDecoration(
+      labelText: "ایمیل",
+      hintText: "ایمیل خود را وارد کنید",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+    ),
+  );
+}
+
+TextFormField buildPasswordFormField(TextEditingController passwordController) {
+  return TextFormField(
+    controller: passwordController,
+    keyboardType: TextInputType.visiblePassword,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return kPassNullError;
+      } else if (value.length < 8) {
+        return kShortPassError;
+      }
+      return null;
+    },
+    obscureText: true,
+    decoration: const InputDecoration(
+      labelText: "کلمه عبور",
+      hintText: "کلمه عبور خود را وارد کنید",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Secure.svg"),
+    ),
+  );
+}
