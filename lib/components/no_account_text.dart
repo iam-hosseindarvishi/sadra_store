@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/screens/sign_up/sign_up_screen.dart';
 
 import '../constants.dart';
 import '../screens/forgot_password/forgot_password_screen.dart';
@@ -14,8 +15,7 @@ class NoAccountText extends StatelessWidget {
         Text("  حساب کاربری ندارید؟",
             style: TextStyle(fontSize: getProportionateScreenWidth(16))),
         GestureDetector(
-          onTap: () => Navigator.popAndPushNamed(
-              context, ForgotPasswordScreen.routeName),
+          onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: Text(
             " نامنویسی ",
             style: TextStyle(

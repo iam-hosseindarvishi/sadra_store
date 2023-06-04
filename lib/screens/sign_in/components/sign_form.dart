@@ -50,7 +50,7 @@ class _SignFormState extends State<SignForm> {
                 const Text("مرا به خاطر بسپار"),
                 const Spacer(),
                 GestureDetector(
-                  onTap: () => Navigator.popAndPushNamed(
+                  onTap: () => Navigator.pushNamed(
                       context, ForgotPasswordScreen.routeName),
                   child: const Text(
                     "فراموشی کلمه عبور!",
