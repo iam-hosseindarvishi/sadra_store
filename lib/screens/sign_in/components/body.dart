@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/constants.dart';
+import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
 import 'package:sadra_store/size_config.dart';
+import '../../../components/no_account_text.dart';
 import 'sign_form.dart';
 
 class Body extends StatelessWidget {
@@ -38,22 +40,10 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: SizeConfig.screenHeight * 0.08,
                       ),
-                      Row(
-                        children: [
-                          Text("حساب کاربری ندارید؟",
-                              style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(16))),
-                          Text(
-                            "نامنویسی",
-                            style: TextStyle(
-                                fontSize: getProportionateScreenWidth(16),
-                                color: kPrimaryColor),
-                          )
-                        ],
-                      ),
                       SizedBox(
                         height: SizeConfig.screenHeight * 0.08,
                       ),
+                      const NoAccountText(),
                     ],
                   ),
                 ))));
