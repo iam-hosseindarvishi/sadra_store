@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/screens/home/home_screen.dart';
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
 import './theme.dart';
@@ -22,7 +23,7 @@ class _MainState extends State<MyApp> {
       title: 'صدرا پخش',
       theme: theme(),
       // home:  SplashScreen(),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: routes,
     );
   }
