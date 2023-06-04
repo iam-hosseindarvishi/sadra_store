@@ -9,26 +9,27 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      child: Column(
-        children: [
-          Text(
-            "ایجاد حساب",
-            style: headingStyle,
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                "ایجاد حساب",
+                style: headingStyle,
+              ),
+              const Text(
+                "برای ایجاد حساب کاربری \n اطلاعات خود را تکمیل کنید",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.08,
+              ),
+              const SignUpForm(),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.08,
+              ),
+            ],
           ),
-          const Text(
-            "برای ایجاد حساب کاربری \n اطلاعات خود را تکمیل کنید",
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: SizeConfig.screenHeight * 0.08,
-          ),
-          const SignUpForm(),
-          SizedBox(
-            height: SizeConfig.screenHeight * 0.08,
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

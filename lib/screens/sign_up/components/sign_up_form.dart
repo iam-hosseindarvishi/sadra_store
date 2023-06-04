@@ -24,44 +24,43 @@ class _SignUpForm extends State<SignUpForm> {
     return Form(
         key: _formKey,
         child: SizedBox(
-            width: double.infinity,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: Column(
-                  children: [
-                    buildEmailFormField(_emailController),
-                    SizedBox(
-                      height: getProportionateScreenHeight(30),
-                    ),
-                    buildPasswordFormField(_passwordController, "کلمه عبور",
-                        "کلمه عبور را وارد کنید"),
-                    SizedBox(
-                      height: getProportionateScreenHeight(30),
-                    ),
-                    buildPasswordFormField(_confirmPasswordController,
-                        "تکرار کلمه عبور", "کلمه عبور خود را تکرار کنید"),
-                    SizedBox(
-                      height: getProportionateScreenHeight(30),
-                    ),
-                    DefaultButton(
-                        text: "ادامه",
-                        press: () {
-                          if (_formKey.currentState!.validate()) {
-                            if (_passwordController.text !=
-                                _confirmPasswordController.text) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "رمز عبور و تکرار آن یکسان نیست")));
-                            }
-                          }
-                        })
-                  ],
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
+            child: Column(
+              children: [
+                buildEmailFormField(_emailController),
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
                 ),
-              ),
-            )));
+                buildPasswordFormField(
+                    _passwordController, "کلمه عبور", "کلمه عبور را وارد کنید"),
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
+                ),
+                buildPasswordFormField(_confirmPasswordController,
+                    "تکرار کلمه عبور", "کلمه عبور خود را تکرار کنید"),
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
+                ),
+                DefaultButton(
+                    text: "ادامه",
+                    press: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (_passwordController.text !=
+                            _confirmPasswordController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text("رمز عبور و تکرار آن یکسان نیست")));
+                        }
+                      }
+                    })
+              ],
+            ),
+          ),
+        ));
   }
 }
 
