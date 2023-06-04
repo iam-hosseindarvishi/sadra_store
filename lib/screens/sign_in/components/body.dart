@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sadra_store/components/default_button.dart';
 import 'package:sadra_store/constants.dart';
 import 'package:sadra_store/size_config.dart';
+import 'package:email_validator/email_validator.dart';
 
 import '../../../components/custom_surffix_icon.dart';
 
@@ -45,6 +46,10 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  String? email;
+  String? password;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -52,24 +57,39 @@ class _SignFormState extends State<SignForm> {
         key: _formKey,
         child: Column(
           children: [
-            buildEmailFormField(),
+            buildEmailFormField(emailController),
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            buildPasswordFormField(),
+            buildPasswordFormField(passwordController),
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            DefaultButton(text: "ورود", press: () {})
+            DefaultButton(
+                text: "ورود",
+                press: () {
+                  if (_formKey.currentState!.validate()) {
+                    email = emailController.text;
+                    password = passwordController.text;
+                    print('email is $email and password is $password');
+                  }
+                })
           ],
         ));
   }
 }
 
-TextFormField buildEmailFormField() {
+TextFormField buildEmailFormField(TextEditingController emailController) {
   return TextFormField(
+    controller: emailController,
     keyboardType: TextInputType.emailAddress,
     validator: (value) {
+      if (value == null || value.isEmpty) {
+        return kEmailNullError;
+      }
+      if (!EmailValidator.validate(value, true)) {
+        return kInvalidemailError;
+      }
       return null;
     },
     decoration: const InputDecoration(
@@ -81,9 +101,16 @@ TextFormField buildEmailFormField() {
   );
 }
 
-TextFormField buildPasswordFormField() {
+TextFormField buildPasswordFormField(TextEditingController passwordController) {
   return TextFormField(
+    controller: passwordController,
     keyboardType: TextInputType.visiblePassword,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return kPassNullError;
+      }
+      return null;
+    },
     obscureText: true,
     decoration: const InputDecoration(
       labelText: "کلمه عبور",
