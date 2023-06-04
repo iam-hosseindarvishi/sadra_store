@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:sadra_store/screens/complate_profile/complate_profile_screen.dart';
 
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
@@ -47,15 +48,17 @@ class _SignUpForm extends State<SignUpForm> {
                 DefaultButton(
                     text: "ادامه",
                     press: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (_passwordController.text !=
-                            _confirmPasswordController.text) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("رمز عبور و تکرار آن یکسان نیست")));
-                        }
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   if (_passwordController.text !=
+                      //       _confirmPasswordController.text) {
+                      //     ScaffoldMessenger.of(context).showSnackBar(
+                      //         const SnackBar(
+                      //             content:
+                      //                 Text("رمز عبور و تکرار آن یکسان نیست")));
+                      //   }
+                      // }
+                      Navigator.pushNamed(
+                          context, ComplateProfileScreen.routeName);
                     })
               ],
             ),
