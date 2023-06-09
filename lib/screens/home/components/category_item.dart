@@ -27,14 +27,11 @@ class CategoryListItem extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
           onTap: press,
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(text,
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: isActive ? Colors.white : Colors.black)),
-            ),
+          child: Center(
+            child: Text(text,
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(color: isActive ? Colors.white : Colors.black)),
           ),
         ),
       ),

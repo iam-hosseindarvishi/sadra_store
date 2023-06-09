@@ -22,11 +22,9 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(
-          getProportionateScreenWidth(15),
-          getProportionateScreenWidth(15),
-          getProportionateScreenWidth(20),
-          getProportionateScreenWidth(10)),
+      padding: EdgeInsets.symmetric(
+          horizontal: getProportionateScreenWidth(10),
+          vertical: getProportionateScreenWidth(10)),
       height: 70,
       width: double.infinity,
       child: ListView.builder(
