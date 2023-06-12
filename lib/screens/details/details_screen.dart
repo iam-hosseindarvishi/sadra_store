@@ -17,17 +17,8 @@ class DetailsScreen extends StatelessWidget {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          backgroundColor: const Color(0xFFF5F6F9),
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            leading: SizedBox(
-              height: getProportionateScreenWidth(40),
-              width: getProportionateScreenWidth(40),
-              child: RoundedIconBtn(
-                iconData: Icons.arrow_back_ios,
-                press: () => Navigator.pop(context),
-              ),
-            ),
+            title: Text(arguments.product.title),
           ),
           body: Body(
             product: arguments.product,

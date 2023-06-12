@@ -23,16 +23,19 @@ class _ProtuctImagesState extends State<ProtuctImages> {
         SizedBox(
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
-            aspectRatio: 1,
+            aspectRatio: 1.5,
             child: Image.asset(widget.product.images[selectedImage]),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(widget.product.images.length,
-                (index) => BuildSmallPreview(index))
-          ],
+        Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...List.generate(widget.product.images.length,
+                  (index) => BuildSmallPreview(index))
+            ],
+          ),
         )
       ],
     );
