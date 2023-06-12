@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../components/default_button.dart';
 import '../../../components/rounded_icon_btn.dart';
 import '../../../size_config.dart';

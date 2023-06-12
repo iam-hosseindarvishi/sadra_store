@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/models/Product.dart';
-import 'package:sadra_store/size_config.dart';
-
-import '../../components/rounded_icon_btn.dart';
 import 'components/body.dart';
 
 class DetailsScreen extends StatelessWidget {
