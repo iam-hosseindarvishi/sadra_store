@@ -1,11 +1,13 @@
 class Product {
+  final int id;
   final String title, description;
   final List<String> images;
   final int price;
   final bool isFavourite, isPopular;
 
   Product(
-      {required this.images,
+      {required this.id,
+      required this.images,
       this.isFavourite = false,
       this.isPopular = false,
       required this.title,
@@ -17,6 +19,7 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
+      id: 1,
       images: [
         'assets/images/pepsi.jpg',
         'assets/images/pepsi.jpg',
@@ -27,6 +30,7 @@ List<Product> demoProducts = [
       isFavourite: true,
       description: "نوشابه قوطی پپسی ساخت ایران"),
   Product(
+      id: 2,
       images: [
         'assets/images/family-pepsi.jpg',
         'assets/images/family-pepsi.jpg'
@@ -34,12 +38,18 @@ List<Product> demoProducts = [
       title: "نوشابه پپسی",
       price: 25000,
       description: "نوشابه  پپسی خانواده ، یک و نیم لیتری ساخت ایران"),
-  Product(images: [
-    'assets/images/dalil.jpg',
-    'assets/images/dalil.jpg',
-    'assets/images/dalil.jpg'
-  ], title: "آبلیمو دلیل", price: 250000, description: "آبلیمو شیشه ای دلیل"),
   Product(
+      id: 3,
+      images: [
+        'assets/images/dalil.jpg',
+        'assets/images/dalil.jpg',
+        'assets/images/dalil.jpg'
+      ],
+      title: "آبلیمو دلیل",
+      price: 250000,
+      description: "آبلیمو شیشه ای دلیل"),
+  Product(
+      id: 4,
       images: ['assets/images/meshkot.jpg'],
       title: "لوبیا بلند مشکوه",
       price: 25000,
