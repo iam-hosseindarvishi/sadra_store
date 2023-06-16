@@ -14,18 +14,11 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         ProtuctImages(product: product),
-        TopRoundedContainer(
-          color: Colors.white,
-          child: Column(
-            children: [
-              ProductDescription(
-                product: product,
-                pressOnSeeMore: () {},
-              ),
-              PrudoctAddToCart(),
-            ],
-          ),
-        )
+        ProductDescription(
+          product: product,
+          pressOnSeeMore: () {},
+        ),
+        PrudoctAddToCart(),
       ],
     );
   }
