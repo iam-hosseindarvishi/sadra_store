@@ -54,4 +54,16 @@ List<Product> demoProducts = [
       title: "لوبیا بلند مشکوه",
       price: 25000,
       description: "لوبیا بلند مشکوه"),
+  Product(
+      id: 5,
+      images: ['assets/images/meshkot.jpg'],
+      title: "لوبیا بلند مشکوه",
+      price: 25000,
+      description: "لوبیا بلند مشکوه"),
+  Product(
+      id: 6,
+      images: ['assets/images/meshkot.jpg'],
+      title: "لوبیا بلند مشکوه",
+      price: 25000,
+      description: "لوبیا بلند مشکوه"),
 ];

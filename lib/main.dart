@@ -24,6 +24,7 @@ class _MainState extends State<MyApp> {
       theme: theme(),
       // home:  SplashScreen(),
       initialRoute: HomeScreen.routeName,
+      // initialRoute: SplashScreen.routeName,
       routes: routes,
     );
   }
