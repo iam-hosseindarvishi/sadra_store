@@ -12,11 +12,13 @@ class BuildGridView extends StatelessWidget {
     this.childAspectRatio = 1,
     this.crossAxisSpacing = 5,
     this.mainAxisSpacing = 5,
+    this.showPrice = false,
   });
 
   final List<Product> products;
   final int crossAxisCount;
   final double childAspectRatio, crossAxisSpacing, mainAxisSpacing;
+  final bool showPrice;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -41,7 +43,9 @@ class BuildGridView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: showPrice == true
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.spaceAround,
                 children: [
                   AspectRatio(
                       aspectRatio: 3 / 2,
@@ -62,10 +66,14 @@ class BuildGridView extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '${products[index].price} ریال',
+                            showPrice == true
+                                ? '${products[index].price} ریال'
+                                : 'امکان مشاهده قیمت  وجود ندارد',
+                            maxLines: 2,
                             style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold),
+                                color: Colors.deepOrange,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12),
                           ),
                         ],
                       )

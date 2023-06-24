@@ -30,17 +30,17 @@ class _BodyState extends State<Body> {
             height: getProportionateScreenWidth(10),
           ),
           // a place for Surpise section for future
-          const Categories(),
-          SizedBox(
-            height: getProportionateScreenWidth(10),
-          ),
+          // const Categories(),
+          // SizedBox(
+          //   height: getProportionateScreenWidth(10),
+          // ),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("محصولات"),
+                Text("همه محصولات"),
                 IconButton(
                     onPressed: () {
                       setState(() {

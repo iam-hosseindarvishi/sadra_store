@@ -10,9 +10,11 @@ class BuildListView extends StatelessWidget {
     super.key,
     required this.products,
     this.imageAspectRatio = 1,
+    this.showPrice = false,
   });
   final List<Product> products;
   final double imageAspectRatio;
+  final bool showPrice;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -50,10 +52,14 @@ class BuildListView extends StatelessWidget {
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${products[index].price} ریال',
+                        showPrice == true
+                            ? '${products[index].price} ریال'
+                            : 'امکان مشاهده قیمت وجود ندارد',
+                        maxLines: 2,
                         style: const TextStyle(
-                            color: kPrimaryColor, fontWeight: FontWeight.bold),
-                      )
+                            color: Colors.deepOrange,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ],
                   )
                 ],
