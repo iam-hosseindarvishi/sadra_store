@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../sign_in/sign_in_screen.dart';
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../constants/constants.dart';
+import '../../../constants/size_config.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 

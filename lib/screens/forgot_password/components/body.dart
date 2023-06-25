@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/forgot_password/components/forgot_pass_form.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/size_config.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

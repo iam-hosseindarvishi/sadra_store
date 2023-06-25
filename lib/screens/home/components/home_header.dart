@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/cart/cart_screen.dart';
 
-import '../../../size_config.dart';
+import '../../../constants/size_config.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 

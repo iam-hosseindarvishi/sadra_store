@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../home/components/costume_gnav.dart';
+import '../../components/costume_gnav.dart';
 import 'components/body.dart';
 
 class FavoriteScreen extends StatelessWidget {

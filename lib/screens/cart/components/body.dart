@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/size_config.dart';
 import '../../../models/Cart.dart';
 import 'cart_item_cart.dart';
 

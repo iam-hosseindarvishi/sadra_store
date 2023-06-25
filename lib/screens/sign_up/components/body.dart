@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/constants.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/constants.dart';
+import 'package:sadra_store/constants/size_config.dart';
 import 'sign_up_form.dart';
 
 class Body extends StatelessWidget {

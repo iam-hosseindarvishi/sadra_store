@@ -1,10 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:sadra_store/components/default_button.dart';
-import 'package:sadra_store/constants.dart';
+import 'package:sadra_store/constants/constants.dart';
 
 import '../../../components/custom_surffix_icon.dart';
-import '../../../size_config.dart';
+import '../../../constants/size_config.dart';
 import 'complate_profile_form.dart';
 
 class Body extends StatelessWidget {

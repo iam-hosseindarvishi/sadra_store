@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/details/details_screen.dart';
 
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 import '../../../models/Cart.dart';
-import '../../../size_config.dart';
+import '../../../constants/size_config.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({

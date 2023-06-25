@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/models/Product.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/size_config.dart';
 import 'build_grid_view.dart';
 import 'build_list_view.dart';
 import 'categories.dart';

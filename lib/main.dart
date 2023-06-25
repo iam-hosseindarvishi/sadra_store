@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
-import './theme.dart';
-import 'size_config.dart';
+import 'constants/theme.dart';
+import 'constants/size_config.dart';
 
 void main() {
   runApp(const MyApp());

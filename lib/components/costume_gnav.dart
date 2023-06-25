@@ -3,9 +3,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sadra_store/screens/favorite/favorite_screen.dart';
 import 'package:sadra_store/screens/settings/setting_screen.dart';
 
-import '../../../size_config.dart';
-import '../../profile/profile_screen.dart';
-import '../home_screen.dart';
+import '../constants/size_config.dart';
+import '../screens/profile/profile_screen.dart';
+import '../screens/home/home_screen.dart';
 
 class CostumeGnav extends StatefulWidget {
   const CostumeGnav({Key? key, this.index = 0}) : super(key: key);
@@ -72,8 +72,6 @@ class _CostumeGnavState extends State<CostumeGnav> {
                       ? null
                       : Navigator.popAndPushNamed(
                           context, ProfileScreen.routeName);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("این ویژگی در نسخه های بعدی اضافه میشود")));
                 },
               ),
               GButton(

@@ -2,10 +2,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:sadra_store/components/default_button.dart';
 import 'package:sadra_store/components/no_account_text.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/size_config.dart';
 
 import '../../../components/custom_surffix_icon.dart';
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 
 class ForgotPassForm extends StatefulWidget {
   const ForgotPassForm({Key? key}) : super(key: key);

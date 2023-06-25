@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/constants.dart';
+import 'package:sadra_store/constants/constants.dart';
 import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
-import 'package:sadra_store/size_config.dart';
+import 'package:sadra_store/constants/size_config.dart';
 import '../../../components/no_account_text.dart';
 import 'sign_form.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/screens/home/components/costume_gnav.dart';
+import 'package:sadra_store/components/costume_gnav.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {

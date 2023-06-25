@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../size_config.dart';
+import '../../../constants/size_config.dart';
 import 'category_item.dart';
 
 class Categories extends StatefulWidget {

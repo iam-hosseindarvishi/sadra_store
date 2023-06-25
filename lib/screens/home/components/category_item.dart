@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../constants/constants.dart';
+import '../../../constants/size_config.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem(

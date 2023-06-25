@@ -4,8 +4,8 @@ import 'package:sadra_store/screens/complate_profile/complate_profile_screen.dar
 
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../constants/constants.dart';
+import '../../../constants/size_config.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sadra_store/screens/profile/profile_screen.dart';
-import '../../size_config.dart';
+import '../../constants/size_config.dart';
 import 'components/body.dart';
-import 'components/costume_gnav.dart';
+import '../../components/costume_gnav.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";

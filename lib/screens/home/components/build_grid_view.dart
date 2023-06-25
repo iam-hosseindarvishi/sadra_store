@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 import '../../../models/Product.dart';
 import '../../details/details_screen.dart';
 
