@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/screens/home/home_screen.dart';
+
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
 import './theme.dart';
+import 'size_config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,13 +19,12 @@ class MyApp extends StatefulWidget {
 class _MainState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'صدرا پخش',
+      debugShowCheckedModeBanner: false,
       theme: theme(),
-      // home:  SplashScreen(),
-      initialRoute: HomeScreen.routeName,
-      // initialRoute: SplashScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: routes,
     );
   }

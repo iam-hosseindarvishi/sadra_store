@@ -6,7 +6,7 @@ ThemeData theme() {
   return ThemeData(
     brightness: Brightness.light,
     appBarTheme: appBarTheme(),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.grey[100],
     visualDensity: VisualDensity.adaptivePlatformDensity,
     fontFamily: 'Vazir',
     textTheme: textTheme(),

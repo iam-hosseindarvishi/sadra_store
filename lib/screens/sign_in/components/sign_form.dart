@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/forgot_password/components/forgot_pass_form.dart';
 import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
+import 'package:sadra_store/screens/home/home_screen.dart';
 
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
@@ -65,6 +66,7 @@ class _SignFormState extends State<SignForm> {
                   if (_formKey.currentState!.validate()) {
                     email = emailController.text;
                     password = passwordController.text;
+                    Navigator.popAndPushNamed(context, HomeScreen.routeName);
                   }
                 })
           ],

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/screens/home/components/costume_gnav.dart';
+
+import '../home/components/costume_gnav.dart';
 import 'components/body.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
-  static String routeName = '/profile';
-
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({Key? key}) : super(key: key);
+  static String routeName = "/settings";
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("ناحیه کاربری"),
+          title: const Text("تنظیمات"),
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
         body: const Body(),
         bottomNavigationBar: const CostumeGnav(
-          index: 2,
+          index: 3,
         ),
       ),
     );
