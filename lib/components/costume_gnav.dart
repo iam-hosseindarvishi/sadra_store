@@ -49,8 +49,7 @@ class _CostumeGnavState extends State<CostumeGnav> {
                   onPressed: () {
                     widget.index == 0
                         ? null
-                        : Navigator.popAndPushNamed(
-                            context, HomeScreen.routeName);
+                        : Navigator.pushNamed(context, HomeScreen.routeName);
                   }),
               GButton(
                 icon: Icons.favorite,
@@ -58,8 +57,7 @@ class _CostumeGnavState extends State<CostumeGnav> {
                 onPressed: () {
                   widget.index == 1
                       ? null
-                      : Navigator.popAndPushNamed(
-                          context, FavoriteScreen.routeName);
+                      : Navigator.pushNamed(context, FavoriteScreen.routeName);
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("این ویژگی در نسخه های بعدی اضافه میشود")));
                 },
@@ -70,8 +68,7 @@ class _CostumeGnavState extends State<CostumeGnav> {
                 onPressed: () {
                   widget.index == 2
                       ? null
-                      : Navigator.popAndPushNamed(
-                          context, ProfileScreen.routeName);
+                      : Navigator.pushNamed(context, ProfileScreen.routeName);
                 },
               ),
               GButton(
@@ -81,8 +78,7 @@ class _CostumeGnavState extends State<CostumeGnav> {
                 onPressed: () {
                   widget.index == 3
                       ? null
-                      : Navigator.popAndPushNamed(
-                          context, SettingScreen.routeName);
+                      : Navigator.pushNamed(context, SettingScreen.routeName);
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("این ویژگی در نسخه های بعدی اضافه میشود")));
                 },
