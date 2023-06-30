@@ -1,13 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:sadra_store/screens/forgot_password/components/forgot_pass_form.dart';
 import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
-import 'package:sadra_store/screens/home/home_screen.dart';
+import 'package:sadra_store/services/remote/get_token.dart';
 
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
+import '../../../models/token.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
@@ -63,11 +63,15 @@ class _SignFormState extends State<SignForm> {
             DefaultButton(
                 text: "ورود",
                 press: () {
-                  if (_formKey.currentState!.validate()) {
-                    email = emailController.text;
-                    password = passwordController.text;
-                    Navigator.popAndPushNamed(context, HomeScreen.routeName);
-                  }
+                  var token = GetToken().getToken();
+
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(token.toString())));
+                  // if (_formKey.currentState!.validate()) {
+                  //   email = emailController.text;
+                  //   password = passwordController.text;
+                  //   Navigator.popAndPushNamed(context, HomeScreen.routeName);
+                  // }
                 })
           ],
         ));
