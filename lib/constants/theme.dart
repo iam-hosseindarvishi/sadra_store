@@ -50,3 +50,31 @@ InputDecorationTheme inputDecorationTheme() {
     border: outlineInputBorder,
   );
 }
+
+SnackBar buildAlertSnackBar(
+  Duration duration,
+  Color backgroundColor,
+  String massage,
+  Icon icon,
+  Color massageColor,
+) {
+  return SnackBar(
+      animation: kAlwaysCompleteAnimation,
+      duration: duration,
+      backgroundColor: backgroundColor,
+      content: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              massage,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: massageColor,
+              ),
+            ),
+            icon
+          ],
+        ),
+      ));
+}

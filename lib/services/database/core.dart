@@ -12,6 +12,7 @@ class CoreDatabase {
   Future<Database> database() async {
     return openDatabase(
       join(await getDatabasesPath(), 'sadra.db'),
+      version: 1,
       onCreate: (db, version) async {
         await db.execute(
             "CREATE TABLE $tokenTableName (${TokenFields.id} $idType, ${TokenFields.token} $textType)");

@@ -15,8 +15,8 @@ const kAnimationDuartion = Duration(milliseconds: 200);
 
 // Form errors
 
-const String kEmailNullError = "ایمیل نمیتواند خالی باشد";
-const String kInvalidemailError = "ایمیل وارد شده معتبر نمیباشد !";
+const String kPhonNullError = "شماره تلفن نمیتواند خالی باشد";
+const String kInvalidPhonError = "شماره تلفن وارد شده معتبر نمیباشد !";
 const String kPassNullError = "کلمه عبور نمیتواند خالی باشد";
 const String kShortPassError = "کلمه عبور بسیار کوتاه است";
 const String kMatchPassError = "کلمه عبور وارد شده صحیح نمیباشد";
@@ -28,3 +28,13 @@ final headingStyle = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.black,
     height: 1.5);
+
+// remote data constanst
+
+const Map apiInfo = {
+  "userName": "2512140",
+  "packageNo": "2512140",
+  "password": "069515",
+  "databaseId": 2790027,
+  "language": "fa",
+};

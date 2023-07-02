@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
 import 'package:sadra_store/services/remote/get_token.dart';
 
@@ -7,6 +8,7 @@ import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
+import '../../../constants/theme.dart';
 import '../../../models/token.dart';
 
 class SignForm extends StatefulWidget {
@@ -18,11 +20,11 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
   final passwordController = TextEditingController();
-  String? email;
+  String? phone;
   String? password;
-  bool remember = false;
+  bool remember = true;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _SignFormState extends State<SignForm> {
         key: _formKey,
         child: Column(
           children: [
-            buildEmailFormField(emailController),
+            buildPhonNumberFormField(phoneController),
             SizedBox(
               height: getProportionateScreenHeight(30),
             ),
@@ -51,8 +53,18 @@ class _SignFormState extends State<SignForm> {
                 const Text("مرا به خاطر بسپار"),
                 const Spacer(),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                      context, ForgotPasswordScreen.routeName),
+                  onTap: () => ScaffoldMessenger.of(context)
+                      .showSnackBar(buildAlertSnackBar(
+                          const Duration(milliseconds: 800),
+                          Colors.lightBlue,
+                          "در حال حاظر امکان بازیابی کلمه عبور وجود ندارد",
+                          const Icon(
+                            Icons.info_rounded,
+                            color: Colors.white,
+                          ),
+                          Colors.white)),
+                  //  Navigator.pushNamed(
+                  //     context, ForgotPasswordScreen.routeName),
                   child: const Text(
                     "فراموشی کلمه عبور!",
                     style: TextStyle(decoration: TextDecoration.underline),
@@ -64,11 +76,8 @@ class _SignFormState extends State<SignForm> {
                 text: "ورود",
                 press: () {
                   var token = GetToken().getToken();
-
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(token.toString())));
                   // if (_formKey.currentState!.validate()) {
-                  //   email = emailController.text;
+                  //   email = phoneController.text;
                   //   password = passwordController.text;
                   //   Navigator.popAndPushNamed(context, HomeScreen.routeName);
                   // }
@@ -78,24 +87,27 @@ class _SignFormState extends State<SignForm> {
   }
 }
 
-TextFormField buildEmailFormField(TextEditingController emailController) {
+TextFormField buildPhonNumberFormField(TextEditingController phoneController) {
   return TextFormField(
-    controller: emailController,
-    keyboardType: TextInputType.emailAddress,
+    controller: phoneController,
+    keyboardType: TextInputType.phone,
+    inputFormatters: [
+      FilteringTextInputFormatter.digitsOnly,
+    ],
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return kEmailNullError;
+        return kPhonNullError;
       }
-      if (!EmailValidator.validate(value, true)) {
-        return kInvalidemailError;
+      if (!RegExp(r'^[0-9]{3}-[0-9]{3}-[0-9]{4}$').hasMatch(value)) {
+        return kInvalidPhonError;
       }
       return null;
     },
     decoration: const InputDecoration(
-      labelText: "ایمیل",
-      hintText: "ایمیل خود را وارد کنید",
+      labelText: "تلفن",
+      hintText: "تلفن خود را وارد کنید",
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+      suffixIcon: Icon(Icons.phone_iphone),
     ),
   );
 }
@@ -117,7 +129,7 @@ TextFormField buildPasswordFormField(TextEditingController passwordController) {
       labelText: "کلمه عبور",
       hintText: "کلمه عبور خود را وارد کنید",
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Secure.svg"),
+      suffixIcon: Icon(Icons.lock),
     ),
   );
 }
