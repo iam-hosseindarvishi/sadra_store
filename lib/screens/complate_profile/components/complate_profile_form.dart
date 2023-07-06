@@ -87,10 +87,10 @@ class _ComplateProfileForm extends State<ComplateProfileForm> {
       keyboardType: inputType,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return kEmailNullError;
+          return kPhonNullError;
         }
         if (!EmailValidator.validate(value, true)) {
-          return kInvalidemailError;
+          return kInvalidPhonError;
         }
         return null;
       },

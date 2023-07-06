@@ -73,10 +73,10 @@ TextFormField buildEmailFormField(TextEditingController emailController) {
     keyboardType: TextInputType.emailAddress,
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return kEmailNullError;
+        return kPhonNullError;
       }
       if (!EmailValidator.validate(value, true)) {
-        return kInvalidemailError;
+        return kInvalidPhonError;
       }
       return null;
     },

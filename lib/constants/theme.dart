@@ -65,6 +65,7 @@ SnackBar buildAlertSnackBar(
       content: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               massage,

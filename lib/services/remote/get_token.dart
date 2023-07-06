@@ -6,7 +6,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class GetToken {
-  Future<String> getToken() async {
+  Future<Token> getToken() async {
     // var token = Token(
     //   userName: "2512140",
     //   packageNo: "2512140",
@@ -15,7 +15,7 @@ class GetToken {
     //   language: "fa",
     // );
     Token token = Token();
-    var uri = Uri.https("mahakacc.mahaksoft.com", "/API/v3/Sync/login");
+    var uri = Uri.https(baseUri, "/API/v3/Sync/login");
     var body = convert.jsonEncode(apiInfo);
     var respone = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: body);
@@ -27,8 +27,8 @@ class GetToken {
           ? await TokenDb().store(token)
           : await TokenDb().update(token);
 
-      return token.token!;
+      return token;
     }
-    return token.token!;
+    return token;
   }
 }

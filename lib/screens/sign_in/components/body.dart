@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/constants/constants.dart';
-import 'package:sadra_store/screens/forgot_password/forgot_password_screen.dart';
+import 'package:sadra_store/components/forgoten_password.dart';
 import 'package:sadra_store/constants/size_config.dart';
 import '../../../components/no_account_text.dart';
 import 'sign_form.dart';
@@ -30,7 +29,7 @@ class Body extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       const Text(
-                        "برای ورود به فروشگاه \n ایمیل و کلمه عبور خود را وارد کنید",
+                        "برای ورود به فروشگاه \n شماره تلفن و کلمه عبور خود را وارد کنید",
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -42,6 +41,10 @@ class Body extends StatelessWidget {
                       ),
                       SizedBox(
                         height: SizeConfig.screenHeight * 0.08,
+                      ),
+                      const ForgotenPassword(),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.01,
                       ),
                       const NoAccountText(),
                     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/constants/constants.dart';
 
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
@@ -21,7 +22,7 @@ class _MainState extends State<MyApp> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return MaterialApp(
-      title: 'صدرا پخش',
+      title: appTitle,
       debugShowCheckedModeBanner: false,
       theme: theme(),
       initialRoute: SplashScreen.routeName,

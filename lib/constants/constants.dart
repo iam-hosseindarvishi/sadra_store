@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'size_config.dart';
 
+// App Title & company Name
+
+const String appTitle = "عمده فروشی صدرا";
+
 const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
@@ -38,3 +42,5 @@ const Map apiInfo = {
   "databaseId": 2790027,
   "language": "fa",
 };
+
+const String baseUri = "mahakacc.mahaksoft.com";
