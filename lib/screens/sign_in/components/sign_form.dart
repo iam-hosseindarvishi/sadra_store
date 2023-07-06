@@ -83,12 +83,15 @@ class _SignFormState extends State<SignForm> {
                                 phoneController.text, passwordController.text);
                             if (user.deleted == false) {
                               if (await UserDb().checkUserExsist()) {
+
                                 User localUser;
                                 localUser = await UserDb().getUser();
                                 if (localUser.phone != user.phone ||
                                     localUser.password != user.password) {
+
                                   UserDb()
                                       .update(user, localUser.phone.toString());
+
                                 }
                               } else {
                                 await UserDb().store(user);
