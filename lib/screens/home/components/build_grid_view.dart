@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
 import '../../../constants/constants.dart';
-import '../../../models/Product.dart';
+import '../../../models/product.dart';
 import '../../details/details_screen.dart';
 
 class BuildGridView extends StatelessWidget {
@@ -58,14 +57,12 @@ class BuildGridView extends StatelessWidget {
                       ? MainAxisAlignment.spaceBetween
                       : MainAxisAlignment.spaceAround,
                   children: [
-                    AspectRatio(
-                        aspectRatio: 3 / 2,
-                        child: Image.asset(products[index].images[0])),
+                    AspectRatio(aspectRatio: 3 / 2, child: Image.asset("")),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          products[index].title,
+                          products[index].description.toString(),
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -78,7 +75,7 @@ class BuildGridView extends StatelessWidget {
                           children: [
                             Text(
                               showPrice == true
-                                  ? '${products[index].price} ریال'
+                                  ? '${products[index].description} ریال'
                                   : 'امکان مشاهده قیمت  وجود ندارد',
                               maxLines: 2,
                               style: const TextStyle(

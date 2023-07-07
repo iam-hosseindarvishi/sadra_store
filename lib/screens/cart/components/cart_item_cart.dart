@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/details/details_screen.dart';
-
 import '../../../constants/constants.dart';
 import '../../../models/Cart.dart';
 import '../../../constants/size_config.dart';
@@ -27,7 +26,7 @@ class CartItemCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15)),
-                child: Image.asset(cart.product.images[0]),
+                child: Image.asset("cart.product.images[0]"),
               ),
             ),
           ),
@@ -38,7 +37,7 @@ class CartItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                demoCarts[0].product.title,
+                demoCarts[0].product.description.toString(),
                 style: TextStyle(fontSize: 16, color: Colors.black),
                 maxLines: 2,
               ),
@@ -48,7 +47,7 @@ class CartItemCard extends StatelessWidget {
               Directionality(
                   textDirection: TextDirection.ltr,
                   child: Text.rich(TextSpan(
-                      text: "${cart.product.price}",
+                      text: "${cart.product}",
                       style: TextStyle(color: kPrimaryColor),
                       children: [
                         TextSpan(

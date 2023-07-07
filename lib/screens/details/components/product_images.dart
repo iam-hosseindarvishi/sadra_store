@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../models/Product.dart';
+
 import '../../../constants/size_config.dart';
+import '../../../models/product.dart';
 
 class ProtuctImages extends StatefulWidget {
   const ProtuctImages({Key? key, required this.product}) : super(key: key);
@@ -24,7 +25,7 @@ class _ProtuctImagesState extends State<ProtuctImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1.5,
-            child: Image.asset(widget.product.images[selectedImage]),
+            child: Image.asset("widget.product.images[selectedImage]"),
           ),
         ),
         Padding(
@@ -32,8 +33,7 @@ class _ProtuctImagesState extends State<ProtuctImages> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ...List.generate(widget.product.images.length,
-                  (index) => BuildSmallPreview(index))
+              ...List.generate(3, (index) => BuildSmallPreview(index))
             ],
           ),
         )
@@ -60,7 +60,7 @@ class _ProtuctImagesState extends State<ProtuctImages> {
                 color: selectedImage == index
                     ? kPrimaryColor
                     : Colors.transparent)),
-        child: Image.asset(widget.product.images[index]),
+        child: Image.asset(""),
       ),
     );
   }

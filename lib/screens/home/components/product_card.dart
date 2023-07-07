@@ -32,21 +32,21 @@ class ProductCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: kSecondaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(15)),
-                  child: Image.asset(product.images[0]),
+                  child: Image.asset("product.images[0]"),
                 ),
               ),
               // const SizedBox(
               //   height: 5,
               // ),
               Text(
-                product.title,
+                product.tags.toString(),
                 style: const TextStyle(
                   color: Colors.black,
                 ),
                 maxLines: 1,
               ),
               Text(
-                "${product.price}ريال",
+                "${product.description}ريال",
                 style: const TextStyle(
                     color: kPrimaryColor,
                     fontSize: 18,

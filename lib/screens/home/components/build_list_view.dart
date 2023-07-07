@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
 import '../../../constants/constants.dart';
-import '../../../models/Product.dart';
 import '../../../constants/size_config.dart';
+import '../../../models/product.dart';
 import '../../details/details_screen.dart';
 
 class BuildListView extends StatelessWidget {
@@ -57,20 +56,20 @@ class BuildListView extends StatelessWidget {
                   children: [
                     AspectRatio(
                       aspectRatio: imageAspectRatio,
-                      child: Image.asset(products[index].images[0]),
+                      child: Image.asset("products[index].images[0]"),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          products[index].title,
+                          products[index].description.toString(),
                           style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           showPrice == true
-                              ? '${products[index].price} ریال'
+                              ? '${products[index]} ریال'
                               : 'امکان مشاهده قیمت وجود ندارد',
                           maxLines: 2,
                           style: const TextStyle(

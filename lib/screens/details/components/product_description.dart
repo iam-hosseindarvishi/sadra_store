@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
-import '../../../models/Product.dart';
 import '../../../constants/size_config.dart';
+import '../../../models/product.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
@@ -24,13 +24,13 @@ class ProductDescription extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                product.title,
+                product.description.toString(),
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(
                 height: 15,
               ),
-              Text(product.description,
+              Text(product.description.toString(),
                   maxLines: 3,
                   style: Theme.of(context).textTheme.headlineSmall),
             ],

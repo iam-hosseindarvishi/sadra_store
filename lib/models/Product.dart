@@ -1,69 +1,73 @@
-class Product {
-  final int id;
-  final String title, description;
-  final List<String> images;
-  final int price;
-  final bool isFavourite, isPopular;
+const productTableName = "products";
 
-  Product(
-      {required this.id,
-      required this.images,
-      this.isFavourite = false,
-      this.isPopular = false,
-      required this.title,
-      required this.price,
-      required this.description});
+class ProductFields {
+  static const String productId = "productId";
+  static const String productClientId = "productClientId";
+  static const String productCode = "productCode";
+  static const String productCategoryId = "productCategoryId";
+  static const String name = "name";
+  static const String unitName = "unitName";
+  static const String description = "description";
+  static const String deleted = "deleted";
+  static const String rowVersion = "rowVersion";
+  static const String productCategoryClientId = "productCategoryClientId";
+  static const String productCategoryCode = "productCategoryCode";
 }
 
-// demo products
+class Product {
+  int? productId;
+  int? productClientId;
+  int? productCode;
+  int? productCategoryId;
+  String? name;
+  String? unitName;
+  String? description;
+  bool? deleted;
+  int? rowVersion;
+  int? productCategoryClientId;
+  int? productCategoryCode;
 
-List<Product> demoProducts = [
-  Product(
-      id: 1,
-      images: [
-        'assets/images/pepsi.jpg',
-        'assets/images/pepsi.jpg',
-        'assets/images/family-pepsi.jpg'
-      ],
-      title: "قوطی پپسی ایرانی",
-      price: 25000,
-      isFavourite: true,
-      description: "نوشابه قوطی پپسی ساخت ایران"),
-  Product(
-      id: 2,
-      images: [
-        'assets/images/family-pepsi.jpg',
-        'assets/images/family-pepsi.jpg'
-      ],
-      title: "نوشابه پپسی",
-      price: 25000,
-      description: "نوشابه  پپسی خانواده ، یک و نیم لیتری ساخت ایران"),
-  Product(
-      id: 3,
-      images: [
-        'assets/images/dalil.jpg',
-        'assets/images/dalil.jpg',
-        'assets/images/dalil.jpg'
-      ],
-      title: "آبلیمو دلیل",
-      price: 250000,
-      description: "آبلیمو شیشه ای دلیل"),
-  Product(
-      id: 4,
-      images: ['assets/images/meshkot.jpg'],
-      title: "لوبیا بلند مشکوه",
-      price: 25000,
-      description: "لوبیا بلند مشکوه"),
-  Product(
-      id: 5,
-      images: ['assets/images/meshkot.jpg'],
-      title: "لوبیا بلند مشکوه",
-      price: 25000,
-      description: "لوبیا بلند مشکوه"),
-  Product(
-      id: 6,
-      images: ['assets/images/meshkot.jpg'],
-      title: "لوبیا بلند مشکوه",
-      price: 25000,
-      description: "لوبیا بلند مشکوه"),
-];
+  Product({
+    this.productId,
+    this.productClientId,
+    this.productCode,
+    this.productCategoryId,
+    this.name,
+    this.unitName,
+    this.description,
+    this.deleted,
+    this.rowVersion,
+    this.productCategoryClientId,
+    this.productCategoryCode,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        productId: json['productId'] as int?,
+        productClientId: json['productClientId'] as int?,
+        productCode: json['productCode'] as int?,
+        productCategoryId: json['productCategoryId'] as int?,
+        name: json['name'] as String?,
+        unitName: json['unitName'] as String?,
+        description: json['description'] as String?,
+        deleted: json['deleted'] as bool?,
+        rowVersion: json['rowVersion'] as int?,
+        productCategoryClientId: json['productCategoryClientId'] as int?,
+        productCategoryCode: json['productCategoryCode'] as int?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'productId': productId,
+        'productClientId': productClientId,
+        'productCode': productCode,
+        'productCategoryId': productCategoryId,
+        'name': name,
+        'unitName': unitName,
+        'description': description,
+        'deleted': deleted,
+        'rowVersion': rowVersion,
+        'productCategoryClientId': productCategoryClientId,
+        'productCategoryCode': productCategoryCode,
+      };
+
+  List<Product> demoProducts = [];
+}

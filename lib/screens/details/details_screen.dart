@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/models/Product.dart';
+import '../../models/product.dart';
 import 'components/body.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(arguments.product.title),
+            title: Text(arguments.product.description.toString()),
           ),
           body: Body(
             product: arguments.product,

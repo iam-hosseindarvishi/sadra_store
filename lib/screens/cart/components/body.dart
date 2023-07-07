@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
                       ],
                     ),
                   ),
-                  key: Key(demoCarts[index].product.id.toString()),
+                  key: Key(demoCarts[index].product.productId.toString()),
                   child: CartItemCard(
                     cart: demoCarts[index],
                   ),
