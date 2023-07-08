@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../constants/constants.dart';
 import '../../../models/Product.dart';
 import '../../../constants/size_config.dart';
@@ -39,7 +38,7 @@ class ProductCard extends StatelessWidget {
               //   height: 5,
               // ),
               Text(
-                product.tags.toString(),
+                product.description.toString(),
                 style: const TextStyle(
                   color: Colors.black,
                 ),
