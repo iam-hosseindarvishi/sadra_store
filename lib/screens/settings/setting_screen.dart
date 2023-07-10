@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../components/costume_gnav.dart';
 import 'components/body.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -17,9 +15,6 @@ class SettingScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: const Body(),
-        bottomNavigationBar: const CostumeGnav(
-          index: 3,
-        ),
       ),
     );
   }

@@ -1,7 +1,5 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:sadra_store/screens/complate_profile/complate_profile_screen.dart';
-
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
@@ -75,9 +73,7 @@ TextFormField buildEmailFormField(TextEditingController emailController) {
       if (value == null || value.isEmpty) {
         return kPhonNullError;
       }
-      if (!EmailValidator.validate(value, true)) {
-        return kInvalidPhonError;
-      }
+
       return null;
     },
     decoration: const InputDecoration(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../components/costume_gnav.dart';
 import 'components/body.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -17,9 +15,6 @@ class FavoriteScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: const Body(),
-        bottomNavigationBar: const CostumeGnav(
-          index: 1,
-        ),
       ),
     );
   }

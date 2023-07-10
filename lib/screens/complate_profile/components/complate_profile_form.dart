@@ -1,6 +1,4 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-
 import '../../../components/custom_surffix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
@@ -88,9 +86,6 @@ class _ComplateProfileForm extends State<ComplateProfileForm> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return kPhonNullError;
-        }
-        if (!EmailValidator.validate(value, true)) {
-          return kInvalidPhonError;
         }
         return null;
       },

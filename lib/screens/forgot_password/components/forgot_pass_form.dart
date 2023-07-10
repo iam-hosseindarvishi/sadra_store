@@ -1,11 +1,9 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:sadra_store/components/default_button.dart';
-import 'package:sadra_store/components/no_account_text.dart';
-import 'package:sadra_store/constants/size_config.dart';
-
 import '../../../components/custom_surffix_icon.dart';
+import '../../../components/default_button.dart';
+import '../../../components/no_account_text.dart';
 import '../../../constants/constants.dart';
+import '../../../constants/size_config.dart';
 
 class ForgotPassForm extends StatefulWidget {
   const ForgotPassForm({Key? key}) : super(key: key);
@@ -60,9 +58,7 @@ TextFormField buildEmailFormField(TextEditingController emailController) {
       if (value == null || value.isEmpty) {
         return kPhonNullError;
       }
-      if (!EmailValidator.validate(value, true)) {
-        return kInvalidPhonError;
-      }
+
       return null;
     },
     decoration: const InputDecoration(

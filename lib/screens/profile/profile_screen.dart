@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/components/costume_gnav.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -18,9 +17,6 @@ class ProfileScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: const Body(),
-        bottomNavigationBar: const CostumeGnav(
-          index: 2,
-        ),
       ),
     );
   }
