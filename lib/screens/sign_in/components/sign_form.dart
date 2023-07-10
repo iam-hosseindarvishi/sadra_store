@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:sadra_store/models/user.dart';
-import 'package:sadra_store/screens/home/home_screen.dart';
-import 'package:sadra_store/services/database/user_db.dart';
-import 'package:sadra_store/services/remote/user.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
+import '../../../models/user.dart';
+import '../../../services/api/api_services.dart';
+import '../../../services/database/user_db.dart';
+import '../../home/home_screen.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _SignFormState extends State<SignForm> {
                           });
                           User user;
                           try {
-                            user = await RemoteUser().login(
+                            user = await ApiServices().getUser(
                                 phoneController.text, passwordController.text);
                             if (user.deleted == false) {
                               if (await UserDb().checkUserExsist()) {

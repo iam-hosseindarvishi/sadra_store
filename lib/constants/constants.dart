@@ -42,5 +42,3 @@ const Map apiInfo = {
   "databaseId": 2790027,
   "language": "fa",
 };
-
-const String baseUri = "mahakacc.mahaksoft.com";
