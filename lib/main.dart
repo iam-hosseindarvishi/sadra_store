@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/constants/constants.dart';
-
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
 import 'constants/theme.dart';
 import 'constants/size_config.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {

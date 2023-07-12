@@ -9,13 +9,11 @@ class UserDb extends CoreDatabase {
   }
 
   Future<User> getUser() async {
-    User user;
     Database db = await database();
     final List<Map<String, dynamic>> maps = await db.query(
       userTableName,
     );
-    user = User.fromJson(maps.first);
-    return user;
+    return User.fromJson(maps.first);
   }
 
   Future<int> update(User user, String phone) async {

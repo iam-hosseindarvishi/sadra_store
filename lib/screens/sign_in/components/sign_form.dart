@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:sadra_store/models/product_category.dart';
+import 'package:sadra_store/services/database/category_db.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -94,6 +97,11 @@ class _SignFormState extends State<SignForm> {
                                 await UserDb().store(user);
                               }
                             }
+                            if (!await CategoryDb().checkCategoryExsit()) {
+                              List<ProductCategory> categories =
+                                  await ApiServices().getCategories();
+                              categories.map((e) => CategoryDb().store(e));
+                            }
                             Navigator.pushNamed(context, HomeScreen.routeName);
                           } catch (e) {
                             setState(() {
@@ -102,7 +110,7 @@ class _SignFormState extends State<SignForm> {
                             showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                      icon: Icon(Icons.error),
+                                      icon: const Icon(Icons.error),
                                       iconColor: Colors.red,
                                       title: const Text(
                                         "خطا",
@@ -119,7 +127,7 @@ class _SignFormState extends State<SignForm> {
                                         TextButton(
                                             onPressed: () =>
                                                 Navigator.pop(context),
-                                            child: Text("فهمیدم"))
+                                            child: const Text("فهمیدم"))
                                       ],
                                     ));
                             // ScaffoldMessenger.of(context)
