@@ -6,11 +6,7 @@ import 'core.dart';
 class CategoryDb extends CoreDatabase {
   Future<int> store(ProductCategory category) async {
     Database db = await database();
-    if (await checkCategoryExsit(category.productCategoryId)) {
-      return await update(category, category.productCategoryId!);
-    } else {
-      return await db.insert(categoryTableNmae, category.toJson());
-    }
+    return await db.insert(categoryTableNmae, category.toJson());
   }
 
   Future<List<ProductCategory>> getAllCategoreis() async {

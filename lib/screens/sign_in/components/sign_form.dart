@@ -97,10 +97,13 @@ class _SignFormState extends State<SignForm> {
                                 await UserDb().store(user);
                               }
                             }
-                            if (!await CategoryDb().checkCategoryExsit()) {
+                            if (await CategoryDb().checkCategoryExsit() ==
+                                false) {
                               List<ProductCategory> categories =
                                   await ApiServices().getCategories();
-                              categories.map((e) => CategoryDb().store(e));
+                              for (var element in categories) {
+                                await CategoryDb().store(element);
+                              }
                             }
                             Navigator.pushNamed(context, HomeScreen.routeName);
                           } catch (e) {

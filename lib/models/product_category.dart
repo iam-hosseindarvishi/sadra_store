@@ -56,7 +56,7 @@ class ProductCategory {
         'Name': name,
         'Color': color,
         'Icon': icon,
-        'Deleted': deleted,
+        'Deleted': deleted == false ? 0 : 1,
         'DataHash': dataHash,
         'RowVersion': rowVersion,
       };
