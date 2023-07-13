@@ -63,7 +63,7 @@ class Product {
         'name': name,
         'unitName': unitName,
         'description': description,
-        'deleted': deleted,
+        'deleted': deleted == false ? 0 : 1,
         'rowVersion': rowVersion,
         'productCategoryClientId': productCategoryClientId,
         'productCategoryCode': productCategoryCode,

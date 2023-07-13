@@ -38,7 +38,7 @@ class _BodyState extends State<Body> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("همه محصولات"),
+                const Text("همه محصولات"),
                 IconButton(
                     onPressed: () {
                       setState(() {
@@ -46,8 +46,8 @@ class _BodyState extends State<Body> {
                       });
                     },
                     icon: _currentView == 'grid'
-                        ? Icon(Icons.list_sharp)
-                        : Icon(Icons.grid_on_sharp))
+                        ? const Icon(Icons.list_sharp)
+                        : const Icon(Icons.grid_on_sharp))
               ],
             ),
           )

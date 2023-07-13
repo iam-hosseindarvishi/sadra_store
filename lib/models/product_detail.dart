@@ -67,7 +67,7 @@ class ProductDetail {
         'Count1': count1,
         'Count2': count2,
         'Price1': price1,
-        'Deleted': deleted,
+        'Deleted': deleted == false ? 0 : 1,
         'DataHash': dataHash,
         'RowVersion': rowVersion,
         'ProductClientId': productClientId,

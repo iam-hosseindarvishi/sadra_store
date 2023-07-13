@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/product.dart';
+import 'package:sadra_store/models/product_detail.dart';
 import '../../constants/constants.dart';
 import '../../models/product_category.dart';
 import '../../models/token.dart';
@@ -84,6 +86,81 @@ class ApiServices {
       return ProductCategory.fromJson(e);
     }));
     return categories;
+  }
+
+  Future<List<Product>> getProducts() async {
+    List<Product> products = [];
+    Token token = await getToken();
+    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var body = convert.jsonEncode({
+      "fromProductVersion": 0,
+    });
+    var respone = await http.post(uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${token.token}"
+        },
+        body: body);
+    if (respone.statusCode != 200) {
+      return throw Exception("خطا در دریافت اطلاعات");
+    }
+    // Map<String, dynamic> categoryMap = convert.jsonDecode(respone.body);
+    List<dynamic> productsList =
+        convert.jsonDecode(respone.body)["Data"]["Objects"]["Products"];
+    products.addAll(productsList.map((e) {
+      return Product.fromJson(e);
+    }));
+    return products;
+  }
+
+  // Future<List<ProductDetail>> getProductsDatail() async {
+  //   List<ProductDetail> categories = [];
+  //   Token token = await getToken();
+  //   var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+  //   var body = convert.jsonEncode({
+  //     "fromProductCategoryVersion": 0,
+  //   });
+  //   var respone = await http.post(uri,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": "Bearer ${token.token}"
+  //       },
+  //       body: body);
+  //   if (respone.statusCode != 200) {
+  //     return throw Exception("خطا در دریافت اطلاعات");
+  //   }
+  //   // Map<String, dynamic> categoryMap = convert.jsonDecode(respone.body);
+  //   List<dynamic> items = convert.jsonDecode(respone.body)["Data"]["Objects"]
+  //       ["ProductCategories"];
+  //   categories.addAll(items.map((e) {
+  //     return ProductCategory.fromJson(e);
+  //   }));
+  //   return categories;
+  // }
+
+  Future<List<Product>> getProductsDatails() async {
+    List<Product> productsDatails = [];
+    Token token = await getToken();
+    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var body = convert.jsonEncode({
+      "fromProductDetailVersion": 0,
+    });
+    var respone = await http.post(uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${token.token}"
+        },
+        body: body);
+    if (respone.statusCode != 200) {
+      return throw Exception("خطا در دریافت اطلاعات");
+    }
+    // Map<String, dynamic> categoryMap = convert.jsonDecode(respone.body);
+    List<dynamic> productsDatailsList =
+        convert.jsonDecode(respone.body)["Data"]["Objects"]["ProductDetails"];
+    productsDatails.addAll(productsDatailsList.map((e) {
+      return Product.fromJson(e);
+    }));
+    return productsDatails;
   }
 }
 

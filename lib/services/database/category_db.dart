@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:sqflite/sqflite.dart';
 
 import '../../models/product_category.dart';
@@ -25,11 +27,7 @@ class CategoryDb extends CoreDatabase {
         ? await db.query(categoryTableNmae)
         : await db.query(categoryTableNmae,
             where: "productCategoryId=?", whereArgs: [id]);
-    if (maps.isEmpty) {
-      return false;
-    } else {
-      return true;
-    }
+    return maps.isEmpty ? false : true;
   }
 
   Future<int> update(ProductCategory productCategory, int id) async {
@@ -42,9 +40,8 @@ class CategoryDb extends CoreDatabase {
     Database db = await database();
     final List<Map<String, dynamic>> maps = await db.query(categoryTableNmae,
         where: "productCategoryId=?", whereArgs: [id]);
-    if (maps.isEmpty) {
-      return ProductCategory();
-    }
-    return ProductCategory.fromJson(maps.first);
+    return maps.isEmpty
+        ? throw Exception(["دسته بندی محصول یافت نشد"])
+        : ProductCategory.fromJson(maps.first);
   }
 }
