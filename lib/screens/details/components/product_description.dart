@@ -22,17 +22,26 @@ class ProductDescription extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.description.toString(),
-                style: Theme.of(context).textTheme.headlineMedium,
+                product.name!,
+                style: const TextStyle(
+                    fontSize: 21,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 15,
               ),
-              Text(product.description.toString(),
-                  maxLines: 3,
-                  style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                product.description == null
+                    ? "توضیحاتی وجود ندارد"
+                    : product.description!,
+                maxLines: 3,
+                style: const TextStyle(fontSize: 16),
+              ),
             ],
           ),
         ),

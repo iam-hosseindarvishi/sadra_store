@@ -1,15 +1,15 @@
 const String categoryTableNmae = "product_categories";
 
 class CategoryFields {
-  static const String productCategoryId = "productCategoryId";
-  static const String productCategoryClientId = "productCategoryClientId";
-  static const String productCategoryCode = "productCategoryCode";
-  static const String name = "name";
-  static const String color = "color";
-  static const String icon = "icon";
-  static const String deleted = "deleted";
-  static const String dataHash = "dataHash";
-  static const String rowVersion = "rowVersion";
+  static const String productCategoryId = "ProductCategoryId";
+  static const String productCategoryClientId = "ProductCategoryClientId";
+  static const String productCategoryCode = "ProductCategoryCode";
+  static const String name = "Name";
+  static const String color = "Color";
+  static const String icon = "Icon";
+  static const String deleted = "Deleted";
+  static const String dataHash = "DataHash";
+  static const String rowVersion = "RowVersion";
 }
 
 class ProductCategory {
@@ -19,7 +19,7 @@ class ProductCategory {
   String? name;
   String? color;
   dynamic icon;
-  bool? deleted;
+  int? deleted;
   String? dataHash;
   int? rowVersion;
 
@@ -43,7 +43,7 @@ class ProductCategory {
       name: json['Name'] as String?,
       color: json['Color'] as String?,
       icon: json['Icon'] as dynamic,
-      deleted: json['Deleted'] as bool?,
+      deleted: json['Deleted'] == false ? 0 : 1,
       dataHash: json['DataHash'] as String?,
       rowVersion: json['RowVersion'] as int?,
     );
@@ -56,7 +56,7 @@ class ProductCategory {
         'Name': name,
         'Color': color,
         'Icon': icon,
-        'Deleted': deleted == false ? 0 : 1,
+        'Deleted': deleted,
         'DataHash': dataHash,
         'RowVersion': rowVersion,
       };

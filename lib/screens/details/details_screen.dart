@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(arguments.product.description.toString()),
+            title: Text(arguments.product.name!),
           ),
           body: Body(
             product: arguments.product,

@@ -25,16 +25,16 @@ class _ProtuctImagesState extends State<ProtuctImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1.5,
-            child: Image.asset("widget.product.images[selectedImage]"),
+            child: Image.asset("assets/images/no-photo.png"),
           ),
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(top: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(3, (index) => BuildSmallPreview(index))
-            ],
+            // children: [
+            //   ...List.generate(3, (index) => BuildSmallPreview(index))
+            // ],
           ),
         )
       ],

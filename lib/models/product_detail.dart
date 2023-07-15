@@ -1,18 +1,18 @@
 const String productDatailTableName = "product_datail";
 
 class ProductDatailFields {
-  static const String productDatailId = "productDatailId";
-  static const String productDetailClientId = "productDetailClientId";
-  static const String productDetailCode = "productDetailCode";
-  static const String productId = "productId";
-  static const String count1 = "count1";
-  static const String count2 = "count2";
-  static const String price1 = "price1";
-  static const String deleted = "deleted";
-  static const String dataHash = "dataHash";
-  static const String rowVersion = "rowVersion";
-  static const String productClientId = "productClientId";
-  static const String productCode = "productCode";
+  static const String productDatailId = "ProductDatailId";
+  static const String productDetailClientId = "ProductDetailClientId";
+  static const String productDetailCode = "ProductDetailCode";
+  static const String productId = "ProductId";
+  static const String count1 = "Count1";
+  static const String count2 = "Count2";
+  static const String price1 = "Price1";
+  static const String deleted = "Deleted";
+  static const String dataHash = "DataHash";
+  static const String rowVersion = "RowVersion";
+  static const String productClientId = "ProductClientId";
+  static const String productCode = "ProductCode";
 }
 
 class ProductDetail {
@@ -20,10 +20,10 @@ class ProductDetail {
   int? productDetailClientId;
   int? productDetailCode;
   int? productId;
-  int? count1;
-  int? count2;
-  int? price1;
-  bool? deleted;
+  double? count1;
+  double? count2;
+  double? price1;
+  int? deleted;
   String? dataHash;
   int? rowVersion;
   int? productClientId;
@@ -49,10 +49,10 @@ class ProductDetail {
         productDetailClientId: json['productDetailClientId'] as int?,
         productDetailCode: json['productDetailCode'] as int?,
         productId: json['ProductId'] as int?,
-        count1: json['Count1'] as int?,
-        count2: json['Count2'] as int?,
-        price1: json['Price1'] as int?,
-        deleted: json['Deleted'] as bool?,
+        count1: json['Count1'] as double?,
+        count2: json['Count2'] as double?,
+        price1: json['Price1'] as double?,
+        deleted: json['Deleted'] == false ? 0 : 1,
         dataHash: json['DataHash'] as String?,
         rowVersion: json['RowVersion'] as int?,
         productClientId: json['ProductClientId'] as int?,
@@ -67,7 +67,7 @@ class ProductDetail {
         'Count1': count1,
         'Count2': count2,
         'Price1': price1,
-        'Deleted': deleted == false ? 0 : 1,
+        'Deleted': deleted,
         'DataHash': dataHash,
         'RowVersion': rowVersion,
         'ProductClientId': productClientId,

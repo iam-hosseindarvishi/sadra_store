@@ -1,17 +1,17 @@
 const productTableName = "products";
 
 class ProductFields {
-  static const String productId = "productId";
-  static const String productClientId = "productClientId";
-  static const String productCode = "productCode";
-  static const String productCategoryId = "productCategoryId";
-  static const String name = "name";
-  static const String unitName = "unitName";
-  static const String description = "description";
-  static const String deleted = "deleted";
-  static const String rowVersion = "rowVersion";
-  static const String productCategoryClientId = "productCategoryClientId";
-  static const String productCategoryCode = "productCategoryCode";
+  static const String productId = "ProductId";
+  static const String productClientId = "ProductClientId";
+  static const String productCode = "ProductCode";
+  static const String productCategoryId = "ProductCategoryId";
+  static const String name = "Name";
+  static const String unitName = "UnitName";
+  static const String description = "Description";
+  static const String deleted = "Deleted";
+  static const String rowVersion = "RowVersion";
+  static const String productCategoryClientId = "ProductCategoryClientId";
+  static const String productCategoryCode = "ProductCategoryCode";
 }
 
 class Product {
@@ -22,7 +22,7 @@ class Product {
   String? name;
   String? unitName;
   String? description;
-  bool? deleted;
+  int? deleted;
   int? rowVersion;
   int? productCategoryClientId;
   int? productCategoryCode;
@@ -42,17 +42,17 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-        productId: json['productId'] as int?,
-        productClientId: json['productClientId'] as int?,
-        productCode: json['productCode'] as int?,
-        productCategoryId: json['productCategoryId'] as int?,
-        name: json['name'] as String?,
-        unitName: json['unitName'] as String?,
-        description: json['description'] as String?,
-        deleted: json['deleted'] as bool?,
-        rowVersion: json['rowVersion'] as int?,
-        productCategoryClientId: json['productCategoryClientId'] as int?,
-        productCategoryCode: json['productCategoryCode'] as int?,
+        productId: json['ProductId'] as int?,
+        productClientId: json['ProductClientId'] as int?,
+        productCode: json['ProductCode'] as int?,
+        productCategoryId: json['ProductCategoryId'] as int?,
+        name: json['Name'] as String?,
+        unitName: json['UnitName'] as String?,
+        description: json['Description'] as String?,
+        deleted: json['Deleted'] == false ? 0 : 1,
+        rowVersion: json['RowVersion'] as int?,
+        productCategoryClientId: json['ProductCategoryClientId'] as int?,
+        productCategoryCode: json['ProductCategoryCode'] as int?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,7 +63,7 @@ class Product {
         'name': name,
         'unitName': unitName,
         'description': description,
-        'deleted': deleted == false ? 0 : 1,
+        'deleted': deleted,
         'rowVersion': rowVersion,
         'productCategoryClientId': productCategoryClientId,
         'productCategoryCode': productCategoryCode,

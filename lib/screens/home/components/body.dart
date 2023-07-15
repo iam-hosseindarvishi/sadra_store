@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/constants/size_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../constants/size_config.dart';
+import '../../../services/database/product_db.dart';
+import '../../../services/providers/product_provider.dart';
 import 'build_grid_view.dart';
 import 'build_list_view.dart';
 import 'home_header.dart';
 
-class Body extends StatefulWidget {
+class Body extends ConsumerStatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
-  State<Body> createState() => _BodyState();
+  ConsumerState<Body> createState() => _BodyState();
 }
 
-class _BodyState extends State<Body> {
+class _BodyState extends ConsumerState<Body> {
   String _currentView = 'grid';
   @override
   Widget build(BuildContext context) {
+    ProductDb().storeFromApi();
+    final products = ref.watch(productDataProdiver);
     return SafeArea(
         child: Column(
       children: [
@@ -54,14 +59,16 @@ class _BodyState extends State<Body> {
           // const PopularProducts(),
         ])),
         Expanded(
-          //   child: BuildGridView(
-          // products: products,
-          child: _currentView == 'grid'
-              ? BuildGridView(products: [])
-              : BuildListView(
-                  products: [],
-                ),
-        )
+            //   child: BuildGridView(
+            // products: products,
+            child: products.when(
+                data: (data) => _currentView == 'grid'
+                    ? BuildGridView(products: data)
+                    : BuildListView(
+                        products: data,
+                      ),
+                error: (err, s) => Center(child: Text("$err")),
+                loading: () => const CircularProgressIndicator()))
       ],
     ));
   }

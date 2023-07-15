@@ -57,12 +57,15 @@ class BuildGridView extends StatelessWidget {
                       ? MainAxisAlignment.spaceBetween
                       : MainAxisAlignment.spaceAround,
                   children: [
-                    AspectRatio(aspectRatio: 3 / 2, child: Image.asset("")),
+                    AspectRatio(
+                        aspectRatio: 3 / 2,
+                        child: Image.asset("assets/images/no-photo.png")),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          products[index].description.toString(),
+                          products[index].name!,
+                          maxLines: 1,
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

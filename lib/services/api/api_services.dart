@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sadra_store/models/product.dart';
-import 'package:sadra_store/models/product_detail.dart';
 import '../../constants/constants.dart';
+import '../../models/product.dart';
 import '../../models/product_category.dart';
+import '../../models/product_detail.dart';
 import '../../models/token.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -32,7 +31,7 @@ class ApiServices {
     return token;
   }
 
-  // get user form server
+  // get user form api
   Future<User> getUser(String phone, String password) async {
     Token token = await getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
@@ -63,6 +62,7 @@ class ApiServices {
     return user;
   }
 
+  // get product categories form api
   Future<List<ProductCategory>> getCategories() async {
     List<ProductCategory> categories = [];
     Token token = await getToken();
@@ -88,6 +88,7 @@ class ApiServices {
     return categories;
   }
 
+  // get products from api
   Future<List<Product>> getProducts() async {
     List<Product> products = [];
     Token token = await getToken();
@@ -110,36 +111,13 @@ class ApiServices {
     products.addAll(productsList.map((e) {
       return Product.fromJson(e);
     }));
+    print(products.length);
     return products;
   }
 
-  // Future<List<ProductDetail>> getProductsDatail() async {
-  //   List<ProductDetail> categories = [];
-  //   Token token = await getToken();
-  //   var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
-  //   var body = convert.jsonEncode({
-  //     "fromProductCategoryVersion": 0,
-  //   });
-  //   var respone = await http.post(uri,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Bearer ${token.token}"
-  //       },
-  //       body: body);
-  //   if (respone.statusCode != 200) {
-  //     return throw Exception("خطا در دریافت اطلاعات");
-  //   }
-  //   // Map<String, dynamic> categoryMap = convert.jsonDecode(respone.body);
-  //   List<dynamic> items = convert.jsonDecode(respone.body)["Data"]["Objects"]
-  //       ["ProductCategories"];
-  //   categories.addAll(items.map((e) {
-  //     return ProductCategory.fromJson(e);
-  //   }));
-  //   return categories;
-  // }
-
-  Future<List<Product>> getProductsDatails() async {
-    List<Product> productsDatails = [];
+// get product datails from api
+  Future<List<ProductDetail>> getProductsDatails() async {
+    List<ProductDetail> productsDatails = [];
     Token token = await getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
@@ -158,7 +136,7 @@ class ApiServices {
     List<dynamic> productsDatailsList =
         convert.jsonDecode(respone.body)["Data"]["Objects"]["ProductDetails"];
     productsDatails.addAll(productsDatailsList.map((e) {
-      return Product.fromJson(e);
+      return ProductDetail.fromJson(e);
     }));
     return productsDatails;
   }

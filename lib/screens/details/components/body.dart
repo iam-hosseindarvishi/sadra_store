@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/constants/size_config.dart';
 import '../../../models/product.dart';
 import 'product_add_to_cart.dart';
 import 'product_description.dart';
@@ -12,12 +13,18 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: getProportionateScreenWidth(20),
+        ),
         ProtuctImages(product: product),
+        SizedBox(
+          height: getProportionateScreenWidth(20),
+        ),
         ProductDescription(
           product: product,
           pressOnSeeMore: () {},
         ),
-        PrudoctAddToCart(),
+        OrderWidget(),
       ],
     );
   }

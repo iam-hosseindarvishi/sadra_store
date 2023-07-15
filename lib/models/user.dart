@@ -1,27 +1,27 @@
 const String userTableName = "user";
 
 class UserFields {
-  static const String personId = "personId";
-  static const String personClientId = "personClientId";
-  static const String personCode = "personCode";
-  static const String personGroupId = "personGroupId";
-  static const String personType = "personType";
-  static const String prifix = "prifix";
-  static const String firstName = "firstName";
-  static const String lastName = "lastName";
-  static const String organization = "organization";
-  static const String gender = "gender";
-  static const String email = "email";
-  static const String userName = "userName";
-  static const String password = "password";
-  static const String address = "address";
-  static const String phone = "phone";
-  static const String mobile = "mobile";
-  static const String deleted = "deleted";
-  static const String dataHash = "dataHash";
-  static const String rowVersion = "rowVersion";
-  static const String personGroupClientId = "personGroupClientId";
-  static const String personGroupCode = "personGroupCode";
+  static const String personId = "PersonId";
+  static const String personClientId = "PersonClientId";
+  static const String personCode = "PersonCode";
+  static const String personGroupId = "PersonGroupId";
+  static const String personType = "PersonType";
+  static const String prifix = "Prifix";
+  static const String firstName = "FirstName";
+  static const String lastName = "LastName";
+  static const String organization = "Organization";
+  static const String gender = "Gender";
+  static const String email = "Email";
+  static const String userName = "UserName";
+  static const String password = "Password";
+  static const String address = "Address";
+  static const String phone = "Phone";
+  static const String mobile = "Mobile";
+  static const String deleted = "Deleted";
+  static const String dataHash = "DataHash";
+  static const String rowVersion = "RowVersion";
+  static const String personGroupClientId = "PersonGroupClientId";
+  static const String personGroupCode = "PersonGroupCode";
 }
 
 class User {
@@ -41,7 +41,7 @@ class User {
   String? address;
   String? phone;
   String? mobile;
-  bool? deleted;
+  int? deleted;
   String? dataHash;
   int? rowVersion;
   int? personGroupClientId;
@@ -88,7 +88,7 @@ class User {
         address: json['Address'] as String?,
         phone: json['Phone'] as String?,
         mobile: json['Mobile'] as String?,
-        deleted: json['Deleted'] as bool?,
+        deleted: json['Deleted'] == false ? 0 : 1,
         dataHash: json['DataHash'] as String?,
         rowVersion: json['RowVersion'] as int?,
         personGroupClientId: json['PersonGroupClientId'] as int?,
@@ -112,7 +112,7 @@ class User {
         'Address': address,
         'Phone': phone,
         'Mobile': mobile,
-        'Deleted': deleted == false ? 0 : 1,
+        'Deleted': deleted,
         'DataHash': dataHash,
         'RowVersion': rowVersion,
         'PersonGroupClientId': personGroupClientId,

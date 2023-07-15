@@ -56,14 +56,14 @@ class BuildListView extends StatelessWidget {
                   children: [
                     AspectRatio(
                       aspectRatio: imageAspectRatio,
-                      child: Image.asset("products[index].images[0]"),
+                      child: Image.asset("assets/images/no-photo.png"),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          products[index].description.toString(),
+                          products[index].name!,
                           style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
