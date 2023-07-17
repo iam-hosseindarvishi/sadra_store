@@ -1,7 +1,7 @@
-const String productDatailTableName = "product_datail";
+const String productDatailTableName = "product_detail";
 
 class ProductDatailFields {
-  static const String productDatailId = "ProductDatailId";
+  static const String productDatailId = "ProductDetailId";
   static const String productDetailClientId = "ProductDetailClientId";
   static const String productDetailCode = "ProductDetailCode";
   static const String productId = "ProductId";
@@ -45,8 +45,8 @@ class ProductDetail {
   });
 
   factory ProductDetail.fromJson(Map<String, dynamic> json) => ProductDetail(
-        productDetailId: json['productDetailId'] as int?,
-        productDetailClientId: json['productDetailClientId'] as int?,
+        productDetailId: json['ProductDetailId'] as int?,
+        productDetailClientId: json['ProductDetailClientId'] as int?,
         productDetailCode: json['productDetailCode'] as int?,
         productId: json['ProductId'] as int?,
         count1: json['Count1'] as double?,
@@ -60,9 +60,9 @@ class ProductDetail {
       );
 
   Map<String, dynamic> toJson() => {
-        'productDetailId': productDetailId,
-        'productDetailClientId': productDetailClientId,
-        'productDetailCode': productDetailCode,
+        'ProductDetailId': productDetailId,
+        'ProductDetailClientId': productDetailClientId,
+        'ProductDetailCode': productDetailCode,
         'ProductId': productId,
         'Count1': count1,
         'Count2': count2,

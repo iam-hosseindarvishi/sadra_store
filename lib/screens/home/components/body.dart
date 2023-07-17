@@ -19,7 +19,7 @@ class _BodyState extends ConsumerState<Body> {
   @override
   Widget build(BuildContext context) {
     ProductDb().storeFromApi();
-    final products = ref.watch(productDataProdiver);
+    final products = ref.watch(productDataProvider);
     return SafeArea(
         child: Column(
       children: [

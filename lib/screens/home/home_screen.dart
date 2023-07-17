@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ApiServices().getProductsDatails();
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(

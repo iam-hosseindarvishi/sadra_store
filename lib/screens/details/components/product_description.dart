@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-
-import '../../../constants/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/product_detail.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/product.dart';
+import '../../../services/providers/product_provider.dart';
 
-class ProductDescription extends StatelessWidget {
+// ignore: must_be_immutable
+
+class ProductDescription extends ConsumerWidget {
   const ProductDescription({
     super.key,
     required this.product,
-    required this.pressOnSeeMore,
   });
 
   final Product product;
-  final GestureTapCallback pressOnSeeMore;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productDetail =
+        ref.read(productDetailProvider(product.productId!)).value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,45 +29,100 @@ class ProductDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                product.name!,
-                style: const TextStyle(
-                    fontSize: 21,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  const Text(
+                    "نام کالا : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 21),
+                  ),
+                  Text(
+                    product.name!,
+                    style: TextStyle(
+                      fontSize: 21,
+                      color: Colors.green[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 15,
               ),
-              Text(
-                product.description == null
-                    ? "توضیحاتی وجود ندارد"
-                    : product.description!,
-                maxLines: 3,
-                style: const TextStyle(fontSize: 16),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "واحد کالا : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  Text(
+                    product.unitName!,
+                    style: TextStyle(
+                        color: Colors.green[800],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "موجودی کالا : ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    productDetail!.count1! >= 1
+                        ? "در انبار صدرا موجود می باشد"
+                        : "این کالا در انبار موجودی ندارد",
+                    style: TextStyle(
+                        color: productDetail.count1! >= 1
+                            ? Colors.green[800]
+                            : Colors.red[800],
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "توضیحات: ",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    product.description == null
+                        ? "توضیحاتی وجود ندارد"
+                        : product.description!,
+                    maxLines: 5,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: product.description == null
+                            ? Colors.red[800]
+                            : Colors.green[900]),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(20), vertical: 10),
-          child: GestureDetector(
-            onTap: pressOnSeeMore,
-            child: const Row(children: [
-              Text(
-                "توضیحات بیشتر",
-                style: TextStyle(
-                    color: kPrimaryColor, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(width: 5),
-              Icon(
-                Icons.arrow_forward,
-                color: kPrimaryColor,
-              )
-            ]),
-          ),
-        )
       ],
     );
   }

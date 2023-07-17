@@ -20,6 +20,9 @@ class DetailsScreen extends StatelessWidget {
           body: Body(
             product: arguments.product,
           ),
+          // bottomNavigationBar: AddToOrder(
+          //   prodcut: arguments.product,
+          // ),
         ));
   }
 }

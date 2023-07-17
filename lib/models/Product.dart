@@ -12,6 +12,7 @@ class ProductFields {
   static const String rowVersion = "RowVersion";
   static const String productCategoryClientId = "ProductCategoryClientId";
   static const String productCategoryCode = "ProductCategoryCode";
+  static const String productImageUrl = "ProductImageUrl";
 }
 
 class Product {
@@ -26,7 +27,6 @@ class Product {
   int? rowVersion;
   int? productCategoryClientId;
   int? productCategoryCode;
-
   Product({
     this.productId,
     this.productClientId,
@@ -56,18 +56,16 @@ class Product {
       );
 
   Map<String, dynamic> toJson() => {
-        'productId': productId,
-        'productClientId': productClientId,
-        'productCode': productCode,
-        'productCategoryId': productCategoryId,
-        'name': name,
-        'unitName': unitName,
-        'description': description,
-        'deleted': deleted,
-        'rowVersion': rowVersion,
-        'productCategoryClientId': productCategoryClientId,
-        'productCategoryCode': productCategoryCode,
+        'ProductId': productId,
+        'ProductClientId': productClientId,
+        'ProductCode': productCode,
+        'ProductCategoryId': productCategoryId,
+        'Name': name,
+        'UnitName': unitName,
+        'Description': description,
+        'Deleted': deleted,
+        'RowVersion': rowVersion,
+        'ProductCategoryClientId': productCategoryClientId,
+        'ProductCategoryCode': productCategoryCode,
       };
-
-  List<Product> demoProducts = [];
 }

@@ -111,7 +111,6 @@ class ApiServices {
     products.addAll(productsList.map((e) {
       return Product.fromJson(e);
     }));
-    print(products.length);
     return products;
   }
 
