@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/models/product_detail.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/product.dart';
+import '../../../services/providers/picture_provider.dart';
 import '../../../services/providers/product_provider.dart';
 
 // ignore: must_be_immutable
@@ -17,7 +18,7 @@ class ProductDescription extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productDetail =
-        ref.read(productDetailProvider(product.productId!)).value;
+        ref.watch(productDetailProvider(product.productId!)).value;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

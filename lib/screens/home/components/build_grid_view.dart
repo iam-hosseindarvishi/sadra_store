@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/constants.dart';
 import '../../../models/product.dart';
+import '../../../services/providers/picture_provider.dart';
 import '../../details/details_screen.dart';
 
-class BuildGridView extends StatelessWidget {
+class BuildGridView extends ConsumerWidget {
   const BuildGridView({
     super.key,
     required this.products,
@@ -19,8 +21,10 @@ class BuildGridView extends StatelessWidget {
   final int crossAxisCount;
   final double childAspectRatio, crossAxisSpacing, mainAxisSpacing;
   final bool showPrice;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productPicture = ref.watch(pictureDataProvider).value;
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
@@ -58,8 +62,13 @@ class BuildGridView extends StatelessWidget {
                       : MainAxisAlignment.spaceAround,
                   children: [
                     AspectRatio(
-                        aspectRatio: 3 / 2,
-                        child: Image.asset("assets/images/no-photo.png")),
+                      aspectRatio: 3 / 2,
+                      child:
+                          productPicture!.containsKey(products[index].productId)
+                              ? Image.asset(
+                                  productPicture[products[index].productId]!)
+                              : Image.asset("assets/images/no-photo.png"),
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
