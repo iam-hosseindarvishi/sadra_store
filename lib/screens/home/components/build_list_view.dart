@@ -4,6 +4,7 @@ import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/product.dart';
 import '../../details/details_screen.dart';
+import 'product_image.dart';
 
 class BuildListView extends StatelessWidget {
   const BuildListView({
@@ -56,7 +57,9 @@ class BuildListView extends StatelessWidget {
                   children: [
                     AspectRatio(
                       aspectRatio: imageAspectRatio,
-                      child: Image.asset("assets/images/no-photo.png"),
+                      child: ProductImage(
+                        productID: products[index].productId!,
+                      ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

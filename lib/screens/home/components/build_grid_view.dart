@@ -5,6 +5,7 @@ import '../../../constants/constants.dart';
 import '../../../models/product.dart';
 import '../../../services/providers/picture_provider.dart';
 import '../../details/details_screen.dart';
+import 'product_image.dart';
 
 class BuildGridView extends ConsumerWidget {
   const BuildGridView({
@@ -24,7 +25,6 @@ class BuildGridView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productPicture = ref.watch(pictureDataProvider).value;
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
@@ -62,13 +62,10 @@ class BuildGridView extends ConsumerWidget {
                       : MainAxisAlignment.spaceAround,
                   children: [
                     AspectRatio(
-                      aspectRatio: 3 / 2,
-                      child:
-                          productPicture!.containsKey(products[index].productId)
-                              ? Image.asset(
-                                  productPicture[products[index].productId]!)
-                              : Image.asset("assets/images/no-photo.png"),
-                    ),
+                        aspectRatio: 3 / 2,
+                        child: ProductImage(
+                          productID: products[index].productId!,
+                        )),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
