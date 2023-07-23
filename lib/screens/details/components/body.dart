@@ -12,7 +12,6 @@ class Body extends ConsumerWidget {
   final Product product;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productPicture = ref.watch(pictureDataProvider);
     return SingleChildScrollView(
       child: Column(
         children: [

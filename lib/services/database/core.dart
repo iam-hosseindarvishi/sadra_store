@@ -1,6 +1,7 @@
 import 'package:sadra_store/models/product.dart';
 import 'package:sadra_store/models/product_category.dart';
 import 'package:sadra_store/models/product_detail.dart';
+import 'package:sadra_store/models/product_detail_store_assets.dart';
 import 'package:sadra_store/models/setting_model.dart';
 import 'package:sadra_store/models/user.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,6 +34,8 @@ class CoreDatabase {
             "CREATE TABLE $productTableName (${ProductFields.productId} $primaryKey,${ProductFields.productClientId} $integerType,${ProductFields.productCode} $integerType,${ProductFields.productCategoryId} $integerType,${ProductFields.name} $textType, ${ProductFields.unitName} $textType,${ProductFields.description} $textType,${ProductFields.deleted} $integerType,${ProductFields.rowVersion} $integerType,${ProductFields.productCategoryClientId} $integerType,${ProductFields.productCategoryCode} $integerType , FOREIGN KEY (${ProductFields.productCategoryId}) REFERENCES $categoryTableNmae (${CategoryFields.productCategoryId}))");
         await db.execute(
             "CREATE TABLE $productDatailTableName (${ProductDatailFields.productDatailId} $primaryKey,${ProductDatailFields.productDetailClientId},${ProductDatailFields.productClientId} $integerType,${ProductDatailFields.productDetailCode} $integerType, ${ProductDatailFields.productId} $integerType,${ProductDatailFields.count1} $doubleType,${ProductDatailFields.count2} $doubleType, ${ProductDatailFields.price1} $doubleType,${ProductDatailFields.deleted} $integerType , ${ProductDatailFields.dataHash} $textType,${ProductDatailFields.rowVersion} $integerType,${ProductDatailFields.productCode} $integerType , FOREIGN KEY (${ProductDatailFields.productId}) REFERENCES $productTableName (${ProductFields.productId}))");
+        await db.execute(
+            "CREATE TABLE $detailStoreAssetTableName (${StoreAssetsTableFields.productDetailStoreAssetId} $primaryKey , ${StoreAssetsTableFields.productDetailId} $integerType , ${StoreAssetsTableFields.storeId} $integerType , ${StoreAssetsTableFields.count1} $doubleType , ${StoreAssetsTableFields.count2} $doubleType , ${StoreAssetsTableFields.deleted} $integerType, ${StoreAssetsTableFields.dataHash} $textType , ${StoreAssetsTableFields.rowVersion} $integerType , FOREIGN KEY (${StoreAssetsTableFields.productDetailId}) REFERENCES $productDatailTableName (${ProductDatailFields.productDatailId}) )");
       },
       onUpgrade: (db, oldVersion, newVersion) async {},
     );
