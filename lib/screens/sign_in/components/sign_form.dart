@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:sadra_store/models/product_category.dart';
+import 'package:sadra_store/services/api/category_remote.dart';
+import 'package:sadra_store/services/api/user_remote.dart';
 import 'package:sadra_store/services/database/category_db.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
@@ -82,7 +84,7 @@ class _SignFormState extends State<SignForm> {
                           });
                           User user;
                           try {
-                            user = await ApiServices().getUser(
+                            user = await UserApi().getUser(
                                 phoneController.text, passwordController.text);
                             if (user.deleted == false) {
                               if (await UserDb().checkUserExsist()) {
@@ -100,7 +102,7 @@ class _SignFormState extends State<SignForm> {
                             if (await CategoryDb().checkCategoryExsit() ==
                                 false) {
                               List<ProductCategory> categories =
-                                  await ApiServices().getCategories();
+                                  await CategoryApi().getCategories();
                               for (var element in categories) {
                                 await CategoryDb().store(element);
                               }

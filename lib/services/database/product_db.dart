@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sadra_store/services/database/detail_db.dart';
+import 'package:sadra_store/services/api/product_remote.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/product.dart';
 import '../../models/product_detail.dart';
-import '../api/api_services.dart';
 import 'core.dart';
+import 'detail_db.dart';
 
 class ProductDb extends CoreDatabase {
   // save signle product
@@ -15,9 +15,9 @@ class ProductDb extends CoreDatabase {
 
   // get And save products from api
   Future<bool> storeFromApi() async {
-    List<Product> products = await ApiServices().getProducts();
+    List<Product> products = await ProductApi().getProducts();
     List<ProductDetail> productsDatails =
-        await ApiServices().getProductsDatails();
+        await ProductApi().getProductsDatails();
 
     for (var element in products) {
       var datail = productsDatails
