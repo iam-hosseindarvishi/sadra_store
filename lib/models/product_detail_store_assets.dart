@@ -39,7 +39,7 @@ class ProductDetailStoreAssets {
       storeId: json['StoreId'] as int?,
       count1: json['Count1'] as double?,
       count2: json['Count2'] as double?,
-      deleted: json['Deleted'] as int?,
+      deleted: json['Deleted'] == false ? 0 : 1,
       dataHash: json['DataHash'] as String?,
       rowVersion: json['RowVersion'] as int?,
     );

@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/product_detail.dart';
+import 'package:sadra_store/models/product_detail_store_assets.dart';
 import 'package:sadra_store/services/api/product_remote.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/product.dart';
-import '../../models/product_detail.dart';
 import 'core.dart';
 import 'detail_db.dart';
+import 'store_assets_db.dart';
 
 class ProductDb extends CoreDatabase {
   // save signle product
@@ -15,21 +17,26 @@ class ProductDb extends CoreDatabase {
 
   // get And save products from api
   Future<bool> storeFromApi() async {
-    List<Product> products = await ProductApi().getProducts();
-    List<ProductDetail> productsDatails =
-        await ProductApi().getProductsDatails();
-
-    for (var element in products) {
-      var datail = productsDatails
-          .singleWhere((el) => el.productId == element.productId);
-      await checkProductExist(element.productId)
-          ? await update(element)
-          : await store(element);
-      await ProductDatailsDb().checkDetailExist(element.productId)
-          ? ProductDatailsDb().update(datail)
-          : ProductDatailsDb().store(datail);
+    final List<Product> products = await ProductApi().getProducts();
+    final List<ProductDetail> details = await ProductApi().getProductsDatails();
+    final List<ProductDetailStoreAssets> detailsStoreAssets =
+        await ProductApi().getDetailAssets();
+    for (var product in products) {
+      await initProduct(product);
+      ProductDetail detail =
+          details.singleWhere((el) => el.productId == product.productId);
+      await ProductDatailsDb().initDetails(detail, detailsStoreAssets);
+      ProductDetailStoreAssets detailAssets = detailsStoreAssets
+          .singleWhere((el) => el.productDetailId == detail.productDetailId);
+      await StoreAssetsDb().initDetailAssets(detailAssets);
     }
     return true;
+  }
+
+  Future initProduct(Product product) async {
+    await checkProductExist(product.productId)
+        ? update(product)
+        : store(product);
   }
 
   Future<int> update(Product product) async {

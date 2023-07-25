@@ -1,3 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/product_detail_store_assets.dart';
+
 import '../../models/product.dart';
 import '../../models/product_detail.dart';
 import '../../models/token.dart';
@@ -57,4 +60,31 @@ class ProductApi extends ApiServices {
     }));
     return productsDatails;
   }
+
+  //  get product details store assets from api
+  Future<List<ProductDetailStoreAssets>> getDetailAssets() async {
+    List<ProductDetailStoreAssets> details = [];
+    Token token = await getToken();
+    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var body = convert.jsonEncode({
+      "fromProductDetailStoreAssetVersion": 0,
+    });
+    var respone = await http.post(uri,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${token.token}"
+        },
+        body: body);
+    if (respone.statusCode != 200) {
+      return throw Exception("خطا در دریافت اطلاعات");
+    }
+    List<dynamic> productsDatailsList = convert.jsonDecode(respone.body)["Data"]
+        ["Objects"]["ProductDetailStoreAssets"];
+    details.addAll(productsDatailsList.map((e) {
+      return ProductDetailStoreAssets.fromJson(e);
+    }));
+    return details;
+  }
 }
+
+// final initProductsProvider = Provider<ProductApi>((ref) => ProductApi());

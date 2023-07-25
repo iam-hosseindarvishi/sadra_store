@@ -19,6 +19,9 @@ class ProductDescription extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productDetail =
         ref.watch(productDetailProvider(product.productId!)).value;
+    final productStoreAsset = ref
+        .watch(productStoreAssetsProvider(productDetail!.productDetailId!))
+        .value;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,11 +89,11 @@ class ProductDescription extends ConsumerWidget {
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    productDetail!.count1! >= 1
+                    productStoreAsset!.count1! >= 1
                         ? "در انبار صدرا موجود می باشد"
                         : "این کالا در انبار موجودی ندارد",
                     style: TextStyle(
-                        color: productDetail.count1! >= 1
+                        color: productStoreAsset.count1! >= 1
                             ? Colors.green[800]
                             : Colors.red[800],
                         fontWeight: FontWeight.bold),

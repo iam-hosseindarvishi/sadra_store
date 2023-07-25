@@ -1,13 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/models/product_detail.dart';
+import 'package:sadra_store/models/product_detail_store_assets.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'core.dart';
 
 class ProductDatailsDb extends CoreDatabase {
   Future<int> store(ProductDetail productDetail) async {
     Database db = await database();
     return await db.insert(productDatailTableName, productDetail.toJson());
+  }
+
+  Future initDetails(ProductDetail detail,
+      List<ProductDetailStoreAssets> detailStoreAssets) async {
+    await checkDetailExist(detail.productId) ? update(detail) : store(detail);
   }
 
   Future<bool> checkDetailExist([int? id]) async {
