@@ -19,7 +19,8 @@ final productStoreAssetsProvider =
         (ref, productAssetsId) {
   return ref.read(storeAssetsProvider).getDetail(productAssetsId);
 });
-
+final initDataFromServer =
+    FutureProvider<bool>((ref) => ref.watch(productProvider).storeFromApi());
 // // init data from server
 // final getProductFromServer = FutureProvider<List<Product>>((ref) {
 //   return ref.read(initProductsProvider).getProducts();

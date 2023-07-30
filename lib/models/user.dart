@@ -1,3 +1,6 @@
+import '../services/api/user_remote.dart';
+import '../services/database/user_db.dart';
+
 const String userTableName = "user";
 
 class UserFields {
@@ -118,4 +121,25 @@ class User {
         'PersonGroupClientId': personGroupClientId,
         'PersonGroupCode': personGroupCode,
       };
+
+  Future<bool> Login(String phone, String password) async {
+    User user;
+    user = await UserApi().getUser(phone, password);
+    // ignore: unrelated_type_equality_checks
+    if (user.deleted == false) {
+      if (await UserDb().checkUserExsist()) {
+        User localUser;
+        localUser = await UserDb().getUser();
+        if (localUser.phone != user.phone ||
+            localUser.password != user.password) {
+          UserDb().update(user, localUser.phone.toString());
+        }
+      } else {
+        await UserDb().store(user);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -23,13 +23,6 @@ class BuildListView extends StatelessWidget {
         itemBuilder: (_, int index) {
           return Animate(
             autoPlay: true,
-            // effects: const [
-            //   FadeEffect(
-            //       begin: 0,
-            //       end: 1,
-            //       duration: Duration(seconds: 1),
-            //       delay: Duration(milliseconds: 15)),
-            // ],
             effects: const [
               BlurEffect(
                   begin: Offset(10, 10),

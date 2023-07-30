@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/constants/constants.dart';
-import 'package:sadra_store/services/database/product_db.dart';
 import './screens/splash/splash_screen.dart';
 import './routs.dart';
 import 'constants/theme.dart';

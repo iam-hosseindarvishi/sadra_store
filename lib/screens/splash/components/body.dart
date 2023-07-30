@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/models/user.dart';
+import 'package:sadra_store/screens/home/home_screen.dart';
+import 'package:sadra_store/services/database/user_db.dart';
+import '../../../services/database/setting_db.dart';
 import '../../sign_in/sign_in_screen.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -68,8 +72,25 @@ class _BodyState extends State<Body> {
                     const Spacer(),
                     DefaultButton(
                         text: "بزن بریم خرید",
-                        press: () {
-                          Navigator.pushNamed(context, SignInScreen.routeName);
+                        press: () async {
+                          if (await SettingDb().checkSettingExsit()) {
+                            var setting = await SettingDb().getSettings();
+                            if (setting.autoLogin == true &&
+                                await UserDb().checkUserExsist()) {
+                              var user = await UserDb().getUser();
+                              var login =
+                                  User().Login(user.phone!, user.password!);
+                              login == true
+                                  ? Navigator.pushNamed(
+                                      context, HomeScreen.routeName)
+                                  : Navigator.pushNamed(
+                                      context, SignInScreen.routeName);
+                            }
+                          } else {
+                            await SettingDb().initSetting();
+                            Navigator.pushNamed(
+                                context, SignInScreen.routeName);
+                          }
                         }),
                     const Spacer(),
                   ]),

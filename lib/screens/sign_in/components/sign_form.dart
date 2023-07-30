@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:sadra_store/models/product_category.dart';
+import 'package:sadra_store/models/setting_model.dart';
 import 'package:sadra_store/services/api/category_remote.dart';
-import 'package:sadra_store/services/api/user_remote.dart';
 import 'package:sadra_store/services/database/category_db.dart';
+import 'package:sadra_store/services/database/setting_db.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/user.dart';
-import '../../../services/api/api_services.dart';
-import '../../../services/database/user_db.dart';
 import '../../home/home_screen.dart';
 
 class SignForm extends StatefulWidget {
@@ -43,38 +42,38 @@ class _SignFormState extends State<SignForm> {
                   SizedBox(
                     height: getProportionateScreenHeight(30),
                   ),
-                  // Row(
-                  //   children: [
-                  //     // Checkbox(
-                  //     //     value: remember,
-                  //     //     activeColor: kPrimaryColor,
-                  //     //     onChanged: (value) {
-                  //     //       setState(() {
-                  //     //         remember = value!;
-                  //     //       });
-                  //     //     }),
-                  //     // const Text("مرا به خاطر بسپار"),
-                  //     // const Spacer(),
-                  //     GestureDetector(
-                  //       onTap: () => ScaffoldMessenger.of(context)
-                  //           .showSnackBar(buildAlertSnackBar(
-                  //               const Duration(milliseconds: 800),
-                  //               Colors.lightBlue,
-                  //               "در حال حاظر امکان بازیابی کلمه عبور وجود ندارد",
-                  //               const Icon(
-                  //                 Icons.info_rounded,
-                  //                 color: Colors.white,
-                  //               ),
-                  //               Colors.white)),
-                  //       //  Navigator.pushNamed(
-                  //       //     context, ForgotPasswordScreen.routeName),
-                  //       child: const Text(
-                  //         "فراموشی کلمه عبور!",
-                  //         style: TextStyle(decoration: TextDecoration.underline),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
+                  Row(
+                    children: [
+                      Checkbox(
+                          value: remember,
+                          activeColor: kPrimaryColor,
+                          onChanged: (value) {
+                            setState(() {
+                              remember = value!;
+                            });
+                          }),
+                      const Text("مرا به خاطر بسپار"),
+                      // const Spacer(),
+                      // GestureDetector(
+                      //   onTap: () => ScaffoldMessenger.of(context)
+                      //       .showSnackBar(buildAlertSnackBar(
+                      //           const Duration(milliseconds: 800),
+                      //           Colors.lightBlue,
+                      //           "در حال حاظر امکان بازیابی کلمه عبور وجود ندارد",
+                      //           const Icon(
+                      //             Icons.info_rounded,
+                      //             color: Colors.white,
+                      //           ),
+                      //           Colors.white)),
+                      //   //  Navigator.pushNamed(
+                      //   //     context, ForgotPasswordScreen.routeName),
+                      //   child: const Text(
+                      //     "فراموشی کلمه عبور!",
+                      //     style: TextStyle(decoration: TextDecoration.underline),
+                      //   ),
+                      // )
+                    ],
+                  ),
                   DefaultButton(
                       text: "ورود",
                       press: () async {
@@ -82,22 +81,12 @@ class _SignFormState extends State<SignForm> {
                           setState(() {
                             loginMode = !loginMode;
                           });
-                          User user;
                           try {
-                            user = await UserApi().getUser(
+                            var login = await User().Login(
                                 phoneController.text, passwordController.text);
-                            if (user.deleted == false) {
-                              if (await UserDb().checkUserExsist()) {
-                                User localUser;
-                                localUser = await UserDb().getUser();
-                                if (localUser.phone != user.phone ||
-                                    localUser.password != user.password) {
-                                  UserDb()
-                                      .update(user, localUser.phone.toString());
-                                }
-                              } else {
-                                await UserDb().store(user);
-                              }
+                            if (login) {
+                              await SettingDb()
+                                  .update(SettingModel(autoLogin: remember));
                             }
                             if (await CategoryDb().checkCategoryExsit() ==
                                 false) {
@@ -107,6 +96,7 @@ class _SignFormState extends State<SignForm> {
                                 await CategoryDb().store(element);
                               }
                             }
+
                             Navigator.pushNamed(context, HomeScreen.routeName);
                           } catch (e) {
                             setState(() {
