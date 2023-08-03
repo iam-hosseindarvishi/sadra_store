@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:sadra_store/models/product_category.dart';
 import 'package:sadra_store/models/setting_model.dart';
+import 'package:sadra_store/screens/sign_in/components/remmaber_user.dart';
 import 'package:sadra_store/services/api/category_remote.dart';
 import 'package:sadra_store/services/database/category_db.dart';
 import 'package:sadra_store/services/database/setting_db.dart';
@@ -24,7 +25,7 @@ class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
-  bool remember = true;
+  bool remember = false;
   bool loginMode = false;
   final List<String> errors = [];
   @override
@@ -40,39 +41,11 @@ class _SignFormState extends State<SignForm> {
                   ),
                   buildPasswordFormField(passwordController),
                   SizedBox(
-                    height: getProportionateScreenHeight(30),
+                    height: getProportionateScreenHeight(10),
                   ),
-                  Row(
-                    children: [
-                      Checkbox(
-                          value: remember,
-                          activeColor: kPrimaryColor,
-                          onChanged: (value) {
-                            setState(() {
-                              remember = value!;
-                            });
-                          }),
-                      const Text("مرا به خاطر بسپار"),
-                      // const Spacer(),
-                      // GestureDetector(
-                      //   onTap: () => ScaffoldMessenger.of(context)
-                      //       .showSnackBar(buildAlertSnackBar(
-                      //           const Duration(milliseconds: 800),
-                      //           Colors.lightBlue,
-                      //           "در حال حاظر امکان بازیابی کلمه عبور وجود ندارد",
-                      //           const Icon(
-                      //             Icons.info_rounded,
-                      //             color: Colors.white,
-                      //           ),
-                      //           Colors.white)),
-                      //   //  Navigator.pushNamed(
-                      //   //     context, ForgotPasswordScreen.routeName),
-                      //   child: const Text(
-                      //     "فراموشی کلمه عبور!",
-                      //     style: TextStyle(decoration: TextDecoration.underline),
-                      //   ),
-                      // )
-                    ],
+                  // const RemmaberUser(),
+                  SizedBox(
+                    height: getProportionateScreenHeight(30),
                   ),
                   DefaultButton(
                       text: "ورود",
@@ -82,12 +55,12 @@ class _SignFormState extends State<SignForm> {
                             loginMode = !loginMode;
                           });
                           try {
-                            var login = await User().Login(
+                            var login = await User().login(
                                 phoneController.text, passwordController.text);
-                            if (login) {
-                              await SettingDb()
-                                  .update(SettingModel(autoLogin: remember));
-                            }
+                            // if (login) {
+                            //   await SettingDb()
+                            //       .update(SettingModel(remmaberUser: remember));
+                            // }
                             if (await CategoryDb().checkCategoryExsit() ==
                                 false) {
                               List<ProductCategory> categories =
@@ -102,6 +75,7 @@ class _SignFormState extends State<SignForm> {
                             setState(() {
                               loginMode = !loginMode;
                             });
+                            print(e);
                             showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(

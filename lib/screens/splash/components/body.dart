@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sadra_store/models/user.dart';
 import 'package:sadra_store/screens/home/home_screen.dart';
 import 'package:sadra_store/services/database/user_db.dart';
+import 'package:sadra_store/utility/check_internet_connection.dart';
 import '../../../services/database/setting_db.dart';
 import '../../sign_in/sign_in_screen.dart';
 import '../../../constants/constants.dart';
@@ -73,18 +74,38 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                         text: "بزن بریم خرید",
                         press: () async {
+                          if (await InternetConnection().checkConnection() ==
+                              false) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: const Text(
+                                "اتصال اینترنت وجود ندارد",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              backgroundColor: Colors.grey[800],
+                              behavior: SnackBarBehavior.floating,
+                              duration: const Duration(seconds: 2),
+                            ));
+                            return;
+                          }
                           if (await SettingDb().checkSettingExsit()) {
                             var setting = await SettingDb().getSettings();
-                            if (setting.autoLogin == true &&
+                            if (setting.remmaberUser == true &&
                                 await UserDb().checkUserExsist()) {
                               var user = await UserDb().getUser();
-                              var login =
-                                  User().Login(user.phone!, user.password!);
-                              login == true
+                              var login = await User()
+                                  .login(user.phone!, user.password!);
+
+                              login
                                   ? Navigator.pushNamed(
                                       context, HomeScreen.routeName)
                                   : Navigator.pushNamed(
                                       context, SignInScreen.routeName);
+                            } else {
+                              Navigator.pushNamed(
+                                  context, SignInScreen.routeName);
                             }
                           } else {
                             await SettingDb().initSetting();

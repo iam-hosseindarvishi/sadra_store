@@ -25,7 +25,7 @@ class CoreDatabase {
         await db.execute(
             "CREATE TABLE $tokenTableName (${TokenFields.id} $idType, ${TokenFields.token} $textType)");
         await db.execute(
-            "CREATE TABLE $settingTableName (${SettingFialds.id} $idType , ${SettingFialds.autoLogin} $integerType , ${SettingFialds.remmaberUser} $integerType , ${SettingFialds.lastTimeUpdate} $textType)");
+            "CREATE TABLE $settingTableName (${SettingFialds.id} $idType  , ${SettingFialds.remmaberUser} $integerType , ${SettingFialds.lastTimeUpdate} $textType)");
         await db.execute(
             "CREATE TABLE $userTableName (${UserFields.personId} $primaryKey , ${UserFields.personClientId} $integerType , ${UserFields.personCode} $integerType,${UserFields.personGroupId} , ${UserFields.personType} $integerType , ${UserFields.prifix} $textType , ${UserFields.firstName} $textType , ${UserFields.lastName} $textType , ${UserFields.organization} $textType, ${UserFields.gender} $integerType , ${UserFields.email} $textType , ${UserFields.userName} $textType ,${UserFields.password} $textType , ${UserFields.address} $textType , ${UserFields.phone} $textType  , ${UserFields.mobile} $textType , ${UserFields.deleted} $integerType , ${UserFields.dataHash} $textType , ${UserFields.rowVersion} $integerType , ${UserFields.personGroupClientId} $integerType , ${UserFields.personGroupCode}  $integerType  )");
         await db.execute(

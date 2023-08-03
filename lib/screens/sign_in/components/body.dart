@@ -39,14 +39,14 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: SizeConfig.screenHeight * 0.08,
                       ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.08,
-                      ),
-                      const ForgotenPassword(),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      const NoAccountText(),
+                      // SizedBox(
+                      //   height: SizeConfig.screenHeight * 0.08,
+                      // ),
+                      // const ForgotenPassword(),
+                      // SizedBox(
+                      //   height: SizeConfig.screenHeight * 0.01,
+                      // ),
+                      // const NoAccountText(),
                     ],
                   ),
                 ))));

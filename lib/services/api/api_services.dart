@@ -10,7 +10,8 @@ class ApiServices {
   //  get token from api
   Future<Token> getToken() async {
     Token token = Token();
-    var uri = Uri.https(endPoint, "/API/v3/Sync/login");
+    var uri = Uri.https(endPoint, "/API/v3/Sync/Login");
+    print(uri);
     var body = convert.jsonEncode(apiInfo);
     var respone = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: body);

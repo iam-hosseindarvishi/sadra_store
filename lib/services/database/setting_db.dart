@@ -1,11 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/models/setting_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'core.dart';
 
 class SettingDb extends CoreDatabase {
   Future<int> initSetting() async {
-    SettingModel setting = SettingModel(
-        autoLogin: false, remmaberUser: false, lastTimeUpdate: null);
+    SettingModel setting =
+        SettingModel(remmaberUser: false, lastTimeUpdate: null);
     Database db = await database();
     return db.insert(settingTableName, setting.toJson());
   }
@@ -31,3 +32,5 @@ class SettingDb extends CoreDatabase {
     return maps.isEmpty ? false : true;
   }
 }
+
+final settingProvider = Provider<SettingDb>((ref) => SettingDb());
