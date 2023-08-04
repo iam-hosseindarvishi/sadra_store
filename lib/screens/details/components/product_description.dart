@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sadra_store/models/product_detail_store_assets.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/product.dart';

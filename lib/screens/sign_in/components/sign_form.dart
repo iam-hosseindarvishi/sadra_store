@@ -58,7 +58,11 @@ class _SignFormState extends ConsumerState<SignForm> {
                     height: getProportionateScreenHeight(30),
                   ),
                   DefaultButton(
-                      text: "ورود",
+                      icon: const Icon(
+                        Icons.login,
+                        color: Colors.white,
+                      ),
+                      text: "ورود به فروشگاه",
                       press: () async {
                         if (_formKey.currentState!.validate()) {
                           setState(() {
