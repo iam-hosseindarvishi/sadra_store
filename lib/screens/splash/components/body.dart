@@ -74,44 +74,12 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                         text: "بزن بریم خرید",
                         press: () async {
-                          if (await InternetConnection().checkConnection() ==
-                              false) {
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text(
-                                "اتصال اینترنت وجود ندارد",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              backgroundColor: Colors.grey[800],
-                              behavior: SnackBarBehavior.floating,
-                              duration: const Duration(seconds: 2),
-                            ));
-                            return;
-                          }
-                          if (await SettingDb().checkSettingExsit()) {
-                            var setting = await SettingDb().getSettings();
-                            if (setting.remmaberUser == true &&
-                                await UserDb().checkUserExsist()) {
-                              var user = await UserDb().getUser();
-                              var login = await User()
-                                  .login(user.phone!, user.password!);
-
-                              login
-                                  ? Navigator.pushNamed(
-                                      context, HomeScreen.routeName)
-                                  : Navigator.pushNamed(
-                                      context, SignInScreen.routeName);
-                            } else {
-                              Navigator.pushNamed(
-                                  context, SignInScreen.routeName);
-                            }
-                          } else {
+                          await checkConnection();
+                          if (await SettingDb().getSettings() == false) {
                             await SettingDb().initSetting();
-                            Navigator.pushNamed(
-                                context, SignInScreen.routeName);
                           }
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(context, SignInScreen.routeName);
                         }),
                     const Spacer(),
                   ]),
@@ -120,6 +88,22 @@ class _BodyState extends State<Body> {
         ),
       ),
     ));
+  }
+
+  Future checkConnection() async {
+    if (await InternetConnection().checkConnection() == false) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text(
+          "اتصال اینترنت وجود ندارد",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.grey[800],
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ));
+      return;
+    }
   }
 
   AnimatedContainer buildDot(int index) {

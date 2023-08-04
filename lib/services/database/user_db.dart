@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/user.dart';
 import 'core.dart';
@@ -13,15 +14,19 @@ class UserDb extends CoreDatabase {
     final List<Map<String, dynamic>> maps = await db.query(
       userTableName,
     );
-    return User.fromJson(maps.first);
+
+    return maps.isNotEmpty
+        ? User.fromJson(maps.first)
+        : throw Exception("کاربری یافت نشد");
   }
 
-  Future<int> update(User user, String phone) async {
+  Future<int> update(User user) async {
     Database db = await database();
     return await db.update(userTableName, user.toJson());
   }
 
   Future<bool> checkUserExsist() async {
+    print("checking user exsist");
     Database db = await database();
     final List<Map<String, dynamic>> maps = await db.query(userTableName);
     if (maps.isNotEmpty) {
@@ -30,3 +35,5 @@ class UserDb extends CoreDatabase {
     return false;
   }
 }
+
+final userProvider = Provider<UserDb>((ref) => UserDb());

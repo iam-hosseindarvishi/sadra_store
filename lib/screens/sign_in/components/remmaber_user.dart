@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/services/database/setting_db.dart';
 import 'package:sadra_store/services/providers/setting_provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -18,7 +19,12 @@ class RemmaberUser extends ConsumerWidget {
             return Checkbox(
                 value: data.remmaberUser,
                 activeColor: kPrimaryColor,
-                onChanged: (value) {});
+                onChanged: (value) {
+                  data.remmaberUser = value;
+                  SettingDb()
+                      .update(data)
+                      .then((value) => ref.refresh(settingDataProvider));
+                });
           }),
           error: (error, stackTrace) => const Icon(
             Icons.error,

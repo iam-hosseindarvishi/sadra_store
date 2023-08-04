@@ -22,8 +22,9 @@ class SettingDb extends CoreDatabase {
   Future<int> update(SettingModel setting) async {
     Database db = await database();
     var settingId = await getSettings();
+    print("updated to ${setting.remmaberUser}");
     return db.update(settingTableName, setting.toJson(),
-        where: SettingFialds.id, whereArgs: [settingId.id]);
+        where: "${SettingFialds.id}=?", whereArgs: [settingId.id]);
   }
 
   Future<bool> checkSettingExsit() async {
