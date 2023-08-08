@@ -32,24 +32,32 @@ class ProductDescription extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    "نام کالا : ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 21),
-                  ),
-                  Text(
-                    product.name!,
-                    style: TextStyle(
-                      fontSize: 21,
-                      color: Colors.green[800],
-                      fontWeight: FontWeight.bold,
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "نام کالا : ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
-                  ),
-                ],
+                    Text(
+                      product.name!,
+                      softWrap: true,
+                      maxLines: 3,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green[800],
+                        fontWeight: FontWeight.bold,
+
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 15,
@@ -65,14 +73,14 @@ class ProductDescription extends ConsumerWidget {
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                        fontSize: 16),
                   ),
                   Text(
                     product.unitName!,
                     style: TextStyle(
                         color: Colors.green[800],
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                        fontSize: 16),
                   )
                 ],
               ),
@@ -108,7 +116,7 @@ class ProductDescription extends ConsumerWidget {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
-                loading: () => shimmerLoading(),
+                loading: () => const Text(""),
               ),
               const SizedBox(
                 height: 15,

@@ -46,6 +46,10 @@ class ProductDatailsDb extends CoreDatabase {
         ? throw Exception(["محصول یافت نشد"])
         : ProductDetail.fromJson(maps.first);
   }
+  Future delete(ProductDetail productDetail) async{
+   Database db=await database();
+   await db.delete(productDatailTableName,where: "ProductId=?",whereArgs: [productDetail.productId]);
+  }
 }
 
 final detailProvider = Provider<ProductDatailsDb>((ref) => ProductDatailsDb());

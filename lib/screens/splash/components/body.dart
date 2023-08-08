@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sadra_store/models/user.dart';
-import 'package:sadra_store/screens/home/home_screen.dart';
-import 'package:sadra_store/services/database/user_db.dart';
 import 'package:sadra_store/utility/check_internet_connection.dart';
+import '../../../models/product_category.dart';
+import '../../../services/api/category_remote.dart';
+import '../../../services/database/category_db.dart';
 import '../../../services/database/setting_db.dart';
 import '../../sign_in/sign_in_screen.dart';
 import '../../../constants/constants.dart';
@@ -75,8 +75,24 @@ class _BodyState extends State<Body> {
                         text: "بزن بریم خرید",
                         press: () async {
                           await checkConnection();
-                          if (await SettingDb().getSettings() == false) {
-                            await SettingDb().initSetting();
+                          // if (await SettingDb().getSettings() == false) {
+                          //   await SettingDb().initSetting();
+                          // }
+                          await SettingDb()
+                              .checkSettingExsit()
+                              .then((value) async {
+                            if (value == false) {
+                              await SettingDb().initSetting();
+                            }
+                          });
+                          // init categories
+                          if (await CategoryDb().checkCategoryExsit() ==
+                              false) {
+                            List<ProductCategory> categories =
+                            await CategoryApi().getCategories();
+                            for (var element in categories) {
+                              await CategoryDb().store(element);
+                            }
                           }
                           // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, SignInScreen.routeName);

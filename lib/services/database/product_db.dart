@@ -1,8 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/order_details.dart';
 import 'package:sadra_store/models/product_detail.dart';
 import 'package:sadra_store/models/product_detail_store_assets.dart';
 import 'package:sadra_store/services/api/product_remote.dart';
+import 'package:sadra_store/services/database/order_db.dart';
+import 'package:sadra_store/services/database/order_detail_db.dart';
 import 'package:sqflite/sqflite.dart';
+import '../../models/order.dart';
 import '../../models/product.dart';
 import 'core.dart';
 import 'detail_db.dart';
@@ -22,6 +26,20 @@ class ProductDb extends CoreDatabase {
     final List<ProductDetailStoreAssets> detailsStoreAssets =
         await ProductApi().getDetailAssets();
     for (var product in products) {
+      ProductDetail productDetail=details.where((element) => element.productId==product.productId).first;
+      ProductDetailStoreAssets storeAssets=await StoreAssetsDb().getDetail(productDetail.productDetailId!);
+      if(product.deleted==1 || storeAssets.count1! <= 0){
+        Order order=await OrderDb().getCurrentOrder();
+        OrderDetails orderDetails=await OrderDetailDb().getOrderDetails(productDetail.productDetailId! , order.orderClientId!);
+        if(orderDetails.productDetailId==order.orderClientId){
+            await OrderDetailDb().delete(orderDetails);
+        }
+        await ProductDb().delete(product);
+        await ProductDatailsDb().delete(productDetail);
+        await StoreAssetsDb().delete(storeAssets);
+        continue;
+      }
+
       await initProduct(product);
       ProductDetail detail =
           details.singleWhere((el) => el.productId == product.productId);
@@ -69,6 +87,10 @@ class ProductDb extends CoreDatabase {
     return maps.isEmpty
         ? throw Exception(["محصول یافت نشد"])
         : Product.fromJson(maps.first);
+  }
+  Future delete(Product product)async{
+    Database db=await database();
+    db.delete(productTableName,where: "${ProductFields.productId}=?",whereArgs: [product.productId]);
   }
 }
 

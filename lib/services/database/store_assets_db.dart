@@ -55,6 +55,10 @@ class StoreAssetsDb extends CoreDatabase {
             whereArgs: [detailAssetsId]);
     return maps.isEmpty ? false : true;
   }
+  Future delete(ProductDetailStoreAssets storeAssets)async{
+    Database db=await database();
+    db.delete(detailStoreAssetTableName,where: "${StoreAssetsTableFields.productDetailId}=?",whereArgs: [storeAssets.productDetailId]);
+  }
 }
 
 final storeAssetsProvider = Provider<StoreAssetsDb>((ref) => StoreAssetsDb());

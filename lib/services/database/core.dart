@@ -1,3 +1,5 @@
+import 'package:sadra_store/models/order.dart';
+import 'package:sadra_store/models/order_details.dart';
 import 'package:sadra_store/models/product.dart';
 import 'package:sadra_store/models/product_category.dart';
 import 'package:sadra_store/models/product_detail.dart';
@@ -36,6 +38,10 @@ class CoreDatabase {
             "CREATE TABLE $productDatailTableName (${ProductDatailFields.productDatailId} $primaryKey,${ProductDatailFields.productDetailClientId},${ProductDatailFields.productClientId} $integerType,${ProductDatailFields.productDetailCode} $integerType, ${ProductDatailFields.productId} $integerType,${ProductDatailFields.count1} $doubleType,${ProductDatailFields.count2} $doubleType, ${ProductDatailFields.price1} $doubleType,${ProductDatailFields.deleted} $integerType , ${ProductDatailFields.dataHash} $textType,${ProductDatailFields.rowVersion} $integerType,${ProductDatailFields.productCode} $integerType , FOREIGN KEY (${ProductDatailFields.productId}) REFERENCES $productTableName (${ProductFields.productId}))");
         await db.execute(
             "CREATE TABLE $detailStoreAssetTableName (${StoreAssetsTableFields.productDetailStoreAssetId} $integerType , ${StoreAssetsTableFields.productDetailId} $primaryKey , ${StoreAssetsTableFields.storeId} $integerType , ${StoreAssetsTableFields.count1} $doubleType , ${StoreAssetsTableFields.count2} $doubleType , ${StoreAssetsTableFields.deleted} $integerType, ${StoreAssetsTableFields.dataHash} $textType , ${StoreAssetsTableFields.rowVersion} $integerType , FOREIGN KEY (${StoreAssetsTableFields.productDetailId}) REFERENCES $productDatailTableName (${ProductDatailFields.productDatailId}) )");
+        await db.execute(
+            "CREATE TABLE $orderTableName (${OrderTableFields.orderClientId} $primaryKey , ${OrderTableFields.orderType} $integerType , ${OrderTableFields.personId} $integerType , ${OrderTableFields.personCode} $integerType , ${OrderTableFields.visitorId} $integerType , ${OrderTableFields.isActive} $integerType)");
+        await db.execute(
+            "CREATE TABLE $orderDetailsTableName ( ${OrderDetailsfields.id} $idType, ${OrderDetailsfields.orderClientId} $integerType , ${OrderDetailsfields.itemType} $integerType , ${OrderDetailsfields.productDetailId} $integerType, ${OrderDetailsfields.price} $doubleType , ${OrderDetailsfields.count1} $doubleType , ${OrderDetailsfields.description} $textType , ${OrderDetailsfields.storeId} $integerType , ${OrderDetailsfields.rowVersion} $integerType , FOREIGN KEY (${OrderDetailsfields.orderClientId}) REFERENCES $orderTableName (${OrderTableFields.orderClientId}) )");
       },
       onUpgrade: (db, oldVersion, newVersion) async {},
     );

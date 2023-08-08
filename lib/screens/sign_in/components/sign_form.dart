@@ -11,6 +11,7 @@ import '../../../models/product_category.dart';
 import '../../../models/user.dart';
 import '../../../services/api/category_remote.dart';
 import '../../../services/database/category_db.dart';
+import '../../../services/database/order_db.dart';
 import '../../home/home_screen.dart';
 import 'remmaber_user.dart';
 
@@ -71,16 +72,12 @@ class _SignFormState extends ConsumerState<SignForm> {
                           try {
                             await User().login(
                                 phoneController.text, passwordController.text);
-
-                            if (await CategoryDb().checkCategoryExsit() ==
-                                false) {
-                              List<ProductCategory> categories =
-                                  await CategoryApi().getCategories();
-                              for (var element in categories) {
-                                await CategoryDb().store(element);
+                            // init order
+                            await OrderDb().getCurrentOrder().then((order) async{
+                              if(order.orderClientId==null){
+                                await OrderDb().initOrder();
                               }
-                            }
-
+                            });
                             Navigator.pushNamed(context, HomeScreen.routeName);
                           } catch (err) {
                             setState(() {
