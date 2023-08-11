@@ -30,7 +30,7 @@ class ProductDb extends CoreDatabase {
       ProductDetailStoreAssets storeAssets=await StoreAssetsDb().getDetail(productDetail.productDetailId!);
       if(product.deleted==1 || storeAssets.count1! <= 0){
         Order order=await OrderDb().getCurrentOrder();
-        OrderDetails orderDetails=await OrderDetailDb().getOrderDetails(productDetail.productDetailId! , order.orderClientId!);
+        OrderDetails orderDetails=await OrderDetailDb().getOrderDetail(productDetail.productDetailId! , order.orderClientId!);
         if(orderDetails.productDetailId==order.orderClientId){
             await OrderDetailDb().delete(orderDetails);
         }

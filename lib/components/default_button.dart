@@ -25,6 +25,7 @@ class _DefaultButtonState extends State<DefaultButton> {
       width: double.infinity,
       height: getProportionateScreenHeight(56),
       child: ElevatedButton(
+
           style: TextButton.styleFrom(
               backgroundColor: widget.backColor,
               shape: RoundedRectangleBorder(

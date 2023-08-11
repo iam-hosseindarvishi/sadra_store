@@ -36,7 +36,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     details=await ProductDatailsDb().getDetail(productId);
     assets=await StoreAssetsDb().getDetail(details.productDetailId!);
 
-      orderDetails=await OrderDetailDb().getOrderDetails(details.productDetailId!,order.orderClientId!);
+      orderDetails=await OrderDetailDb().getOrderDetail(details.productDetailId!,order.orderClientId!);
       if(orderDetails.orderClientId!=null){
         setState(() {
           count=orderDetails.count1!;
@@ -44,6 +44,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
         });
       }
 
+  }
+  updateCount(double count)async{
+    orderDetails.count1=count;
+    await OrderDetailDb().update(orderDetails).then((value) {
+      setState(() {
+
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -79,9 +87,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ? DefaultButton(
                                     text: "افزودن به سبد خرید",
                                     press: () async {
+                                      if(assets.count1! <= 0){
+                                       errorMessage("کالا داری موجودی نیست");
+                                        return;
+                                      }
                                       setState(() {
                                         addingToCart = !addingToCart;
                                       });
+
                                       OrderDetails orderDetail=OrderDetails(description: "",storeId:assets.storeId,count1: count.toDouble(),price:details.price1!,itemType: 1,productDetailId: details.productDetailId,orderClientId: order.orderClientId);
                                       await OrderDetailDb().store(orderDetail).then((value){
                                         if(value>18){
@@ -114,14 +127,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               children: [
                                 InkWell(
                                     onTap: () async{
+                                      count++;
+                                      if(orderDetails.count1! <= count){
+                                        errorMessage("تعداد مجاز نمی باشد");
+                                        return;
+                                      }
                                       if (count <= 100) {
-                                        count++;
-                                        orderDetails.count1=count;
-                                        await OrderDetailDb().update(orderDetails).then((value) {
-                                          setState(() {
+                                        updateCount(count);
+                                      }else{
 
-                                          });
-                                        });
                                       }
                                     },
                                     child: Container(
@@ -171,6 +185,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 child: TextField(
                                                     onSubmitted: (value) async{
                                                       double valCount=double.parse(value);
+                                                      if(orderDetails.count1! <= valCount){
+                                                        errorMessage("تعداد مجاز نمی باشد");
+                                                        Navigator.of(context).pop();
+                                                        return;
+                                                      }
                                                       if(valCount>0 && valCount<=100){
                                                         orderDetails.count1=valCount;
                                                         await OrderDetailDb().update(orderDetails).then((value) {
@@ -219,6 +238,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     onTap: ()async {
                                       if (count >1) {
                                         count--;
+                                        if(orderDetails.count1! <= count){
+                                          errorMessage("تعداد مجاز نمی باشد");
+                                          return;
+                                        }
                                         orderDetails.count1=count;
                                         await OrderDetailDb().update(orderDetails).then((value) {
                                           setState(() {
@@ -245,6 +268,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
         ));
+  }
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> errorMessage(String text){
+    return ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+      content: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text,style: TextStyle(fontWeight:FontWeight.bold,color: Colors.red[900]),),
+            Icon(Icons.error,color: Colors.red[900],)                                                ],
+        ),
+      ),
+      backgroundColor: Colors.red[200],
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 }
 

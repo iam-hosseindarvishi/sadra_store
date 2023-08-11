@@ -1,8 +1,13 @@
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/models/Cart.dart';
 import 'package:sadra_store/models/product_detail.dart';
+import 'package:sadra_store/services/database/order_db.dart';
+import 'package:sadra_store/services/database/product_db.dart';
 import 'package:sqflite/sqflite.dart';
-
+import '../../models/order.dart';
 import '../../models/order_details.dart';
+import '../../models/product.dart';
 import 'core.dart';
 import 'detail_db.dart';
 
@@ -12,17 +17,45 @@ class OrderDetailDb extends CoreDatabase{
         Database db=await database();
         return db.insert(orderDetailsTableName, orderDetails.toJson());
   }
-  Future<OrderDetails> getOrderDetails(int productDetailId ,int orderClientId) async{
+  Future<OrderDetails> getOrderDetail(int productDetailId ,int orderClientId) async{
     Database db=await database();
     List<Map<String,dynamic>> maps=await db.query(orderDetailsTableName,where: "${OrderDetailsfields.productDetailId}=? AND ${OrderDetailsfields.orderClientId}=?",whereArgs: [productDetailId,orderClientId]);
     return maps.isNotEmpty ? OrderDetails.fromJson(maps.first) :OrderDetails(orderClientId: 0);
   }
+  Future<List<Cart>> getOrderProducts() async{
+    Database db=await database();
+    Order order=await OrderDb().getCurrentOrder();
+    List<Map<String,dynamic>> maps=await db.query(orderDetailsTableName,where:"${OrderDetailsfields.orderClientId}=?",whereArgs: [order.orderClientId] );
+    List<OrderDetails> orderDetails=[];
+    if(maps.isNotEmpty){
+      orderDetails.addAll(maps.map((e) => OrderDetails.fromJson(e)));
+    }
+    List<Cart> cartItems=[];
+    for(var orderDetail in orderDetails){
+        print(orderDetail.productDetailId);
+        ProductDetail productDetail=await ProductDatailsDb().getDetailUsingDetailId(orderDetail.productDetailId!);
+        Product item=await ProductDb().getProduct(productDetail.productId!);
+        Cart cart=Cart(orderDetail: orderDetail, product: item);
+        cartItems.add(cart);
+    }
+    print(cartItems.length);
+  return cartItems;
+  }
+  Future<int> getOrderCount()async{
+      Database db=await database();
+      Order order=await OrderDb().getCurrentOrder();
+      List<Map<String,dynamic>> maps=await db.query(orderDetailsTableName,where: "${OrderDetailsfields.orderClientId}=?",whereArgs: [order.orderClientId]);
+      return maps.isNotEmpty ? maps.length : 0;
+  }
   Future<int> update(OrderDetails orderDetails ) async{
       Database db=await database();
-      return db.update(orderDetailsTableName, orderDetails.toJson(),where: "${OrderDetailsfields.productDetailId}=? AND ${OrderDetailsfields.orderClientId}=?",whereArgs: [orderDetails.productDetailId,orderDetails.orderClientId]);
+      return db.update(orderDetailsTableName, orderDetails.toJson(),where: " ${OrderDetailsfields.id}=?",whereArgs: [orderDetails.id]);
   }
   Future delete(OrderDetails orderDetails) async{
     Database db=await database();
     db.delete(orderDetailsTableName,where: "${OrderDetailsfields.id}=?",whereArgs: [orderDetails.id]);
   }
+
 }
+
+final orderProductProvider = Provider<OrderDetailDb>((ref) => OrderDetailDb());

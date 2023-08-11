@@ -1,10 +1,9 @@
 import 'product.dart';
-
+import '../../models/order_details.dart';
 class Cart {
   final Product product;
-  final int numOfItems;
-
-  Cart({required this.product, required this.numOfItems});
+  final OrderDetails orderDetail;
+  Cart({required this.orderDetail, required this.product});
 }
 
 // demo data
