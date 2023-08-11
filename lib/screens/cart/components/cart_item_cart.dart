@@ -1,9 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:sadra_store/screens/details/details_screen.dart';
 import '../../../constants/constants.dart';
 import '../../../models/Cart.dart';
 import '../../../constants/size_config.dart';
+import '../../details/details_screen.dart';
+import '../../home/components/product_image.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
@@ -27,7 +28,9 @@ class CartItemCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(15)),
-                child: Image.asset("cart.product.images[0]"),
+                child:ProductImage(
+                  productID: cart.product.productId!
+                )
               ),
             ),
           ),

@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
+import '../../../services/database/order_detail_db.dart';
 
-class CheckOurCart extends StatelessWidget {
+class CheckOurCart extends ConsumerStatefulWidget {
   const CheckOurCart({
     super.key,
   });
 
   @override
+  ConsumerState<CheckOurCart> createState() => _CheckOurCartState();
+}
+
+class _CheckOurCartState extends ConsumerState<CheckOurCart> {
+   double totalPrice=0.0;
+   String formattedNumber="";
+  @override
   Widget build(BuildContext context) {
+    ref.watch(orderProductProvider).getOrderPrice().then((value) => {
+    setState(() {
+      totalPrice=value;
+      formattedNumber = NumberFormat('###,###.###').format(totalPrice);
+    })
+    });
     return Container(
       // height: 147,
       padding: EdgeInsets.symmetric(
@@ -30,7 +45,7 @@ class CheckOurCart extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const Row(
+         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -38,11 +53,11 @@ class CheckOurCart extends StatelessWidget {
                 text: "جمع کل : ",
                 children: [
                   TextSpan(
-                      text: "250000 ریال",
-                      style: TextStyle(
+                      text: "$formattedNumber ریال ",
+                      style:const TextStyle(
                           color: kPrimaryColor, fontWeight: FontWeight.bold))
                 ],
-                style: TextStyle(fontSize: 16))),
+                style:const TextStyle(fontSize: 16))),
             // Text.rich(TextSpan(
             //     text: "تعداد : ",
             //     children: [

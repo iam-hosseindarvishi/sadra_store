@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:sadra_store/constants/size_config.dart';
-import 'package:sadra_store/services/database/order_detail_db.dart';
-import '../../../models/Cart.dart';
+import '../../../constants/size_config.dart';
+import '../../../services/database/order_detail_db.dart';
 import '../../../services/providers/cart_items_provider.dart';
 import 'cart_item_cart.dart';
 
