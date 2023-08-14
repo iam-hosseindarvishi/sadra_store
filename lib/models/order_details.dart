@@ -42,18 +42,16 @@ class OrderDetails {
   int? rowVersion;
   int? orderClientId;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id']=id;
-    map['itemType'] = itemType;
-    map['productDetailId'] = productDetailId;
-    map['price'] = price;
-    map['count1'] = count1;
-    map['description'] = description;
-    map['storeId'] = storeId;
-    map['rowVersion'] = rowVersion;
-    map['orderClientId'] = orderClientId;
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'id':id,
+    'itemType' : itemType,
+    'productDetailId' : productDetailId,
+    'price' : price,
+    'count1' : count1,
+    'description' : description,
+    'storeId' : storeId,
+    'rowVersion' : rowVersion,
+    'orderClientId' : orderClientId,
+  };
 
 }

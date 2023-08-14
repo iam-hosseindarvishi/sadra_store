@@ -12,18 +12,14 @@ class Body extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<Body> createState() => _BodyState();
-
-  getData()async{
-
-  }
 }
 
 class _BodyState extends ConsumerState<Body> {
   @override
   Widget build(BuildContext context) {
+    ref.refresh(cartItemsProvider);
     final cartItem=ref.watch(cartItemsProvider);
     return cartItem.when(data: (data) {
-
      return Padding(
         padding:
         EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
@@ -65,7 +61,6 @@ class _BodyState extends ConsumerState<Body> {
             )),
       );
     }, error: (error, stackTrace) {
-      print(stackTrace.toString());
       return const Center(child: Text("خطا در انجام عملیات",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),));
     },
       loading: () {

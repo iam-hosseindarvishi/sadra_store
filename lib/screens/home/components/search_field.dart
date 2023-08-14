@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/services/database/product_db.dart';
 
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -17,8 +18,10 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
-          onChanged: (value) {
-            // search value
+          onSubmitted: (value) async{
+            if(value.isNotEmpty){
+              // await ProductDb().getProducts(value);
+            }
           },
           decoration: InputDecoration(
               enabledBorder: InputBorder.none,

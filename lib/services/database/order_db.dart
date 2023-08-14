@@ -1,6 +1,8 @@
 
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+import 'package:sadra_store/services/database/order_detail_db.dart';
 import 'package:sadra_store/services/database/user_db.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -12,7 +14,7 @@ class OrderDb extends CoreDatabase{
    Database db=await database();
    var user=await UserDb().getUser();
    int orderId;
-   int now=DateTime.now().month+DateTime.now().day+DateTime.now().second+Random().nextInt(999);
+   int now=DateTime.now().month+DateTime.now().day+DateTime.now().hour+DateTime.now().second+Random().nextInt(999);
    if(user.personCode! <= 0  || user.personCode==null){
      throw Exception(["خطا در دریافت اطلاعات کاربر"]);
    }
@@ -27,25 +29,46 @@ class OrderDb extends CoreDatabase{
    order.isActive=true;
    return db.insert(orderTableName, order.toJson());
   }
+  Future<bool> deActivateOrder()async{
+    Database db=await database();
+    Order order=await getCurrentOrder();
+    order.isActive=false;
+    db.update(orderTableName, order.toJson());
+    return true;
+  }
   Future<Order> getCurrentOrder() async{
 
     Database db=await database();
     List<Map<String,dynamic>> maps=await db.query(orderTableName,where: "${OrderTableFields.isActive}=?",whereArgs: [1]);
     return maps.isNotEmpty ? Order.fromJson(maps.first):Order();
   }
-  Future<bool> sendOrder(Order order) async{
-    // currentOrder.isActive=false;
-    // Database db=await database();
 
-    Map<String,List> orders={
-          "orders":[
-            order.toJson()
-          ],
-        "orderDetails":[
+  Future<Map<String,dynamic>> sendingOrder()async{
+    final order=await OrderDb().getCurrentOrder();
+    final orderDetail=await OrderDetailDb().getOrderDetailsList();
+    Map<String,dynamic> orders={
+      '"orders"':[
+        {
+          '"orderClientId"': order.orderClientId,
+          '"personId"': order.personId,
+          '"visitorId"': order.visitorId,
+          '"orderType"': order.orderType,
+          '"personCode"': order.personCode,
+          '"orderDate"':'"${DateFormat('y-M-d').format(DateTime.now())}"'
+        }
+      ],
+      '"orderDetails"':List.generate(orderDetail.length,(index)=> {
 
-        ]
+              '"orderClientId"' :orderDetail[index].orderClientId,
+              '"itemType"' : orderDetail[index].itemType,
+              '"productDetailId"' : orderDetail[index].productDetailId,
+              '"price"' : orderDetail[index].price,
+              '"count1"' : orderDetail[index].count1,
+              '"storeId"' : orderDetail[index].storeId,
+            }),
+
     };
-
-    return true;
+    return orders;
   }
+
 }

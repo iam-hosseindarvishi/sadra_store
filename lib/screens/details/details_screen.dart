@@ -36,7 +36,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     details=await ProductDatailsDb().getDetail(productId);
     assets=await StoreAssetsDb().getDetail(details.productDetailId!);
 
-      orderDetails=await OrderDetailDb().getOrderDetail(details.productDetailId!,order.orderClientId!);
+      orderDetails=await OrderDetailDb().getOrderDetail(details.productDetailId!);
       if(orderDetails.orderClientId!=null){
         setState(() {
           count=orderDetails.count1!;
@@ -128,18 +128,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 InkWell(
                                     onTap: () async{
                                       count++;
-                                      if(orderDetails.count1! <= count){
+                                      if(assets.count1! < count){
                                         errorMessage("تعداد مجاز نمی باشد");
                                         return;
                                       }
                                       if (count <= 100) {
                                         updateCount(count);
                                       }else{
-
+                                        errorMessage("تعداد وارد شده بیش از حد مجاز است");
                                       }
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(10),
+                                      width: 50,
+                                      height: 50,
                                       decoration: BoxDecoration(
                                           color: Colors.red[900],
                                           borderRadius:
@@ -185,7 +187,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 child: TextField(
                                                     onSubmitted: (value) async{
                                                       double valCount=double.parse(value);
-                                                      if(orderDetails.count1! <= valCount){
+                                                      if(assets.count1! < valCount){
                                                         errorMessage("تعداد مجاز نمی باشد");
                                                         Navigator.of(context).pop();
                                                         return;
@@ -221,8 +223,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     });
                                   },
                                   child: Container(
-                                    width: 40,
-                                    height: 40,
+                                    width: 50,
+                                    height: 50,
+
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.red[900]!,width: 3)),
@@ -238,10 +241,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     onTap: ()async {
                                       if (count >1) {
                                         count--;
-                                        if(orderDetails.count1! <= count){
-                                          errorMessage("تعداد مجاز نمی باشد");
-                                          return;
-                                        }
+                                        // if(orderDetails.count1! <= count){
+                                        //   errorMessage("تعداد مجاز نمی باشد");
+                                        //   return;
+                                        // }
                                         orderDetails.count1=count;
                                         await OrderDetailDb().update(orderDetails).then((value) {
                                           setState(() {
@@ -251,6 +254,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       }
                                     },
                                     child: Container(
+                                      width: 50,
+                                      height: 50,
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                           color: Colors.red[900],

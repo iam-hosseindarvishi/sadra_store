@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../constants/constants.dart';
@@ -55,13 +56,17 @@ class BuildListView extends StatelessWidget {
                       ),
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          products[index].name!,
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: 200,
+                          child: AutoSizeText(
+                            products[index].name!,
+                            maxLines: 2 ,
+                            style: const TextStyle(
+                                color: Colors.black, fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Text(
                           showPrice == true

@@ -14,13 +14,12 @@ class _BodyState extends ConsumerState<Body> {
   @override
   Widget build(BuildContext context) {
     setState(() {});
-
     final getData = ref.watch(initDataFromServer);
     return getData.when(
         data: ((data) => const BodyData()),
-        error: (error, stackTrace) => const Center(
+        error: (error, stackTrace) =>  Center(
               child: Text(
-                'خطا در دریافت اطلاعات',
+                error.toString(),
                 style: TextStyle(color: Colors.red),
               ),
             ),

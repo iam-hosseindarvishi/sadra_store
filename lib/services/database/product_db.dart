@@ -26,26 +26,31 @@ class ProductDb extends CoreDatabase {
     final List<ProductDetailStoreAssets> detailsStoreAssets =
         await ProductApi().getDetailAssets();
     for (var product in products) {
-      ProductDetail productDetail=details.where((element) => element.productId==product.productId).first;
-      ProductDetailStoreAssets storeAssets=await StoreAssetsDb().getDetail(productDetail.productDetailId!);
-      if(product.deleted==1 || storeAssets.count1! <= 0){
-        Order order=await OrderDb().getCurrentOrder();
-        OrderDetails orderDetails=await OrderDetailDb().getOrderDetail(productDetail.productDetailId! , order.orderClientId!);
-        if(orderDetails.productDetailId==order.orderClientId){
-            await OrderDetailDb().delete(orderDetails);
-        }
-        await ProductDb().delete(product);
-        await ProductDatailsDb().delete(productDetail);
-        await StoreAssetsDb().delete(storeAssets);
-        continue;
-      }
-
-      await initProduct(product);
       ProductDetail detail =
-          details.singleWhere((el) => el.productId == product.productId);
-      await ProductDatailsDb().initDetails(detail, detailsStoreAssets);
+      details.singleWhere((el) => el.productId == product.productId);
       ProductDetailStoreAssets detailAssets = detailsStoreAssets
           .singleWhere((el) => el.productDetailId == detail.productDetailId);
+      // checking deleted data
+       if(product.deleted==1){
+         //if product is in database
+         if(await ProductDb().checkProductExist(product.productId)){
+           // checking product is in current order list or not
+           OrderDetails orderDetails=await OrderDetailDb().getOrderDetail(detail.productDetailId!);
+           if(orderDetails.orderClientId!=0){
+             // delete product form current order list if product exist in current order list
+             await OrderDetailDb().delete(orderDetails);
+           }
+           // finally remove product and product details and store assets from databse
+           await StoreAssetsDb().delete(detailAssets);
+           await ProductDatailsDb().delete(detail);
+           await delete(product);
+         }
+         // go to next product
+         continue;
+       }
+      //init data
+      await initProduct(product);
+      await ProductDatailsDb().initDetails(detail, detailsStoreAssets);
       await StoreAssetsDb().initDetailAssets(detailAssets);
     }
     return true;

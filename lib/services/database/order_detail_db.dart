@@ -17,9 +17,10 @@ class OrderDetailDb extends CoreDatabase{
         Database db=await database();
         return db.insert(orderDetailsTableName, orderDetails.toJson());
   }
-  Future<OrderDetails> getOrderDetail(int productDetailId ,int orderClientId) async{
+  Future<OrderDetails> getOrderDetail(int productDetailId) async{
     Database db=await database();
-    List<Map<String,dynamic>> maps=await db.query(orderDetailsTableName,where: "${OrderDetailsfields.productDetailId}=? AND ${OrderDetailsfields.orderClientId}=?",whereArgs: [productDetailId,orderClientId]);
+    Order order=await OrderDb().getCurrentOrder();
+    List<Map<String,dynamic>> maps=await db.query(orderDetailsTableName,where: "${OrderDetailsfields.productDetailId}=? AND ${OrderDetailsfields.orderClientId}=?",whereArgs: [productDetailId,order.orderClientId]);
     return maps.isNotEmpty ? OrderDetails.fromJson(maps.first) :OrderDetails(orderClientId: 0);
   }
   Future<List<OrderDetails>> getOrderDetailsList()async{

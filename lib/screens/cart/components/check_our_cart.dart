@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:sadra_store/services/api/order_remote.dart';
+import 'package:sadra_store/services/database/order_db.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -18,6 +22,7 @@ class CheckOurCart extends ConsumerStatefulWidget {
 class _CheckOurCartState extends ConsumerState<CheckOurCart> {
    double totalPrice=0.0;
    String formattedNumber="";
+   bool isSendingOrder=false;
   @override
   Widget build(BuildContext context) {
     ref.watch(orderProductProvider).getOrderPrice().then((value) => {
@@ -72,7 +77,33 @@ class _CheckOurCartState extends ConsumerState<CheckOurCart> {
         const SizedBox(
           height: 30,
         ),
-        DefaultButton(text: "تکمیل خرید", press: () {})
+        isSendingOrder==false? DefaultButton(text: "تکمیل خرید", press: () async{
+          setState(() {
+            isSendingOrder = !isSendingOrder;
+          });
+          await OrderApi().sendOrder().then((value) {
+            ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+              behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.indigo,
+                padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                margin: const EdgeInsets.only(bottom: 10,right: 5,left: 5),
+                content:Text(value==true?"سفارش شما ارسال شد":"خطا در ارسال سفارش",style: TextStyle(color:value==true? Colors.green:Colors.red,fontWeight: FontWeight.bold,fontSize: 22),)
+            )
+            );
+            setState(() {
+              isSendingOrder = !isSendingOrder;
+              setState(() {
+
+              });
+            });
+          });
+        }) :const SpinKitThreeBounce(
+          color: Colors.red,
+          size: 50,
+        ).animate(effects: [
+          const FadeEffect(
+              duration: Duration(seconds: 1)),
+        ]),
       ]),
     );
   }

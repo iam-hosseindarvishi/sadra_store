@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sadra_store/services/api/api_services.dart';
+import 'package:sadra_store/services/database/product_db.dart';
 import '../../constants/size_config.dart';
 import '../../models/Product.dart';
+import '../../services/providers/product_provider.dart';
 import '../favorite/favorite_screen.dart';
 import '../profile/profile_screen.dart';
 import '../settings/setting_screen.dart';
@@ -30,7 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-            body: items[_currentIndex], bottomNavigationBar: gNav(context)));
+            body: items[_currentIndex], bottomNavigationBar: gNav(context),
+        floatingActionButton: _currentIndex==0? FloatingActionButton(onPressed: () async{
+           initDataFromServer;
+           setState(() {
+
+           });
+        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child: Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)),) :null,));
   }
 
   //  gnav
