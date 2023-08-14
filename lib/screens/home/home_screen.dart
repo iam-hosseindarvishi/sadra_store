@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
            setState(() {
 
            });
-        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child: Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)),) :null,));
+        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child:const Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)),) :null,));
   }
 
   //  gnav

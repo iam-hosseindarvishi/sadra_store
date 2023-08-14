@@ -27,7 +27,7 @@ class _BodyState extends ConsumerState<Body> {
             itemCount: data.length,
             itemBuilder: (context, index) => Container(
               decoration: BoxDecoration(
-                color: index%2==0?Colors.white60 : Colors.white10
+                color: index%2==0?Colors.white30   : Colors.white10
               ),
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(

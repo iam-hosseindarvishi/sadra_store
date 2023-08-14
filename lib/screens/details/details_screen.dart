@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sadra_store/components/default_button.dart';
 import 'package:sadra_store/models/order_details.dart';
 import 'package:sadra_store/models/product_detail_store_assets.dart';
@@ -35,15 +36,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
     order=await OrderDb().getCurrentOrder();
     details=await ProductDatailsDb().getDetail(productId);
     assets=await StoreAssetsDb().getDetail(details.productDetailId!);
-
-      orderDetails=await OrderDetailDb().getOrderDetail(details.productDetailId!);
-      if(orderDetails.orderClientId!=null){
-        setState(() {
-          count=orderDetails.count1!;
-          isOnCart=true;
-        });
-      }
-
+    orderDetails=await OrderDetailDb().getOrderDetail(details.productDetailId!);
+    if(orderDetails.orderClientId!=null){
+      setState(() {
+        count=orderDetails.count1!;
+        isOnCart=true;
+      });
+    }
   }
   updateCount(double count)async{
     orderDetails.count1=count;
@@ -230,7 +229,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.red[900]!,width: 3)),
                                     child: Center(
-                                       child:  Text(count.toString(),style: TextStyle(fontSize: 16 ,color: Colors.red[900],  fontWeight: FontWeight.w900),),
+                                       child:  Text(count.toString().toPersianDigit(),style: TextStyle(fontSize: 16 ,color: Colors.red[900],  fontWeight: FontWeight.w900),),
                                     ),
                                   ),
                                 ),

@@ -1,10 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:intl/intl.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sadra_store/services/api/order_remote.dart';
-import 'package:sadra_store/services/database/order_db.dart';
 import '../../../components/default_button.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
@@ -20,16 +20,14 @@ class CheckOurCart extends ConsumerStatefulWidget {
 }
 
 class _CheckOurCartState extends ConsumerState<CheckOurCart> {
-   double totalPrice=0.0;
-   String formattedNumber="";
+   double totalPrice=0;
    bool isSendingOrder=false;
   @override
   Widget build(BuildContext context) {
     ref.watch(orderProductProvider).getOrderPrice().then((value) => {
     setState(() {
       totalPrice=value;
-      formattedNumber = NumberFormat('###,###.###').format(totalPrice);
-    })
+      })
     });
     return Container(
       // height: 147,
@@ -58,22 +56,28 @@ class _CheckOurCartState extends ConsumerState<CheckOurCart> {
                 text: "جمع کل : ",
                 children: [
                   TextSpan(
-                      text: "$formattedNumber ریال ",
+                      text: "${totalPrice.toInt().toString().toPersianDigit().seRagham()} ریال ",
                       style:const TextStyle(
                           color: kPrimaryColor, fontWeight: FontWeight.bold))
                 ],
                 style:const TextStyle(fontSize: 16))),
-            // Text.rich(TextSpan(
-            //     text: "تعداد : ",
-            //     children: [
-            //       TextSpan(
-            //           text: "50",
-            //           style: TextStyle(
-            //               color: kPrimaryColor, fontWeight: FontWeight.bold))
-            //     ],
-            //     style: TextStyle(fontSize: 16))),
           ],
         ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+
+              child: AutoSizeText(
+                "${totalPrice.toInt().toString().beToman().toWord()} تومان ",
+                maxLines: 3,
+                style: TextStyle(color: Colors.red),
+            ),
+        )]),
         const SizedBox(
           height: 30,
         ),
