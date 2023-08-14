@@ -5,15 +5,16 @@ import 'package:sadra_store/screens/home/components/body_shimmer.dart';
 import '../../../services/providers/product_provider.dart';
 
 class Body extends ConsumerStatefulWidget {
-  const Body({Key? key}) : super(key: key);
+  const Body( {Key? key}) : super(key: key);
   @override
   ConsumerState<Body> createState() => _BodyState();
+
 }
 
 class _BodyState extends ConsumerState<Body> {
   @override
   Widget build(BuildContext context) {
-    setState(() {});
+    // setState(() {});
     final getData = ref.watch(initDataFromServer);
     return getData.when(
         data: ((data) => const BodyData()),

@@ -4,11 +4,16 @@ import 'package:sadra_store/services/database/product_db.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
 
-class SearchField extends StatelessWidget {
+class SearchField extends StatefulWidget {
   const SearchField({
-    super.key,
+    super.key, required this.onSearch,
   });
+  final VoidCallback onSearch;
+  @override
+  State<SearchField> createState() => _SearchFieldState();
+}
 
+class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     return Container(

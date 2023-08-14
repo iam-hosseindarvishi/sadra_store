@@ -86,14 +86,11 @@ class _CheckOurCartState extends ConsumerState<CheckOurCart> {
             isSendingOrder = !isSendingOrder;
           });
           await OrderApi().sendOrder().then((value) {
-            ScaffoldMessenger.of(context).showSnackBar( SnackBar(
-              behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.indigo,
-                padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
-                margin: const EdgeInsets.only(bottom: 10,right: 5,left: 5),
-                content:Text(value==true?"سفارش شما ارسال شد":"خطا در ارسال سفارش",style: TextStyle(color:value==true? Colors.green:Colors.red,fontWeight: FontWeight.bold,fontSize: 22),)
-            )
-            );
+            ScaffoldMessenger.of(context).showSnackBar(
+                 SnackBar(
+                    backgroundColor:value==true? Colors.blueGrey : Colors.red,
+                    content: Center(child: Text(value==true?"سفارش شما ارسال شد":"خطا در ارسال سفارش",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),)
+                ));
             setState(() {
               isSendingOrder = !isSendingOrder;
               setState(() {

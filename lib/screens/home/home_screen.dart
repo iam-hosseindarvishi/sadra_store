@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sadra_store/services/api/api_services.dart';
-import 'package:sadra_store/services/database/product_db.dart';
 import '../../constants/size_config.dart';
-import '../../models/Product.dart';
 import '../../services/providers/product_provider.dart';
 import '../favorite/favorite_screen.dart';
 import '../profile/profile_screen.dart';
 import '../settings/setting_screen.dart';
 import 'components/body.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = "/home";
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _currentIndex = 0;
+  bool isLoadingData=false;
   List<Widget> items = [
     const Body(),
     const FavoriteScreen(),
@@ -34,11 +34,32 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
             body: items[_currentIndex], bottomNavigationBar: gNav(context),
         floatingActionButton: _currentIndex==0? FloatingActionButton(onPressed: () async{
-           initDataFromServer;
-           setState(() {
+          setState(() {
+            isLoadingData=true;
+          });
+          ref.refresh(initDataFromServer).whenData((value) => {
+            if(value){
+              ref.refresh(productDataProvider).whenData((value) => {
 
-           });
-        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child:const Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)),) :null,));
+              })
+            }
+          });
+            Future.delayed(Duration(seconds: 2)).then((value) {
+              setState(() {
+                isLoadingData=false;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                 const SnackBar(
+                   backgroundColor: Colors.blueGrey,
+                   content: Center(child: Text("بروزرسانی اطلاعات انجام شد",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),)
+                ));
+            });
+
+        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child: isLoadingData==false? const Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)) :
+        const SpinKitFadingCircle(
+          color: Colors.white,
+        ),)
+            :null,));
   }
 
   //  gnav

@@ -19,6 +19,7 @@ class BuildListView extends StatelessWidget {
   final bool showPrice;
   @override
   Widget build(BuildContext context) {
+    print("products lenght in list view is : ${products.length}");
     return ListView.builder(
         itemCount: products.length,
         itemBuilder: (_, int index) {

@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../constants/constants.dart';
 import '../../../constants/size_config.dart';
+import '../../../models/product.dart';
 import '../../../services/providers/product_provider.dart';
 import 'build_grid_view.dart';
 import 'build_list_view.dart';
@@ -18,9 +19,16 @@ class BodyData extends ConsumerStatefulWidget {
 
 class _BodyDataState extends ConsumerState<BodyData> {
   String _currentView = 'grid';
+  late List<Product> products;
+  bool isDataLoaded=false;
   @override
   Widget build(BuildContext context) {
-    final products = ref.watch(productDataProvider);
+     ref.watch(productDataProvider).whenData((value) {
+      setState(() {
+        isDataLoaded = true;
+        products=value;
+      });
+    });
     return SafeArea(
         child: Column(
       children: [
@@ -29,7 +37,9 @@ class _BodyDataState extends ConsumerState<BodyData> {
           SizedBox(
             height: getProportionateScreenWidth(30),
           ),
-          const HomeHeader(),
+           HomeHeader(searchFunc: () {
+
+           }),
           SizedBox(
             height: getProportionateScreenWidth(10),
           ),
@@ -49,6 +59,9 @@ class _BodyDataState extends ConsumerState<BodyData> {
                     onPressed: () {
                       setState(() {
                         _currentView = _currentView == 'grid' ? 'list' : 'grid';
+                        if(products.isNotEmpty){
+                          isDataLoaded=true;
+                        }
                       });
                     },
                     icon: _currentView == 'grid'
@@ -60,16 +73,25 @@ class _BodyDataState extends ConsumerState<BodyData> {
           // const PopularProducts(),
         ])),
         Expanded(
-            child: products.when(
-                data: (data) => _currentView == 'grid'
-                    ? BuildGridView(products: data)
-                    : BuildListView(
-                        products: data,
-                      ),
-                error: (err, s) => Center(child: Text("$err")),
-                loading: () => _currentView == "grid"
-                    ? buildGridViewShimmer()
-                    : buildListViewShimmer()))
+          child: isDataLoaded==false?_currentView == "grid"
+            ? buildGridViewShimmer()
+            : buildListViewShimmer()
+            :_currentView == 'grid'
+                  ? BuildGridView(products: products)
+                  : BuildListView(
+                      products: products,
+                    ),
+            ),
+            // child: products.when(
+            //     data: (data) => _currentView == 'grid'
+            //         ? BuildGridView(products: data)
+            //         : BuildListView(
+            //             products: data,
+            //           ),
+            //     error: (err, s) => Center(child: Text("$err")),
+            //     loading: () => _currentView == "grid"
+            //         ? buildGridViewShimmer()
+            //         : buildListViewShimmer()))
       ],
     ));
   }
