@@ -6,6 +6,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sadra_store/components/default_button.dart';
 import 'package:sadra_store/models/order_details.dart';
 import 'package:sadra_store/models/product_detail_store_assets.dart';
+import 'package:sadra_store/screens/cart/cart_screen.dart';
 import 'package:sadra_store/services/database/order_db.dart';
 import 'package:sadra_store/services/database/order_detail_db.dart';
 import 'package:sadra_store/services/database/store_assets_db.dart';
@@ -96,7 +97,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
                                       OrderDetails orderDetail=OrderDetails(description: "",storeId:assets.storeId,count1: count.toDouble(),price:details.price1!,itemType: 1,productDetailId: details.productDetailId,orderClientId: order.orderClientId);
                                       await OrderDetailDb().store(orderDetail).then((value){
-                                        if(value>18){
+                                        if(value>=1){
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                              backgroundColor: Colors.blueGrey,
+                                              duration: Duration(seconds: 2),
+                                              content: Row(
+
+                                                children: [
+                                                 const Text("به سبد خرید افزوده شد",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                                                  TextButton(onPressed: (){
+                                                    Navigator.pushNamed(context, CartScreen.routeName);
+                                                  }, child:const Text("مشاهده سبد خرید",style: TextStyle(color: Colors.black45,fontWeight: FontWeight.bold,fontSize: 18),))
+                                                ],
+                                              )
+                                          ));
                                           setState(() {
                                             // isOnCart=true;
                                             addingToCart=!addingToCart;

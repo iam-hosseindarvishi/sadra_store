@@ -31,9 +31,9 @@ class _BodyState extends ConsumerState<Body> {
               ),
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Dismissible(
-                onDismissed: (direction) {
-                  setState(() async{
-                    await OrderDetailDb().delete(data[index].orderDetail).then((value){
+                onDismissed: (direction) async {
+                  OrderDetailDb().delete(data[index].orderDetail).then((value) {
+                    setState(() {
                       data.removeAt(index);
                     });
                   });

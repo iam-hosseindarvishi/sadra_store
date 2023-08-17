@@ -33,7 +33,7 @@ class OrderDb extends CoreDatabase{
     Database db=await database();
     Order order=await getCurrentOrder();
     order.isActive=false;
-    db.update(orderTableName, order.toJson());
+    db.update(orderTableName, order.toJson(),where: "${OrderTableFields.orderClientId}=?",whereArgs: [order.orderClientId]);
     return true;
   }
   Future<Order> getCurrentOrder() async{
@@ -47,24 +47,24 @@ class OrderDb extends CoreDatabase{
     final order=await OrderDb().getCurrentOrder();
     final orderDetail=await OrderDetailDb().getOrderDetailsList();
     Map<String,dynamic> orders={
-      '"orders"':[
+      "orders":[
         {
-          '"orderClientId"': order.orderClientId,
-          '"personId"': order.personId,
-          '"visitorId"': order.visitorId,
-          '"orderType"': order.orderType,
-          '"personCode"': order.personCode,
-          '"orderDate"':'"${DateFormat('y-M-d').format(DateTime.now())}"'
+          "orderClientId": order.orderClientId,
+          "personId": order.personId,
+          "visitorId": order.visitorId,
+          "orderType": order.orderType,
+          "personCode": order.personCode,
+          "orderDate":"${DateFormat('y-M-d').format(DateTime.now())}"
         }
       ],
-      '"orderDetails"':List.generate(orderDetail.length,(index)=> {
+      "orderDetails":List.generate(orderDetail.length,(index)=> {
 
-              '"orderClientId"' :orderDetail[index].orderClientId,
-              '"itemType"' : orderDetail[index].itemType,
-              '"productDetailId"' : orderDetail[index].productDetailId,
-              '"price"' : orderDetail[index].price,
-              '"count1"' : orderDetail[index].count1,
-              '"storeId"' : orderDetail[index].storeId,
+              "orderClientId" :orderDetail[index].orderClientId,
+              "itemType" : orderDetail[index].itemType,
+              "productDetailId" : orderDetail[index].productDetailId,
+              "price" : orderDetail[index].price,
+              "count1" : orderDetail[index].count1,
+              "storeId" : orderDetail[index].storeId,
             }),
 
     };

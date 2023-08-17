@@ -3,24 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../constants/size_config.dart';
 import '../../../models/product.dart';
+import '../../../models/product_detail.dart';
+import '../../../models/product_detail_store_assets.dart';
 import '../../../services/providers/product_provider.dart';
 
 // ignore: must_be_immutable
 
 class ProductDescription extends ConsumerWidget {
-  const ProductDescription({
+   ProductDescription({
     super.key,
     required this.product,
   });
-
+  late ProductDetail productDetail;
+   ProductDetailStoreAssets productStoreAsset = ProductDetailStoreAssets();
   final Product product;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productDetail =
-        ref.watch(productDetailProvider(product.productId!)).value;
-    final productStoreAsset =
-        ref.watch(productStoreAssetsProvider(productDetail!.productDetailId!));
-
+        ref.watch(productDetailProvider(product.productId!)).whenData((value) {
+            productDetail=value;
+            ref.watch(productStoreAssetsProvider(value.productDetailId!)).whenData((value) {
+              productStoreAsset =value;
+            });
+        });
     // return dataLoaded(product, productStoreAsset!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,37 +91,26 @@ class ProductDescription extends ConsumerWidget {
               const SizedBox(
                 height: 15,
               ),
-              productStoreAsset.when(
-                data: (data) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "موجودی کالا : ",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        data.count1! >= 1
-                            ? "در انبار صدرا موجود می باشد"
-                            : "این کالا در انبار موجودی ندارد",
-                        style: TextStyle(
-                            color: data.count1! >= 1
-                                ? Colors.green[800]
-                                : Colors.red[800],
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  );
-                },
-                error: (error, stackTrace) => const Center(
-                  child: Text(
-                    "خطا در دریافت موجودی",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-                loading: () => const Text(""),
+          productStoreAsset.productDetailId !=null ? Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text(
+                "موجودی کالا : ",
+                style: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
+              Text(
+                productStoreAsset.count1! >= 1
+                    ? "در انبار صدرا موجود می باشد"
+                    : "این کالا در انبار موجودی ندارد",
+                style: TextStyle(
+                    color: productStoreAsset.count1! >= 1
+                        ? Colors.green[800]
+                        : Colors.red[800],
+                    fontWeight: FontWeight.bold),
+              )
+            ],
+          ) : shimmerLoading(),
               const SizedBox(
                 height: 15,
               ),

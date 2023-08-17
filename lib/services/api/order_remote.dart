@@ -9,22 +9,19 @@ class OrderApi extends ApiServices{
   Future<bool> sendOrder() async{
     Token token = await getToken();
     final uri = Uri.https(endPoint,"/API/v3/Sync/SaveAllData");
-    print("calling data");
     var jsonData=await OrderDb().sendingOrder();
     var body = jsonEncode(jsonData);
-
     var response = await http.post(uri,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${token.token}"
         },
         body: body);
+    print(response.body);
     if (response.statusCode != 200) {
-      print("error ${response.reasonPhrase}");
       return false;
     }
-    await OrderDb().deActivateOrder();
-    await OrderDb().initOrder();
+    await OrderDb().deActivateOrder().then((value) async => await OrderDb().initOrder());
     print("done!");
     return true;
   }
