@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/constants.dart';
 import '../../../models/product.dart';
-import '../../../services/providers/picture_provider.dart';
 import '../../details/details_screen.dart';
 import 'product_image.dart';
 
@@ -25,6 +24,7 @@ class BuildGridView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("products in grid is $products");
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,

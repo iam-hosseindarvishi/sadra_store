@@ -1,11 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchNotifier extends StateNotifier<String> {
-  SearchNotifier(super.state);
+class SearchNotifier extends ChangeNotifier  {
+  String search = "";
   void add(String s){
-      state=s;
+      search=s;
+      notifyListeners();
   }
+
   void remove(){
-    state="";
+    search = "";
+    notifyListeners();
   }
 }
+
+final searchProvider=ChangeNotifierProvider<SearchNotifier>((ref) => SearchNotifier());

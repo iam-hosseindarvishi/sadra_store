@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sadra_store/services/providers/search_state_notifier.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../constants/constants.dart';
@@ -20,14 +21,33 @@ class BodyData extends ConsumerStatefulWidget {
 class _BodyDataState extends ConsumerState<BodyData> {
   String _currentView = 'grid';
   late List<Product> products;
-  bool isDataLoaded=false;
+  bool isDataLoaded = false;
+  bool isSearched = false;
+  String searchText = "";
   @override
   Widget build(BuildContext context) {
-     ref.watch(productDataProvider).whenData((value) {
+    ref.watch(productDataProvider).whenData((value) {
       setState(() {
         isDataLoaded = true;
-        products=value;
+        products = value;
       });
+    });
+    final searchState = ref.watch(searchProvider);
+    searchState.addListener(() {
+      print("has been searched");
+      if (searchState.search != "") {
+        setState(() {
+          isSearched = true;
+          searchText = searchState.search;
+        });
+      } else {
+        setState(() {
+          isSearched = false;
+          // searchText = searchState.search;
+        });
+      }
+      print("search text is $searchText");
+      print("search state is $isSearched");
     });
     return SafeArea(
         child: Column(
@@ -37,9 +57,7 @@ class _BodyDataState extends ConsumerState<BodyData> {
           SizedBox(
             height: getProportionateScreenWidth(30),
           ),
-           HomeHeader(searchFunc: () {
-
-           }),
+          HomeHeader(searchFunc: () {}),
           SizedBox(
             height: getProportionateScreenWidth(10),
           ),
@@ -59,8 +77,8 @@ class _BodyDataState extends ConsumerState<BodyData> {
                     onPressed: () {
                       setState(() {
                         _currentView = _currentView == 'grid' ? 'list' : 'grid';
-                        if(products.isNotEmpty){
-                          isDataLoaded=true;
+                        if (products.isNotEmpty) {
+                          isDataLoaded = true;
                         }
                       });
                     },
@@ -73,25 +91,38 @@ class _BodyDataState extends ConsumerState<BodyData> {
           // const PopularProducts(),
         ])),
         Expanded(
-          child: isDataLoaded==false?_currentView == "grid"
-            ? buildGridViewShimmer()
-            : buildListViewShimmer()
-            :_currentView == 'grid'
-                  ? BuildGridView(products: products)
+          child: isDataLoaded == false
+              ? _currentView == "grid"
+                  ? buildGridViewShimmer()
+                  : buildListViewShimmer()
+              : _currentView == 'grid'
+                  ? BuildGridView(
+                      products: isSearched != true
+                          ? products
+                          : products
+                              .where((element) =>
+                                  element.name!.contains(searchText))
+                              .toList(),
+                    )
                   : BuildListView(
-                      products: products,
+                      products: isSearched != true
+                          ? products
+                          : products
+                              .where((element) =>
+                                  element.name!.contains(searchText))
+                              .toList(),
                     ),
-            ),
-            // child: products.when(
-            //     data: (data) => _currentView == 'grid'
-            //         ? BuildGridView(products: data)
-            //         : BuildListView(
-            //             products: data,
-            //           ),
-            //     error: (err, s) => Center(child: Text("$err")),
-            //     loading: () => _currentView == "grid"
-            //         ? buildGridViewShimmer()
-            //         : buildListViewShimmer()))
+        ),
+        // child: products.when(
+        //     data: (data) => _currentView == 'grid'
+        //         ? BuildGridView(products: data)
+        //         : BuildListView(
+        //             products: data,
+        //           ),
+        //     error: (err, s) => Center(child: Text("$err")),
+        //     loading: () => _currentView == "grid"
+        //         ? buildGridViewShimmer()
+        //         : buildListViewShimmer()))
       ],
     ));
   }
