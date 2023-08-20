@@ -12,7 +12,7 @@ class ProductFields {
   static const String rowVersion = "RowVersion";
   static const String productCategoryClientId = "ProductCategoryClientId";
   static const String productCategoryCode = "ProductCategoryCode";
-  static const String productImageUrl = "ProductImageUrl";
+  static const String isFavorite = "isFavorite";
 }
 
 class Product {
@@ -27,7 +27,9 @@ class Product {
   int? rowVersion;
   int? productCategoryClientId;
   int? productCategoryCode;
+  bool? isFavorite;
   Product({
+    this.isFavorite,
     this.productId,
     this.productClientId,
     this.productCode,
@@ -53,6 +55,7 @@ class Product {
         rowVersion: json['RowVersion'] as int?,
         productCategoryClientId: json['ProductCategoryClientId'] as int?,
         productCategoryCode: json['ProductCategoryCode'] as int?,
+        isFavorite: json["isFavorite"] == 0 ? false : true,
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +70,6 @@ class Product {
         'RowVersion': rowVersion,
         'ProductCategoryClientId': productCategoryClientId,
         'ProductCategoryCode': productCategoryCode,
+        "isFavorite": isFavorite == false ? 0 : 1,
       };
 }

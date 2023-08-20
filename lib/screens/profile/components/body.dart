@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sadra_store/constants/constants.dart';
 import 'package:sadra_store/constants/size_config.dart';
+import 'package:sadra_store/services/database/user_db.dart';
+
+import '../../../models/user.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -10,8 +13,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  User user = User();
   @override
   Widget build(BuildContext context) {
+    UserDb().getUser().then((value) => user = value);
     return SafeArea(
         child: SingleChildScrollView(
       child: Padding(
@@ -49,6 +54,28 @@ class _BodyState extends State<Body> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
+                          "نام کاربری :  ",
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(14),
+                              fontWeight: FontWeight.w600,
+                              color: kSecondaryColor),
+                        ),
+                        Text(
+                          user.userName!,
+                          style: TextStyle(
+                              fontSize: getProportionateScreenWidth(14),
+                              fontWeight: FontWeight.w600,
+                              color: kSecondaryColor),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(30),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
                           "نام  :  ",
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
@@ -56,7 +83,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "حسین",
+                          user.firstName!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
@@ -78,7 +105,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "درویشی",
+                          user.lastName!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
@@ -100,7 +127,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "iam.hosseindarvishi@gmail.com",
+                          user.email!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
@@ -122,7 +149,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "09179360559",
+                          user.phone!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
@@ -144,7 +171,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "09363760782",
+                          user.mobile!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
@@ -166,7 +193,7 @@ class _BodyState extends State<Body> {
                               color: kSecondaryColor),
                         ),
                         Text(
-                          "میناب",
+                          user.address!,
                           style: TextStyle(
                               fontSize: getProportionateScreenWidth(14),
                               fontWeight: FontWeight.w600,
