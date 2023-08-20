@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="sadra_store"
+        android:label="فروشگاه صدرا"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

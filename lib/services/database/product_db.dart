@@ -59,7 +59,7 @@ class ProductDb extends CoreDatabase {
 
   Future initProduct(Product product) async {
     if (await checkProductExist(product.productId)) {
-      product.isFavorite = await checkIsFavoriteProduct(product);
+      product.isFavorite = await checkIsFavoriteProduct(product.productId!);
       update(product);
     } else {
       product.isFavorite = false;
@@ -67,10 +67,10 @@ class ProductDb extends CoreDatabase {
     }
   }
 
-  Future<bool> checkIsFavoriteProduct(Product product) async {
+  Future<bool> checkIsFavoriteProduct(int productId) async {
     Database db = await database();
-    List<Map<String, dynamic>> maps = await db.query(productTableName,
-        where: "ProductId=?", whereArgs: [product.productId]);
+    List<Map<String, dynamic>> maps = await db
+        .query(productTableName, where: "ProductId=?", whereArgs: [productId]);
     Product getProduct = Product.fromJson(maps.first);
     return getProduct.isFavorite!;
   }
