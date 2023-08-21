@@ -34,7 +34,6 @@ class _BodyDataState extends ConsumerState<BodyData> {
     });
     final searchState = ref.watch(searchProvider);
     searchState.addListener(() {
-      print("has been searched");
       if (searchState.search != "") {
         setState(() {
           isSearched = true;
@@ -46,8 +45,6 @@ class _BodyDataState extends ConsumerState<BodyData> {
           // searchText = searchState.search;
         });
       }
-      print("search text is $searchText");
-      print("search state is $isSearched");
     });
     return SafeArea(
         child: Column(

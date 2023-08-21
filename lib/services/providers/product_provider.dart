@@ -9,6 +9,8 @@ import '../database/store_assets_db.dart';
 final productDataProvider = FutureProvider<List<Product>>((ref) {
   return ref.watch(productProvider).getProducts();
 });
+final favoriteDataProdiver = FutureProvider<List<Product>>(
+    (ref) => ref.watch(productProvider).getFavoritProducts());
 
 final productDetailProvider =
     FutureProvider.family<ProductDetail, int>((ref, productId) {

@@ -76,10 +76,10 @@ class ProductDb extends CoreDatabase {
   }
 
   Future<List<Product>> getFavoritProducts() async {
-    List<Product> favorits = List.empty();
     Database db = await database();
     List<Map<String, dynamic>> maps = await db.query(productTableName,
         where: "${ProductFields.isFavorite}=?", whereArgs: [1]);
+    List<Product> favorits = [];
     maps.isEmpty
         ? throw Exception(["محصول مورد علاقه ای وجود ندارد"])
         : favorits.addAll(maps.map((e) => Product.fromJson(e)));

@@ -36,13 +36,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
   late OrderDetails orderDetails;
   late ProductDetailStoreAssets assets;
   initOrder(int productId) async {
-    isFavorit = await ProductDb().checkIsFavoriteProduct(productId);
     order = await OrderDb().getCurrentOrder();
     details = await ProductDatailsDb().getDetail(productId);
     assets = await StoreAssetsDb().getDetail(details.productDetailId!);
     orderDetails =
         await OrderDetailDb().getOrderDetail(details.productDetailId!);
-    if (orderDetails.orderClientId != null) {
+    if (orderDetails.productDetailId != null &&
+        orderDetails.productDetailId! >= 0) {
       setState(() {
         count = orderDetails.count1!;
         isOnCart = true;
@@ -61,82 +61,91 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final ProductDetailsArguments arguments =
         ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
+    ProductDb()
+        .checkIsFavoriteProduct(arguments.product.productId!)
+        .then((value) => setState(
+              () => isFavorit = value,
+            ));
+
     initOrder(arguments.product.productId!);
 
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          floatingActionButton: GestureDetector(
-            onTap: () async {
-              isFavorit
-                  ? ProductDb()
-                      .removeFromFavorit(arguments.product)
-                      .then((value) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "از علاقه مندی ها حدف شد",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red[900]),
-                              ),
-                              Icon(
-                                Icons.delete,
-                                color: Colors.red[900],
-                              )
-                            ],
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: GestureDetector(
+              onTap: () async {
+                isFavorit
+                    ? ProductDb()
+                        .removeFromFavorit(arguments.product)
+                        .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "از علاقه مندی ها حدف شد",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red[900]),
+                                ),
+                                Icon(
+                                  Icons.delete,
+                                  color: Colors.red[900],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        backgroundColor: Colors.red[200],
-                        behavior: SnackBarBehavior.fixed,
-                      ));
-                      setState(() {
-                        isFavorit = false;
-                      });
-                    })
-                  : ProductDb().addToFavorit(arguments.product).then((value) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "به علاقه مندی ها افزوده شد",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green[900]),
+                          backgroundColor: Colors.red[200],
+                          behavior: SnackBarBehavior.fixed,
+                          duration: const Duration(milliseconds: 60),
+                        ));
+                        setState(() {
+                          isFavorit = !isFavorit;
+                        });
+                      })
+                    : ProductDb().addToFavorit(arguments.product).then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "به علاقه مندی ها افزوده شد",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[900]),
+                                  ),
+                                  Icon(
+                                    Icons.done,
+                                    color: Colors.green[900],
+                                  )
+                                ],
                               ),
-                              Icon(
-                                Icons.done,
-                                color: Colors.green[900],
-                              )
-                            ],
-                          ),
-                        ),
-                        backgroundColor: Colors.green[200],
-                        behavior: SnackBarBehavior.fixed,
-                      ));
-                      setState(() {
-                        isFavorit = false;
+                            ),
+                            backgroundColor: Colors.green[200],
+                            behavior: SnackBarBehavior.fixed,
+                            duration: const Duration(milliseconds: 60)));
+                        setState(() {
+                          isFavorit = !isFavorit;
+                        });
                       });
-                    });
-            },
-            child: Icon(
-              Icons.favorite,
-              color: isFavorit ? Colors.red : Colors.grey,
-              size: 40,
+              },
+              child: Icon(
+                Icons.favorite,
+                color: isFavorit ? Colors.red : Colors.grey,
+                size: 40,
+              ),
             ),
           ),
           appBar: AppBar(
             title: Text(arguments.product.name!),
           ),
-          body: SingleChildScrollView(
-            child: Body(
-              product: arguments.product,
-            ),
+          body: Body(
+            product: arguments.product,
           ),
           bottomNavigationBar: SingleChildScrollView(
             child: Column(
