@@ -8,9 +8,7 @@ import '../../../constants/size_config.dart';
 class SearchField extends ConsumerStatefulWidget {
   const SearchField({
     super.key,
-    required this.onSearch,
   });
-  final VoidCallback onSearch;
 
   @override
   ConsumerState<SearchField> createState() => _SearchFieldState();
@@ -22,7 +20,7 @@ class _SearchFieldState extends ConsumerState<SearchField> {
   Widget build(BuildContext context) {
     // final searchNotifier=ref.watch(searchProvider as ProviderListenable);
     return Container(
-      width: SizeConfig.screenWidth * 0.6,
+      width: SizeConfig.screenWidth * 0.7,
       decoration: BoxDecoration(
         color: kSecondaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(15),

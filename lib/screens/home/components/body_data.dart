@@ -54,7 +54,7 @@ class _BodyDataState extends ConsumerState<BodyData> {
           SizedBox(
             height: getProportionateScreenWidth(30),
           ),
-          HomeHeader(searchFunc: () {}),
+          HomeHeader(),
           SizedBox(
             height: getProportionateScreenWidth(10),
           ),
