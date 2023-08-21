@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,7 +21,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _currentIndex = 0;
-  bool isLoadingData=false;
+  bool isLoadingData = false;
   List<Widget> items = [
     const Body(),
     const FavoriteScreen(),
@@ -29,37 +31,62 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-            body: items[_currentIndex], bottomNavigationBar: gNav(context),
-        floatingActionButton: _currentIndex==0? FloatingActionButton(onPressed: () async{
-          setState(() {
-            isLoadingData=true;
-          });
-          ref.refresh(initDataFromServer).whenData((value) => {
-            if(value){
-              ref.refresh(productDataProvider).whenData((value) => {
-
-              })
-            }
-          });
-            Future.delayed(Duration(seconds: 2)).then((value) {
-              setState(() {
-                isLoadingData=false;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                 const SnackBar(
-                   backgroundColor: Colors.blueGrey,
-                   content: Center(child: Text("بروزرسانی اطلاعات انجام شد",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),)
-                ));
-            });
-
-        },tooltip: "بروزرسانی اطلاعات",backgroundColor: Colors.blueGrey,child: isLoadingData==false? const Center(child: Icon(Icons.refresh_sharp,color: Colors.white,)) :
-        const SpinKitFadingCircle(
-          color: Colors.white,
-        ),)
-            :null,));
+    return WillPopScope(
+      onWillPop: () async {
+        exit(0);
+      },
+      child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: items[_currentIndex],
+            bottomNavigationBar: gNav(context),
+            floatingActionButton: _currentIndex == 0
+                ? FloatingActionButton(
+                    onPressed: () async {
+                      setState(() {
+                        isLoadingData = true;
+                      });
+                      ref.refresh(initDataFromServer).whenData((value) => {
+                            if (value)
+                              {
+                                ref
+                                    .refresh(productDataProvider)
+                                    .whenData((value) => {})
+                              }
+                          });
+                      Future.delayed(Duration(seconds: 2)).then((value) {
+                        setState(() {
+                          isLoadingData = false;
+                        });
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.blueGrey,
+                                content: Center(
+                                  child: Text(
+                                    "بروزرسانی اطلاعات انجام شد",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )));
+                      });
+                    },
+                    tooltip: "بروزرسانی اطلاعات",
+                    backgroundColor: Colors.blueGrey,
+                    child: isLoadingData == false
+                        ? const Center(
+                            child: Icon(
+                            Icons.refresh_sharp,
+                            color: Colors.white,
+                          ))
+                        : const SpinKitFadingCircle(
+                            color: Colors.white,
+                          ),
+                  )
+                : null,
+          )),
+    );
   }
 
   //  gnav
