@@ -13,10 +13,20 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  User user = User();
+  User user = User(
+    userName: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: "",
+    email: "",
+    mobile: "",
+  );
   @override
   Widget build(BuildContext context) {
-    UserDb().getUser().then((value) => user = value);
+    UserDb().getUser().then((value) => setState(
+          () => user = value,
+        ));
     return SafeArea(
         child: SingleChildScrollView(
       child: Padding(

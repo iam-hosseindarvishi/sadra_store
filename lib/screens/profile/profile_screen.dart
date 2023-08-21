@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: const Body(),
+        body: Body(),
       ),
     );
   }
