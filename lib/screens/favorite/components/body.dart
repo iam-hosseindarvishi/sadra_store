@@ -18,15 +18,16 @@ class Body extends ConsumerStatefulWidget {
 class _BodyState extends ConsumerState<Body> {
   late List<Product> products;
   String _currentView = 'grid';
-  bool isDataLoad = false;
   @override
   Widget build(BuildContext context) {
-    ref.refresh(favoriteDataProdiver).whenData((value) {
-      setState(() {
-        isDataLoad = true;
-        products = value;
-      });
-    });
+    final favoritList = ref.refresh(favoriteDataProdiver);
+
+    // .whenData((value) {
+    //   setState(() {
+    //     isDataLoading = true;
+    //     products = value;
+    //   });
+    // });
 
     return SafeArea(
         child: Column(
@@ -49,9 +50,6 @@ class _BodyState extends ConsumerState<Body> {
                           setState(() {
                             _currentView =
                                 _currentView == 'grid' ? 'list' : 'grid';
-                            if (products.isNotEmpty) {
-                              isDataLoad = true;
-                            }
                           });
                         },
                         icon: _currentView == 'grid'
@@ -63,15 +61,29 @@ class _BodyState extends ConsumerState<Body> {
             ],
           ),
         ),
-        Expanded(
-          child: isDataLoad == false
-              ? _currentView == "grid"
-                  ? buildGridViewShimmer()
-                  : buildListViewShimmer()
-              : _currentView == 'grid'
-                  ? BuildGridView(products: products)
-                  : BuildListView(products: products),
-        ),
+        favoritList.when(
+          data: (data) {
+            return Expanded(
+              child: _currentView == 'grid'
+                  ? BuildGridView(products: data)
+                  : BuildListView(products: data),
+            );
+          },
+          error: (error, stackTrace) {
+            return const Center(
+              child: Text(
+                "خطا در دریافت اطلاعات",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            );
+          },
+          loading: () {
+            return buildGridViewShimmer();
+          },
+        )
       ],
     ));
   }
