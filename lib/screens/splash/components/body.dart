@@ -25,10 +25,10 @@ class _BodyState extends State<Body> {
           "به فروشگاه اینترنتی صدرا خوش آمدید \n لذت خرید آنلاین را با ما تجربه کنید",
       "image": "assets/images/splash-online-shoping.webp"
     },
-    {
-      "text": "پرداخت آنلاین مانده حساب",
-      "image": "assets/images/splash-online-pay.webp"
-    },
+    // {
+    //   "text": "پرداخت آنلاین مانده حساب",
+    //   "image": "assets/images/splash-online-pay.webp"
+    // },
     {
       "text": "ارسال بار رایگان برای خرید های بالای 50 میلیون",
       "image": "assets/images/splash-delivery.webp"
@@ -89,7 +89,7 @@ class _BodyState extends State<Body> {
                           if (await CategoryDb().checkCategoryExsit() ==
                               false) {
                             List<ProductCategory> categories =
-                            await CategoryApi().getCategories();
+                                await CategoryApi().getCategories();
                             for (var element in categories) {
                               await CategoryDb().store(element);
                             }
