@@ -75,29 +75,55 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                         text: "بزن بریم خرید",
                         press: () async {
-                          await ApiServices().getToken();
-                          await checkConnection();
-                          // if (await SettingDb().getSettings() == false) {
-                          //   await SettingDb().initSetting();
-                          // }
-                          await SettingDb()
-                              .checkSettingExsit()
-                              .then((value) async {
-                            if (value == false) {
-                              await SettingDb().initSetting();
-                            }
-                          });
-                          // init categories
-                          if (await CategoryDb().checkCategoryExsit() ==
-                              false) {
-                            List<ProductCategory> categories =
-                                await CategoryApi().getCategories();
-                            for (var element in categories) {
-                              await CategoryDb().store(element);
-                            }
-                          }
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(context, SignInScreen.routeName);
+                         try{
+                           await ApiServices().getToken();
+                           await checkConnection();
+                           // if (await SettingDb().getSettings() == false) {
+                           //   await SettingDb().initSetting();
+                           // }
+                           await SettingDb()
+                               .checkSettingExsit()
+                               .then((value) async {
+                             if (value == false) {
+                               await SettingDb().initSetting();
+                             }
+                           });
+                           // init categories
+                           if (await CategoryDb().checkCategoryExsit() ==
+                               false) {
+                             List<ProductCategory> categories =
+                             await CategoryApi().getCategories();
+                             for (var element in categories) {
+                               await CategoryDb().store(element);
+                             }
+                           }
+                           // ignore: use_build_context_synchronously
+                           Navigator.pushNamed(context, SignInScreen.routeName);
+                         }catch(err){
+                           showDialog<String>(
+                               context: context,
+                               builder: (BuildContext context) => AlertDialog(
+                                 icon: const Icon(Icons.error),
+                                 iconColor: Colors.red,
+                                 title: const Text(
+                                   "خطا",
+                                   style: TextStyle(
+                                       color: Colors.red,
+                                       fontWeight: FontWeight.bold),
+                                 ),
+                                 content: Text(
+                                   err.toString(),
+                                   style: const TextStyle(
+                                       color: Colors.redAccent),
+                                 ),
+                                 actions: [
+                                   TextButton(
+                                       onPressed: () =>
+                                           Navigator.pop(context),
+                                       child: const Text("فهمیدم"))
+                                 ],
+                               ));
+                         }
                         }),
                     const Spacer(),
                   ]),
