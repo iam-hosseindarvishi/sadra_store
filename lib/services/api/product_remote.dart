@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadra_store/models/product_detail_store_assets.dart';
+import 'package:sadra_store/services/providers/token_provider.dart';
 
 import '../../models/product.dart';
 import '../../models/product_detail.dart';
@@ -12,7 +13,7 @@ class ProductApi extends ApiServices {
   // get products from api
   Future<List<Product>> getProducts() async {
     List<Product> products = [];
-    Token token = await getToken();
+    Token token = TokenNotifier().getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductVersion": 0,
@@ -38,7 +39,7 @@ class ProductApi extends ApiServices {
 // get product datails from api
   Future<List<ProductDetail>> getProductsDatails() async {
     List<ProductDetail> productsDatails = [];
-    Token token = await getToken();
+    Token token = TokenNotifier().getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductDetailVersion": 0,
@@ -64,7 +65,7 @@ class ProductApi extends ApiServices {
   //  get product details store assets from api
   Future<List<ProductDetailStoreAssets>> getDetailAssets() async {
     List<ProductDetailStoreAssets> details = [];
-    Token token = await getToken();
+    Token token = TokenNotifier().getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductDetailStoreAssetVersion": 0,

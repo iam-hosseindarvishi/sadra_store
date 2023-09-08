@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../models/user.dart';
 import '../database/user_db.dart';
 

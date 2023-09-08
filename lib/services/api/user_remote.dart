@@ -1,5 +1,6 @@
 import '../../models/token.dart';
 import '../../models/user.dart';
+import '../providers/token_provider.dart';
 import 'api_services.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 class UserApi extends ApiServices {
   // get user form api
   Future<User> getUser(String phone, String password) async {
-    Token token = await getToken();
+    Token token = TokenNotifier().getToken();
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromPersonVersion": 0,
