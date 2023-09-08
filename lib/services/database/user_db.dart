@@ -17,7 +17,7 @@ class UserDb extends CoreDatabase {
 
     return maps.isNotEmpty
         ? User.fromJson(maps.first)
-        : throw Exception("کاربری یافت نشد");
+        : User();
   }
 
   Future<int> update(User user) async {

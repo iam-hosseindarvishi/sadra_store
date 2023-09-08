@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:sadra_store/constants/constants.dart';
 import '../../../constants/size_config.dart';
 import '../../../services/database/order_detail_db.dart';
 import '../../../services/providers/cart_items_provider.dart';
@@ -21,7 +23,17 @@ class _BodyState extends ConsumerState<Body> {
     final cartItem = ref.watch(cartItemsProvider);
     return cartItem.when(
       data: (data) {
-        return Padding(
+        return data.length<=0? Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+
+            children: [
+              SvgPicture.asset("assets/images/empty_cart.svg",width: getProportionateScreenWidth(200),colorFilter:ColorFilter.mode(kPrimaryLightColor, BlendMode.dst) ,),
+              SizedBox(height: getProportionateScreenWidth(25),),
+              Text("سبد خرید شما خالی است",style: TextStyle(color:kPrimaryColor,fontSize: 20,fontWeight: FontWeight.bold),)
+            ],
+          ),
+        ) : Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: ListView.builder(
