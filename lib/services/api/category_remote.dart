@@ -9,21 +9,21 @@ class CategoryApi extends ApiServices {
   Future<List<ProductCategory>> getCategories() async {
     List<ProductCategory> categories = [];
     Token token =Token.getToken;
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+"/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductCategoryVersion": 0,
     });
-    var respone = await http.post(uri,
+    var response = await http.post(uri,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${token.token}"
         },
         body: body);
-    if (respone.statusCode != 200) {
+    if (response.statusCode != 200) {
       return throw Exception("خطا در دریافت اطلاعات");
     }
-    // Map<String, dynamic> categoryMap = convert.jsonDecode(respone.body);
-    List<dynamic> items = convert.jsonDecode(respone.body)["Data"]["Objects"]
+    // Map<String, dynamic> categoryMap = convert.jsonDecode(response.body);
+    List<dynamic> items = convert.jsonDecode(response.body)["Data"]["Objects"]
         ["ProductCategories"];
     categories.addAll(items.map((e) {
       return ProductCategory.fromJson(e);

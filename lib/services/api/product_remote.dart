@@ -11,7 +11,7 @@ class ProductApi extends ApiServices {
   Future<List<Product>> getProducts() async {
     List<Product> products = [];
     Token token = Token.getToken;
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+ "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductVersion": 0,
     });
@@ -37,7 +37,7 @@ class ProductApi extends ApiServices {
   Future<List<ProductDetail>> getProductsDatails() async {
     List<ProductDetail> productsDatails = [];
     Token token =Token.getToken;
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+ "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductDetailVersion": 0,
     });
@@ -63,7 +63,7 @@ class ProductApi extends ApiServices {
   Future<List<ProductDetailStoreAssets>> getDetailAssets() async {
     List<ProductDetailStoreAssets> details = [];
     Token token = Token.getToken;
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+ "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductDetailStoreAssetVersion": 0,
     });

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class UserApi extends ApiServices {
   // get user form api
   Future<User> getUser(String phone, String password) async {
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+ "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromPersonVersion": 0,
     });

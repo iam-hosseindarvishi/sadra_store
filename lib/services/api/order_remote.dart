@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class OrderApi extends ApiServices{
   Future<bool> sendOrder() async{
     Token token =Token.getToken;
-    final uri = Uri.https(endPoint,"/API/v3/Sync/SaveAllData");
+    final uri = Uri.parse(endPoint+"/API/v3/Sync/SaveAllData");
     var jsonData=await OrderDb().sendingOrder();
     var body = jsonEncode(jsonData);
     var response = await http.post(uri,

@@ -10,7 +10,7 @@ class PictureApi extends ApiServices {
   // get product images from api
   Future<Map<int, String>> getPictures() async {
     Token token = Token.getToken;
-    var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
+    var uri = Uri.parse(endPoint+"/API/v3/Sync/GetAllData");
     var body = convert
         .jsonEncode({"fromPhotoGalleryVersion": 0, "fromPictureVersion": 0});
     var respone = await http.post(uri,
