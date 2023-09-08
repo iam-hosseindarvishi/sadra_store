@@ -1,4 +1,3 @@
-import 'package:sadra_store/services/providers/token_provider.dart';
 import '../../models/product_category.dart';
 import '../../models/token.dart';
 import 'api_services.dart';
@@ -9,7 +8,7 @@ class CategoryApi extends ApiServices {
   // get product categories form api
   Future<List<ProductCategory>> getCategories() async {
     List<ProductCategory> categories = [];
-    Token token =TokenNotifier().getToken();
+    Token token =Token.getToken;
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert.jsonEncode({
       "fromProductCategoryVersion": 0,

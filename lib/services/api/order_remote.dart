@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'package:sadra_store/services/providers/token_provider.dart';
-
 import '../../models/token.dart';
 import '../database/order_db.dart';
 import 'api_services.dart';
 import 'package:http/http.dart' as http;
 class OrderApi extends ApiServices{
   Future<bool> sendOrder() async{
-    Token token =TokenNotifier().getToken();
+    Token token =Token.getToken;
     final uri = Uri.https(endPoint,"/API/v3/Sync/SaveAllData");
     var jsonData=await OrderDb().sendingOrder();
     var body = jsonEncode(jsonData);

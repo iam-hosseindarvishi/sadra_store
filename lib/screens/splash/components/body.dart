@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sadra_store/services/api/api_services.dart';
 import 'package:sadra_store/utility/check_internet_connection.dart';
 import '../../../models/product_category.dart';
 import '../../../services/api/category_remote.dart';
@@ -74,6 +75,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                         text: "بزن بریم خرید",
                         press: () async {
+                          await ApiServices().getToken();
                           await checkConnection();
                           // if (await SettingDb().getSettings() == false) {
                           //   await SettingDb().initSetting();

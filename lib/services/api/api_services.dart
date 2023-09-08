@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sadra_store/services/providers/token_provider.dart';
 import '../../constants/constants.dart';
 import '../../models/token.dart';
 import 'dart:convert' as convert;
@@ -17,10 +16,10 @@ class ApiServices {
         headers: {"Content-Type": "application/json"}, body: body);
     if (respone.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(respone.body);
-      // print(token.fromJson(jsonResponse).token);
       token.token = jsonResponse["Data"]["UserToken"];
+      Token.getToken=token;
     }
-    TokenNotifier().add(token);
+    Token.getToken=token;
   }
 }
 

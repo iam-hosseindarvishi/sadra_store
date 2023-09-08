@@ -1,6 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sadra_store/services/providers/token_provider.dart';
-
 import '../../models/photo_galleries.dart';
 import '../../models/picture.dart';
 import '../../models/token.dart';
@@ -11,7 +9,7 @@ import 'package:http/http.dart' as http;
 class PictureApi extends ApiServices {
   // get product images from api
   Future<Map<int, String>> getPictures() async {
-    Token token = TokenNotifier().getToken();
+    Token token = Token.getToken;
     var uri = Uri.https(endPoint, "/API/v3/Sync/GetAllData");
     var body = convert
         .jsonEncode({"fromPhotoGalleryVersion": 0, "fromPictureVersion": 0});

@@ -1,3 +1,5 @@
+import 'package:sadra_store/models/token.dart';
+
 import '../services/api/user_remote.dart';
 import '../services/database/user_db.dart';
 
@@ -137,7 +139,8 @@ class User {
       }
       return true;
     } catch (e) {
-      throw Exception("نام کاربری یا رمز عبور اشتباه است");
+      // throw Exception("نام کاربری یا رمز عبور اشتباه است");
+      throw Exception(e);
     }
   }
 }
