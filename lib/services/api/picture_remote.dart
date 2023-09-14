@@ -4,28 +4,32 @@ import '../../models/picture.dart';
 import '../../models/token.dart';
 import 'api_services.dart';
 import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class PictureApi extends ApiServices {
   // get product images from api
   Future<Map<int, String>> getPictures() async {
+    final dio=Dio();
+    dio.options.headers["Content-Type"] = "application/json";
     Token token = Token.getToken;
-    var uri = Uri.parse(endPoint+"/API/v3/Sync/GetAllData");
+    dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (options,handler){
+          // اضافه کردن توکن به درخواست
+          options.headers["Authorization"]="Bearer ${token.token}";
+          handler.next(options);
+        }
+    ));
     var body = convert
         .jsonEncode({"fromPhotoGalleryVersion": 0, "fromPictureVersion": 0});
-    var respone = await http.post(uri,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer ${token.token}"
-        },
-        body: body);
-    if (respone.statusCode != 200) {
+    var response = await dio.post("$endPoint/API/v3/Sync/GetAllData",data: body);
+
+    if (response.statusCode != 200) {
       return throw Exception("خطا در دریافت اطلاعات");
     }
     List<dynamic> galleriesMap =
-        convert.jsonDecode(respone.body)["Data"]["Objects"]["PhotoGalleries"];
+       response.data["Data"]["Objects"]["PhotoGalleries"];
     List<dynamic> picturesMap =
-        convert.jsonDecode(respone.body)["Data"]["Objects"]["Pictures"];
+       response.data["Data"]["Objects"]["Pictures"];
     List<PhotoGalleries> galleriesList =
         List.from(galleriesMap.map((e) => PhotoGalleries.fromJson(e)));
     List<Picture> picturesList =

@@ -2,27 +2,30 @@ import '../../models/token.dart';
 import '../../models/user.dart';
 import 'api_services.dart';
 import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class UserApi extends ApiServices {
   // get user form api
   Future<User> getUser(String phone, String password) async {
-    var uri = Uri.parse(endPoint+ "/API/v3/Sync/GetAllData");
+    final dio=Dio();
+    dio.options.headers["Content-Type"] = "application/json";
     var body = convert.jsonEncode({
       "fromPersonVersion": 0,
     });
     Token token=Token.getToken;
-    var response = await http.post(uri,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer ${token.token}"
-        },
-        body: body);
+    dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (options,handler){
+          // اضافه کردن توکن به درخواست
+          options.headers["Authorization"]="Bearer ${token.token}";
+          handler.next(options);
+        }
+    ));
+    var response = await dio.post("$endPoint/API/v3/Sync/GetAllData",data: body);
+
     if (response.statusCode != 200) {
-      print(response.reasonPhrase);
       return throw Exception("خطا در دریافت اطلاعات");
     }
-    Map<String, dynamic> userMap = convert.jsonDecode(response.body);
+    Map<String, dynamic> userMap = response.data;
 
     List<dynamic> users = userMap["Data"]["Objects"]["People"];
     late User? user;
