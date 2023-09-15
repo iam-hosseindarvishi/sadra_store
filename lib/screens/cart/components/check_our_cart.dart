@@ -22,6 +22,7 @@ class CheckOurCart extends ConsumerStatefulWidget {
 class _CheckOurCartState extends ConsumerState<CheckOurCart> {
    double totalPrice=0;
    bool isSendingOrder=false;
+   bool isEmptyCart=false;
   @override
   Widget build(BuildContext context) {
     ref.watch(orderProductProvider).getOrderPrice().then((value) => {
@@ -87,29 +88,26 @@ class _CheckOurCartState extends ConsumerState<CheckOurCart> {
             height: 30,
           ),
           isSendingOrder==false? DefaultButton(text: "تکمیل خرید", press: () async{
+            ref.watch(orderProductProvider).getOrderCount().then((value) {
+              if(value<=0){
+                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                    leading: Icon(Icons.error_outlined,color: Colors.red,),
+                    backgroundColor: Colors.red[100],
+                    content: Text("سبد خرید شما خالی است",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black54,fontSize: 20),), actions: [
+                  ElevatedButton(onPressed: (){
+                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                  }, child: Text("بستن"))
+                ]));
+                // بستن MaterialBanner پس از 5 ثانیه
+                Future.delayed(Duration(seconds: 5), () {
+                  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                });
+                return;
+              }
+            });
 
             setState(() {
               isSendingOrder = !isSendingOrder;
-            });
-            ref.watch(orderProductProvider).getOrderCount().then((value) {
-                if(value<=0){
-                 ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-                    leading: Icon(Icons.error_outlined,color: Colors.red,),
-                     backgroundColor: Colors.red[100],
-                     content: Text("سبد خرید شما خالی است",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black54,fontSize: 20),), actions: [
-                   ElevatedButton(onPressed: (){
-                    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                   }, child: Text("بستن"))
-                 ]));
-                 // بستن MaterialBanner پس از 5 ثانیه
-                 Future.delayed(Duration(seconds: 5), () {
-                   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                 });
-                  setState(() {
-                    isSendingOrder = !isSendingOrder;
-                  });
-                  return;
-                }
             });
             await OrderApi().sendOrder().then((value) {
               ScaffoldMessenger.of(context).showSnackBar(

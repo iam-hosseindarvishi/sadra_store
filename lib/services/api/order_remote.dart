@@ -18,10 +18,8 @@ class OrderApi extends ApiServices {
       ));
       var jsonData = await OrderDb().sendingOrder();
       var body = jsonEncode(jsonData);
-      print(body);
       var response = await dio.post(
           "$endPoint/API/v3/Sync/SaveAllData", data: body);
-      print(response.data);
       if (response.statusCode != 200) {
         return false;
       }
@@ -30,7 +28,6 @@ class OrderApi extends ApiServices {
       await OrderDb().initOrder());
       return true;
     } catch (ex) {
-      print(ex);
       return false;
     }
   }

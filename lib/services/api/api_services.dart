@@ -13,6 +13,7 @@ class ApiServices {
     // print(uri);
     var body = convert.jsonEncode(apiInfo);
     dio.options.headers["Content-Type"] = "application/json";
+
     var response = await dio.post("$endPoint/API/v3/Sync/Login",data: body);
     if (response.statusCode == 200) {
       token.token =response.data['Data']['UserToken'];
