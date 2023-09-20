@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:intl/intl.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:sadra_store/constants/constants.dart';
 import 'package:sadra_store/services/database/order_detail_db.dart';
 import 'package:sadra_store/services/database/user_db.dart';
 import 'package:sqflite/sqflite.dart';
@@ -27,7 +29,7 @@ class OrderDb extends CoreDatabase {
     order.orderClientId = orderId;
     order.personCode = user.personCode;
     order.personId = user.personId;
-    order.visitorId = 18804;
+    order.visitorId = await UserDb().getVisitorId();
     order.orderType = 201;
     order.isActive = true;
     return db.insert(orderTableName, order.toJson());
@@ -62,7 +64,7 @@ class OrderDb extends CoreDatabase {
           "orderType": order.orderType,
           "personCode": order.personCode,
           // ignore: unnecessary_string_interpolations
-          "orderDate": "${DateFormat('y-M-d').format(DateTime.now())}"
+          "orderDate": DateTime.now().toPersianDate()
         }
       ],
       "orderDetails": List.generate(

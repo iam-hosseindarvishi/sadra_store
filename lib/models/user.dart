@@ -27,6 +27,7 @@ class UserFields {
   static const String rowVersion = "RowVersion";
   static const String personGroupClientId = "PersonGroupClientId";
   static const String personGroupCode = "PersonGroupCode";
+  static const String visitorID = "VisitorId";
 }
 
 class User {
@@ -51,54 +52,54 @@ class User {
   int? rowVersion;
   int? personGroupClientId;
   int? personGroupCode;
-
-  User({
-    this.personId,
-    this.personClientId,
-    this.personCode,
-    this.personGroupId,
-    this.personType,
-    this.prifix,
-    this.firstName,
-    this.lastName,
-    this.organization,
-    this.gender,
-    this.email,
-    this.userName,
-    this.password,
-    this.address,
-    this.phone,
-    this.mobile,
-    this.deleted,
-    this.dataHash,
-    this.rowVersion,
-    this.personGroupClientId,
-    this.personGroupCode,
-  });
+  int? visitorId;
+  User(
+      {this.personId,
+      this.personClientId,
+      this.personCode,
+      this.personGroupId,
+      this.personType,
+      this.prifix,
+      this.firstName,
+      this.lastName,
+      this.organization,
+      this.gender,
+      this.email,
+      this.userName,
+      this.password,
+      this.address,
+      this.phone,
+      this.mobile,
+      this.deleted,
+      this.dataHash,
+      this.rowVersion,
+      this.personGroupClientId,
+      this.personGroupCode,
+      this.visitorId});
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        personId: json['PersonId'] as int?,
-        personClientId: json['PersonClientId'] as int?,
-        personCode: json['PersonCode'] as int?,
-        personGroupId: json['PersonGroupId'] as int?,
-        personType: json['PersonType'] as int?,
-        prifix: json['Prifix'] as String?,
-        firstName: json['FirstName'] as String?,
-        lastName: json['LastName'] as String?,
-        organization: json['Organization'] as dynamic,
-        gender: json['Gender'] as int?,
-        email: json['Email'] as String?,
-        userName: json['UserName'] as String?,
-        password: json['Password'] as String?,
-        address: json['Address'] as String?,
-        phone: json['Phone'] as String?,
-        mobile: json['Mobile'] as String?,
-        deleted: json['Deleted'] == false ? 0 : 1,
-        dataHash: json['DataHash'] as String?,
-        rowVersion: json['RowVersion'] as int?,
-        personGroupClientId: json['PersonGroupClientId'] as int?,
-        personGroupCode: json['PersonGroupCode'] as int?,
-      );
+      personId: json['PersonId'] as int?,
+      personClientId: json['PersonClientId'] as int?,
+      personCode: json['PersonCode'] as int?,
+      personGroupId: json['PersonGroupId'] as int?,
+      personType: json['PersonType'] as int?,
+      prifix: json['Prifix'] as String?,
+      firstName: json['FirstName'] as String?,
+      lastName: json['LastName'] as String?,
+      organization: json['Organization'] as dynamic,
+      gender: json['Gender'] as int?,
+      email: json['Email'] as String?,
+      userName: json['UserName'] as String?,
+      password: json['Password'] as String?,
+      address: json['Address'] as String?,
+      phone: json['Phone'] as String?,
+      mobile: json['Mobile'] as String?,
+      deleted: json['Deleted'] == false ? 0 : 1,
+      dataHash: json['DataHash'] as String?,
+      rowVersion: json['RowVersion'] as int?,
+      personGroupClientId: json['PersonGroupClientId'] as int?,
+      personGroupCode: json['PersonGroupCode'] as int?,
+      visitorId: json["VisitorId"] as int?);
 
   Map<String, dynamic> toJson() => {
         'PersonId': personId,
@@ -122,6 +123,7 @@ class User {
         'RowVersion': rowVersion,
         'PersonGroupClientId': personGroupClientId,
         'PersonGroupCode': personGroupCode,
+        "VisitorId": visitorId
       };
 
   Future<bool> login(String phone, String password) async {

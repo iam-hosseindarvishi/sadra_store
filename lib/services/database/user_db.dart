@@ -15,9 +15,7 @@ class UserDb extends CoreDatabase {
       userTableName,
     );
 
-    return maps.isNotEmpty
-        ? User.fromJson(maps.first)
-        : User();
+    return maps.isNotEmpty ? User.fromJson(maps.first) : User();
   }
 
   Future<int> update(User user) async {
@@ -26,13 +24,23 @@ class UserDb extends CoreDatabase {
   }
 
   Future<bool> checkUserExsist() async {
-    print("checking user exsist");
     Database db = await database();
     final List<Map<String, dynamic>> maps = await db.query(userTableName);
     if (maps.isNotEmpty) {
       return true;
     }
     return false;
+  }
+
+  Future<int> getVisitorId() async {
+    if (await checkUserExsist() == false) {
+      throw Exception("کاربری یافت نشد");
+    }
+    Database db = await database();
+    final List<Map<String, dynamic>> maps = await db.query(userTableName);
+    User user = maps.isEmpty ? User() : User.fromJson(maps.first);
+    int visitorId = user.visitorId ?? 0;
+    return visitorId;
   }
 }
 
