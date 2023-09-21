@@ -8,6 +8,7 @@ import 'package:sadra_store/services/database/user_db.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../models/order.dart';
+import '../../models/user.dart';
 import 'core.dart';
 
 class OrderDb extends CoreDatabase {
@@ -55,6 +56,7 @@ class OrderDb extends CoreDatabase {
   Future<Map<String, dynamic>> sendingOrder() async {
     final order = await OrderDb().getCurrentOrder();
     final orderDetail = await OrderDetailDb().getOrderDetailsList();
+    User user = await UserDb().getUser();
     Map<String, dynamic> orders = {
       "orders": [
         {
@@ -63,8 +65,10 @@ class OrderDb extends CoreDatabase {
           "visitorId": order.visitorId,
           "orderType": order.orderType,
           "personCode": order.personCode,
+          "personClientId": user.personClientId,
           // ignore: unnecessary_string_interpolations
-          "orderDate": DateTime.now().toPersianDate()
+          "orderDate": DateFormat('y-M-d').format(DateTime.now()).toString(),
+          "deliveryDate": DateFormat('y-M-d').format(DateTime.now()).toString()
         }
       ],
       "orderDetails": List.generate(
